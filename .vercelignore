@@ -1,0 +1,10 @@
+*.py
+*.txt
+first_*.js
+original_*.js
+restored_*.js
+assets/page_18_preview.png
+assets/page_4_preview.png
+assets/project_01/page_18_full.png
+assets/project_01/page_18_full_300dpi.png
+

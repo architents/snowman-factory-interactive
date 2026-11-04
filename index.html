@@ -1,0 +1,3086 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>눈사람공장 (SNOWMAN FACTORY) — Interactive Motion Brochure</title>
+  
+  <!-- Fonts -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg-desk: #242528;
+      --paper-white: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      --primary: #0070f3;
+      --primary-hover: #0056b3;
+      --border-light: rgba(15, 23, 42, 0.08);
+      --a4-ratio: 780 / 540; /* 지명원 원본 실측 규격 (780pt x 540pt = 13:9, 1.4444) */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background: #f8fafc;
+      color: var(--text-main);
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* PHASE 0: INTRO HERO SCREEN (맨 처음 구현했던 풀스크린 3D 히어로) */
+    /* ---------------------------------------------------------------- */
+    #intro-screen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 60px;
+      background: #f8fafc;
+      transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    #intro-screen.hide-intro {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* WebGL 3D Point Cloud Canvas */
+    #intro-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+    .intro-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 35%, rgba(248, 250, 252, 0.7) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .cad-crosshair {
+      position: absolute;
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0.25;
+      color: #64748b;
+    }
+    .cad-crosshair.top-left { top: 32px; left: 32px; }
+    .cad-crosshair.top-right { top: 32px; right: 32px; }
+    .cad-crosshair.bottom-left { bottom: 32px; left: 32px; }
+    .cad-crosshair.bottom-right { bottom: 32px; right: 32px; }
+
+    /* Intro Top Nav */
+    .intro-header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .brand-tag {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #475569;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Intro Center Content */
+    .intro-center {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+      pointer-events: none;
+    }
+
+    .intro-title-sub,
+    .intro-logo-img,
+    .intro-slogan,
+    .intro-enter-action {
+      pointer-events: auto;
+    }
+
+    .intro-title-sub {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #0070f3;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .intro-title-sub::before, .intro-title-sub::after {
+      content: "";
+      width: 24px;
+      height: 1px;
+      background: #0070f3;
+      opacity: 0.5;
+    }
+
+    .intro-brand-name {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: clamp(40px, 5.5vw, 68px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+
+    .intro-slogan {
+      font-size: clamp(16px, 1.7vw, 20px);
+      font-weight: 300;
+      color: #64748b;
+      line-height: 1.6;
+      max-width: 650px;
+      margin-bottom: 30px;
+      word-break: keep-all;
+    }
+    .intro-slogan strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .intro-enter-action {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      color: #64748b;
+      font-size: 11px;
+      font-family: 'Space Grotesk', monospace;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      margin-top: 12px;
+    }
+    .intro-enter-action:hover {
+      color: #0070f3;
+      transform: translateY(3px);
+    }
+
+    /* Intro Footer */
+    .intro-footer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+    }
+
+    .status-hud {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.8;
+      letter-spacing: 1px;
+    }
+    .status-hud span { color: #0070f3; font-weight: 600; }
+
+
+    /* ---------------------------------------------------------------- */
+    /* PHASE 1+: A4 LANDSCAPE BROCHURE VIEWER (단일 A4 가로 페이지 뷰어)*/
+    /* ---------------------------------------------------------------- */
+    #brochure-viewer {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: var(--bg-desk);
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.8) 100%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 8px),
+        linear-gradient(180deg, #323337 0%, #202124 50%, #17181a 100%);
+      z-index: 10;
+    }
+
+    /* MotionBook Topbar */
+    header.motion-topbar {
+      width: 100%;
+      height: 52px;
+      padding: 0 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(18, 19, 22, 0.88);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 50;
+      color: #fff;
+    }
+
+    .top-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .top-brand-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 19px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .top-tools-center {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .tool-icon-btn {
+      background: transparent;
+      border: none;
+      color: #b0b5c0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+    .tool-icon-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* A4 Stage Area with 3D Depth */
+    main.a4-stage {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px 80px;
+      perspective: 2500px;
+    }
+
+    .stage-arrow-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(25, 27, 32, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      transition: all 0.25s ease;
+      z-index: 50;
+    }
+    .stage-arrow-btn:hover:not(:disabled) {
+      background: #0070f3;
+      border-color: #0070f3;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .stage-arrow-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+    .stage-arrow-btn.left { left: 24px; }
+    .stage-arrow-btn.right { right: 24px; }
+
+    /* The Authentic Brochure Landscape Sheet (원본 지명원 780pt x 540pt 규격 고정) */
+    .a4-landscape-sheet {
+      aspect-ratio: 780 / 540;
+      width: min(86vw, calc((100vh - 130px) * (780 / 540)));
+      height: auto;
+      max-width: 1220px;
+      background: #ffffff;
+      border-radius: 6px;
+      box-shadow: 
+        0 25px 65px -15px rgba(0, 0, 0, 0.65),
+        0 10px 25px -5px rgba(0, 0, 0, 0.45);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Page Content Panels */
+    .a4-page-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Logo Image Styles */
+    .intro-logo-img {
+      max-width: 320px;
+      width: 60vw;
+      height: auto;
+      margin-bottom: 22px;
+      display: block;
+    }
+
+    .cover-logo-img {
+      max-width: 250px;
+      width: 45vw;
+      height: auto;
+      margin-top: 14px;
+      display: block;
+    }
+
+    .topbar-logo-img {
+      height: 20px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      display: block;
+    }
+
+    .pill-logo-img {
+      width: 82px;
+      height: auto;
+      filter: brightness(0) invert(1);
+      display: block;
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* A4 PAGE 1: COVER (지명원 표지 원본 레이아웃 완벽 매칭)            */
+    /* ---------------------------------------------------------------- */
+    .a4-page-cover {
+      width: 100%;
+      height: 100%;
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+    }
+
+    .cover-center-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cover-snowman-avatar {
+      width: 220px;
+      height: 220px;
+      position: relative;
+      margin-bottom: 24px;
+      cursor: grab;
+      filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.06));
+    }
+    .cover-snowman-avatar:active { cursor: grabbing; }
+
+    .cover-brand-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #000000;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* A4 PAGE 2: OBSIDIAN GRAPH SYSTEM (에디토리얼 인포그래픽 네트워크) */
+    /* ---------------------------------------------------------------- */
+    .a4-page-solutions {
+      width: 100%;
+      height: 100%;
+      padding: 30px 42px 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .obsidian-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4px;
+      border-bottom: 1.5px solid #0f172a;
+      padding-bottom: 10px;
+      z-index: 10;
+    }
+
+    .obsidian-titles-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .obsidian-main-title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .obsidian-main-title span.tag {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #0070f3;
+      background: rgba(0, 112, 243, 0.08);
+      border: 1px solid rgba(0, 112, 243, 0.2);
+      padding: 2.5px 7px;
+      border-radius: 4px;
+    }
+
+    .obsidian-sub-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11.5px;
+      color: #64748b;
+      letter-spacing: 0.3px;
+      font-weight: 500;
+    }
+
+    .solutions-header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+    }
+
+    .solutions-header-note {
+      font-size: 10.5px;
+      color: #94a3b8;
+    }
+
+    /* Editorial Orbit Graph Stage & Camera Zoom */
+    .obsidian-graph-stage {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #graphSvg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    #viewportGroup {
+      transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+      transform-origin: 0 0;
+    }
+
+    /* Zoom Reset Button */
+    .graph-zoom-reset-btn {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid #0070f3;
+      color: #0070f3;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0, 112, 243, 0.15);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: all 0.35s ease;
+      z-index: 20;
+    }
+
+    .graph-zoom-reset-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .graph-zoom-reset-btn:hover {
+      background: #0070f3;
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(0, 112, 243, 0.28);
+    }
+
+    /* ----------------------------------------------------------------- */
+    /* P.02 LIVING ORBIT & DATA STREAM ANIMATIONS (패키지 A 모션 시스템)  */
+    /* ----------------------------------------------------------------- */
+    /* 중앙 관통선 광통신 데이터 펄스 스트림 */
+    @keyframes pulseStreamMove {
+      from { stroke-dashoffset: 232; }
+      to { stroke-dashoffset: 0; }
+    }
+    .data-pulse-stream {
+      animation: pulseStreamMove 3.2s linear infinite;
+      filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.75));
+      pointer-events: none;
+    }
+
+    /* 점선 궤도선 데이터 순환 회전 */
+    @keyframes ringDashOrbit {
+      from { stroke-dashoffset: 48; }
+      to { stroke-dashoffset: 0; }
+    }
+    .orbit-ring-stream {
+      animation: ringDashOrbit 18s linear infinite;
+    }
+
+    /* Parent Node Styles (정밀 동심원 테두리) */
+    .parent-node-group {
+      cursor: pointer;
+      transition: opacity 0.4s ease, filter 0.4s ease;
+    }
+
+    .parent-node-group.dimmed {
+      opacity: 0.32;
+      filter: grayscale(0.25);
+    }
+
+    .parent-outer-ring {
+      transition: stroke-opacity 0.3s ease, stroke-width 0.3s ease;
+    }
+
+    .parent-node-circle {
+      transition: filter 0.3s ease;
+    }
+
+    .parent-node-group:hover:not(.dimmed) .parent-node-circle {
+      /* 상위 카테고리 원 이동/스케일 모션 완전 제거 - 제자리에 단정하게 고정 */
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+    }
+
+    .parent-node-group.active .parent-node-circle {
+      filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.32));
+    }
+
+    .parent-node-text {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      fill: #ffffff;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+      letter-spacing: -0.2px;
+    }
+
+    .parent-node-subtext {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 8.5px;
+      font-weight: 600;
+      fill: rgba(255, 255, 255, 0.95);
+      text-anchor: middle;
+      pointer-events: none;
+    }
+
+    /* 하위 4개 위성 점 유휴 상태 천체 공전 (Living Orbit Drift) */
+    /* 궤도 그룹 (정밀 중심 배치) */
+    .category-orbit-group {
+      transform-origin: center;
+    }
+
+    /* Child Node Styles (White Dots on Orbit) */
+    .child-node-group {
+      cursor: pointer;
+    }
+
+    .child-white-dot {
+      fill: #ffffff;
+      transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
+    }
+
+    .child-node-group:hover .child-white-dot {
+      transform: scale(1.35);
+    }
+
+    .child-edge-line {
+      transition: all 0.4s ease;
+    }
+
+    /* ----------------------------------------------------------------- */
+    /* ZOOM-IN REFERENCE STYLE: CIRCLE NODES & ANNOTATIONS               */
+    /* (첨부 이미지 책자 인포그래픽 클로즈업 원형 노드 & 주석 텍스트)      */
+    /* ----------------------------------------------------------------- */
+    .child-circle-node {
+      cursor: pointer;
+      transition: filter 0.3s ease;
+    }
+
+    .child-circle-node:hover {
+      /* transform: scale(1.1) 제거 - 노드가 흔들리거나 움직이지 않고 제자리에 단정하게 고정 */
+      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.2));
+    }
+
+    .child-circle-outer {
+      fill: #ffffff;
+      stroke-width: 1.6px;
+      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.08));
+      transition: all 0.3s ease;
+    }
+
+    .child-circle-node:hover .child-circle-outer {
+      stroke-width: 2.2px;
+      fill: #f8fafc;
+    }
+
+    .child-circle-inner-ring {
+      fill: none;
+      stroke-width: 0.8px;
+      stroke-opacity: 0.45;
+    }
+
+    .child-circle-title {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 7.0px;
+      font-weight: 800;
+      text-anchor: middle;
+      dominant-baseline: central;
+      letter-spacing: -0.2px;
+      pointer-events: none;
+    }
+
+    .child-circle-sub {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 4.8px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: central;
+      letter-spacing: 0.2px;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    /* 외곽 교차 궤도선 (Large Interlocking Orbit Circles) */
+    .interlocking-orbit {
+      fill: none;
+      stroke-width: 0.75px;
+      stroke-opacity: 0.28;
+      stroke-dasharray: 2, 3;
+      pointer-events: none;
+      transition: stroke-opacity 0.4s ease;
+    }
+
+    /* 주변 세부 주석 텍스트 (Micro Annotation Blocks) */
+    .micro-annotation-group {
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .micro-anno-ko {
+      font-family: 'Pretendard', sans-serif;
+      font-size: 6.2px;
+      font-weight: 700;
+      fill: #334155;
+      letter-spacing: -0.15px;
+    }
+
+    .micro-anno-en {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4.8px;
+      font-weight: 500;
+      fill: #94a3b8;
+      letter-spacing: 0.1px;
+    }
+
+    .micro-anno-line {
+      stroke: #cbd5e1;
+      stroke-width: 0.6px;
+      stroke-dasharray: 2, 2;
+    }
+
+    /* Zoom-in Capsule Badge (Fallback / Legacy) */
+    .child-label-badge {
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+
+    .child-label-badge.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .child-label-badge:hover rect {
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.22));
+      transform: translateY(-1.5px);
+    }
+
+    /* ----------------------------------------------------------------- */
+    /* 하단 심플 안내 문구                                                */
+    /* ----------------------------------------------------------------- */
+    .graph-simple-hint {
+      text-align: center;
+      font-size: 11.5px;
+      font-weight: 500;
+      color: #94a3b8;
+      letter-spacing: 0.3px;
+      padding: 14px 0 4px;
+      z-index: 10;
+    }
+
+    /* MotionBook Bottombar */
+    footer.motion-bottombar {
+      width: 100%;
+      height: 54px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(18, 19, 22, 0.92);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 50;
+      color: #ffffff;
+    }
+
+    .bottom-plus-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #0070f3;
+      color: #ffffff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 112, 243, 0.4);
+      transition: all 0.2s ease;
+    }
+    .bottom-plus-btn:hover { transform: scale(1.1); background: #0056b3; }
+
+    .bottom-center-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .page-step-btn {
+      background: transparent;
+      border: none;
+      color: #9da3af;
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .page-step-btn:hover:not(:disabled) {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .page-step-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
+    .bottom-right-modes {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .view-mode-btn {
+      background: transparent;
+      border: none;
+      color: #8b92a0;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .view-mode-btn:hover, .view-mode-btn.active {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Modal for Service Deep Dive */
+    .service-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .service-modal-backdrop.open { display: flex; opacity: 1; }
+    .service-modal-content {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 580px;
+      width: 100%;
+      padding: 36px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      position: relative;
+      color: #111;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .modal-tag {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: #0070f3;
+      margin-bottom: 8px;
+    }
+    .modal-title { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
+    .modal-desc { font-size: 14px; color: #475569; line-height: 1.65; margin-bottom: 20px; }
+    .modal-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    .modal-box h4 {
+      font-size: 12px;
+      font-family: 'Space Grotesk', monospace;
+      color: #0070f3;
+      margin-bottom: 8px;
+    }
+    .modal-box ul { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #334155; }
+
+    /* ---------------------------------------------------------------- */
+    /* RESPONSIVE & MOBILE ADAPTATION SYSTEM (모바일 비율 완벽 보존)     */
+    /* ---------------------------------------------------------------- */
+    @media (max-width: 900px) {
+      .top-tools-center { display: none; }
+      .top-brand-logo { font-size: 15px; }
+      header.motion-topbar { padding: 0 16px; height: 46px; }
+      footer.motion-bottombar { padding: 0 16px; height: 48px; }
+      main.a4-stage { padding: 10px 12px; }
+      .stage-arrow-btn { display: none; } /* 모바일에서는 터치 스와이프 및 하단 내비게이션 사용 */
+      
+      /* A4 황금 비율(13:9 = 780/540) 절대 유지 */
+      .a4-landscape-sheet {
+        aspect-ratio: 780 / 540 !important;
+        width: min(96vw, calc((100vh - 110px) * (780 / 540))) !important;
+        height: auto !important;
+        border-radius: 6px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      }
+
+      /* Page 1 (Cover) 스케일링 */
+      .a4-page-cover { padding: 20px 24px; }
+      .cover-snowman-avatar { width: clamp(80px, 18vw, 150px); height: clamp(80px, 18vw, 150px); margin-bottom: 12px; }
+      .cover-brand-title { font-size: clamp(20px, 4.5vw, 32px); }
+      .cover-logo-img { max-width: 150px; margin-top: 8px; }
+
+      /* Page 3 (Project) 스케일링 */
+      .project-left-panel {
+        width: 38%;
+        min-width: 125px;
+        padding: 10px 12px;
+      }
+      .project-top-meta-bar { margin-bottom: 4px; padding-bottom: 4px; }
+      .project-pill-badge { font-size: 8.5px; padding: 1px 6px; margin-bottom: 4px; }
+      .project-hero-title { font-size: clamp(10px, 2.2vw, 16px); margin-bottom: 4px; line-height: 1.2; }
+      .project-award-banner { font-size: 8px; padding: 2px 5px; margin-bottom: 5px; }
+      .project-features-list { gap: 4px; padding-top: 6px; }
+      .project-feature-item { gap: 6px; padding-bottom: 4px; }
+      .feature-icon-box { width: 18px; height: 18px; border-radius: 4px; }
+      .feature-icon-box svg { width: 11px; height: 11px; }
+      .feature-title { font-size: 8.5px; margin-bottom: 1px; }
+      .feature-en { font-size: 7px; }
+      .feature-bullets li { font-size: 7.5px; line-height: 1.2; padding-left: 5px; }
+
+      /* Page 4 (Video) */
+      .cinema-full-video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+      }
+    }
+
+    /* 초소형 모바일 기기 (max-width: 480px) 추가 스케일링 */
+    @media (max-width: 480px) {
+      .project-left-panel { width: 40%; padding: 6px 8px; }
+      .feature-bullets { display: none; } /* 초소형 세로 화면에서는 가독성을 위해 아이콘+타이틀 위주 노출 */
+      .project-award-banner { display: none; }
+      .intro-brand-name { font-size: 32px; }
+      .intro-slogan { font-size: 14px; }
+      #intro-screen { padding: 24px 20px; }
+    }
+
+    /* 모바일 가로 모드 (스마트폰을 옆으로 돌렸을 때 전체화면 몰입 뷰) */
+    @media (max-height: 500px) and (orientation: landscape) {
+      header.motion-topbar { height: 38px; padding: 0 12px; }
+      footer.motion-bottombar { height: 40px; padding: 0 12px; }
+      main.a4-stage { padding: 4px 8px; }
+      .a4-landscape-sheet {
+        height: calc(100vh - 84px) !important;
+        width: calc((100vh - 84px) * (780 / 540)) !important;
+        max-width: 98vw;
+      }
+    }
+
+    /* 모바일 가로 회전 권장 토스트 배너 */
+    .mobile-rotate-toast {
+      position: absolute;
+      top: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      z-index: 90;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: auto;
+      white-space: nowrap;
+    }
+    .mobile-rotate-toast .rotate-icon {
+      color: #38bdf8;
+      animation: rotateIconBounce 2s ease infinite;
+    }
+    @keyframes rotateIconBounce {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-90deg); }
+    }
+    .mobile-rotate-toast-close {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 0 2px;
+    }
+    .mobile-rotate-toast-close:hover { color: #fff; }
+    @media (max-width: 768px) and (orientation: portrait) {
+      .mobile-rotate-toast.active { display: flex; }
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* A4 PAGE 3: PROJECT SHOWCASE (지명원 P.18 담바우 에너지 공급센터)      */
+    /* 사용자 최종 합성 포맷(media_1793770666066): 우측 상하우 0여백 Full Bleed */
+    /* ---------------------------------------------------------------- */
+    .a4-page-project {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      box-sizing: border-box;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Left Panel (폭 320px 고정, 내부 단독 패딩) */
+    .project-left-panel {
+      width: 320px;
+      min-width: 320px;
+      height: 100%;
+      padding: 24px 24px 20px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      background: #ffffff;
+      border-right: 1px solid rgba(15, 23, 42, 0.08);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Left Top Minimal Meta Bar */
+    .project-top-meta-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .project-index-num {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+    }
+
+    .project-category-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.5px;
+    }
+
+    /* Pill Badge */
+    .project-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0070f3;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .pill-dot {
+      color: #0070f3;
+      font-size: 8px;
+    }
+
+    /* Main Headline Title */
+    .project-hero-title {
+      font-size: 23px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.7px;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      word-break: keep-all;
+    }
+
+    .title-highlight {
+      color: #0070f3;
+    }
+
+    /* Award Pill / Banner */
+    .project-award-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #b45309;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 2px rgba(180, 83, 9, 0.08);
+    }
+
+    .award-category {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 9px;
+      color: #92400e;
+      background: rgba(255, 255, 255, 0.65);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* 3-Step Feature List (레퍼런스 이미지 하단 리스트와 1:1 매핑) */
+    .project-features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 1px solid rgba(15, 23, 42, 0.08);
+      padding-top: 12px;
+      flex: 1;
+      justify-content: space-evenly;
+    }
+
+    .project-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+    }
+    .project-feature-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .feature-icon-box {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #eff6ff;
+      color: #0070f3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid #dbeafe;
+    }
+
+    .feature-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .feature-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      flex-wrap: wrap;
+      line-height: 1.3;
+    }
+
+    .feature-en {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .feature-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .feature-bullets li {
+      font-size: 10.5px;
+      color: #475569;
+      line-height: 1.4;
+      position: relative;
+      padding-left: 9px;
+      word-break: keep-all;
+    }
+
+    .feature-bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #94a3b8;
+      font-size: 10px;
+    }
+
+    /* Right Visual Stage (상/하/우 여백 0 Full Bleed 직각 사각 그리드) */
+    .project-right-visual {
+      flex: 1;
+      height: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: #0f172a;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .media-card {
+      position: relative;
+      border-radius: 0;
+      overflow: hidden;
+      background: #0f172a;
+      cursor: pointer;
+      transition: filter 0.25s ease, outline 0.15s ease;
+    }
+
+    .media-card:hover {
+      filter: brightness(1.05);
+      z-index: 3;
+      outline: 2px solid #0070f3;
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .media-card:hover img {
+      transform: scale(1.02);
+    }
+
+    /* Top Hero Card (3D LiDAR Point Cloud Wide - 상단/우측 테두리에 0여백 밀착) */
+    .top-hero-card {
+      height: 54%;
+      min-height: 0;
+    }
+
+    /* Bottom Split Layout (좌: 현장 완공 사진 / 우: MEP 상하 2단 - 하단/우측 테두리에 0여백 밀착) */
+    .bottom-split-grid {
+      height: 46%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      min-height: 0;
+    }
+
+    .bottom-left-card {
+      height: 100%;
+      min-height: 0;
+    }
+
+    .bottom-right-stack {
+      height: 100%;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      min-height: 0;
+    }
+
+    .stack-card {
+      height: 100%;
+      min-height: 0;
+    }
+
+    /* HUD Tags & Overlay Elements (직각 사각 뱃지) */
+    .hud-tag {
+      position: absolute;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      letter-spacing: 0.5px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hud-tag.top-left { top: 8px; left: 8px; }
+    .hud-tag.top-right { top: 8px; right: 8px; }
+
+    .media-zoom-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.2s ease;
+      z-index: 3;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .media-card:hover .media-zoom-btn {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .top-hero-card .media-zoom-btn {
+      right: 110px; /* 우측 상단 HUD 태그와 겹치지 않게 */
+    }
+
+    .media-bottom-hud {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 10px 5px 10px;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0) 100%);
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .media-bottom-hud .hud-title {
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+
+    .media-bottom-hud .hud-meta {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 8.5px;
+      color: #94a3b8;
+    }
+
+    .media-bottom-hud.compact {
+      padding: 10px 8px 4px 8px;
+    }
+
+    .media-bottom-hud.compact .hud-title {
+      font-size: 9.5px;
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* IMAGE LIGHTBOX MODAL                                             */
+    /* ---------------------------------------------------------------- */
+    .image-lightbox-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(10px);
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .image-lightbox-backdrop.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-dialog {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .lightbox-caption-bar {
+      margin-top: 14px;
+      color: #f8fafc;
+      text-align: center;
+    }
+
+    .lightbox-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+
+    .lightbox-desc {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: -36px;
+      right: 0;
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-family: 'Space Grotesk', monospace;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close-btn:hover {
+      opacity: 1;
+      color: #38bdf8;
+    }
+
+    /* ---------------------------------------------------------------- */
+    /* A4 PAGE 4: PROJECT CINEMA SHOWCASE (여백 없는 100% 풀 블리드 영상) */
+    /* ---------------------------------------------------------------- */
+    .a4-page-cinema {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      background: #000000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+    }
+
+    /* Full Bleed 100% Video */
+    .cinema-full-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #000000;
+      cursor: pointer;
+    }
+
+    /* Top Floating Glass HUD Overlay */
+    .cinema-overlay-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 22px 28px 40px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      background: linear-gradient(180deg, rgba(11, 15, 25, 0.88) 0%, rgba(11, 15, 25, 0.45) 60%, transparent 100%);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .cinema-titles-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      pointer-events: auto;
+    }
+
+    .cinema-top-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cinema-index-num {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+    }
+
+    .cinema-category-badge {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 1px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(8px);
+    }
+
+    .cinema-main-title {
+      font-size: 19px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    .cinema-main-title .film-badge {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      backdrop-filter: blur(8px);
+    }
+
+    .cinema-sub-desc {
+      font-size: 11px;
+      color: #cbd5e1;
+      font-weight: 400;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .cinema-header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      pointer-events: auto;
+    }
+
+    .cinema-header-note {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 9px;
+      color: #38bdf8;
+      letter-spacing: 1.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cinema-rec-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: pulse 1.5s infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================ -->
+  <!-- PHASE 0: INTRO SCREEN (맨 처음 구현했던 멋진 3D 히어로 페이지)     -->
+  <!-- ================================================================ -->
+  <div id="intro-screen">
+    <!-- WebGL Canvas for Point Cloud -->
+    <canvas id="intro-canvas"></canvas>
+    <div class="intro-overlay"></div>
+
+    <!-- CAD Crosshairs -->
+    <svg class="cad-crosshair top-left" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"/></svg>
+    <svg class="cad-crosshair top-right" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"/></svg>
+    <svg class="cad-crosshair bottom-left" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"/></svg>
+    <svg class="cad-crosshair bottom-right" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"/></svg>
+
+    <!-- Intro Header -->
+    <header class="intro-header">
+      <span class="brand-tag">DIGITAL TWIN & BIM STUDIO</span>
+    </header>
+
+    <!-- Center Brand Visual (3D 포인트클라우드 눈사람과 어우러지는 미니멀 타이포그래피) -->
+    <div class="intro-center">
+      <div class="intro-title-sub">ZERO TO BIM · 3D LIDAR SCAN & SPATIAL COMPUTING</div>
+      <img src="assets/logo.png" alt="SNOWMAN FACTORY" class="intro-logo-img">
+      <p class="intro-slogan">
+        눈사람공장은 <strong>무형의 데이터</strong>에서 <strong>새로운 건축의 가치</strong>를 찾습니다.<br>
+        BIM 도입 0[ZERO]에서 실감형 디지털 전환(DX)까지 함께합니다.
+      </p>
+
+      <!-- Minimal Clickable Action -->
+      <div class="intro-enter-action" onclick="enterBrochure()">
+        <i data-lucide="arrow-down-circle" style="width: 28px; height: 28px;"></i>
+        <span>CLICK TO ENTER BROCHURE</span>
+      </div>
+    </div>
+
+    <!-- Intro Footer -->
+    <footer class="intro-footer">
+      <div class="status-hud">
+        <div>SYS: <span id="sysStatusText">POINT CLOUD ENGINE ACTIVE</span></div>
+        <div>COORDS: <span id="introCoordDisplay">X: 0.000 | Y: 0.000 | Z: 10.000</span></div>
+        <div>SCAN RESOLUTION: <span>1mm HIGH PRECISION</span></div>
+      </div>
+      <div style="font-family: 'Space Grotesk', monospace; font-size: 11px; color: #94a3b8; letter-spacing: 1px;">
+        ZERO TO BIM • 2025
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- PHASE 1+: A4 LANDSCAPE BROCHURE VIEWER (1페이지씩 A4 가로 비율)  -->
+  <!-- ================================================================ -->
+  <div id="brochure-viewer">
+    
+    <!-- Topbar -->
+    <header class="motion-topbar">
+      <div class="top-brand" onclick="returnToIntro()">
+        <img src="assets/logo.png" alt="SNOWMAN FACTORY" class="topbar-logo-img">
+      </div>
+
+      <div class="top-tools-center">
+        <button class="tool-icon-btn" title="목차 보기" onclick="alert('목차:\n01. Cover (표지)\n02. Key Solutions & Services (핵심 역량)\n03. BIM AWARDS 2024 대상 프로젝트 (담바우 역설계)\n04. 담바우 프로젝트 시네마 (공식 홍보영상)')">
+          <i data-lucide="list" style="width: 18px; height: 18px;"></i>
+        </button>
+        <button class="tool-icon-btn" title="전체화면" onclick="toggleFullScreen()">
+          <i data-lucide="maximize" style="width: 17px; height: 17px;"></i>
+        </button>
+        <button class="tool-icon-btn" title="처음 인트로 화면으로" onclick="returnToIntro()">
+          <i data-lucide="home" style="width: 17px; height: 17px;"></i>
+        </button>
+      </div>
+
+      <div style="font-family: 'Space Grotesk', monospace; font-size: 11px; color: #8a909d;">
+        A4 LANDSCAPE BROCHURE
+      </div>
+    </header>
+
+    <!-- Mobile Rotate Prompt Toast -->
+    <div id="mobileRotateToast" class="mobile-rotate-toast active">
+      <i data-lucide="smartphone" class="rotate-icon" style="width: 14px; height: 14px;"></i>
+      <span>화면을 가로로 돌리시면 전체 화면으로 감상하실 수 있습니다</span>
+      <button class="mobile-rotate-toast-close" onclick="closeRotateToast()">✕</button>
+    </div>
+
+    <!-- Main A4 Stage Area -->
+    <main class="a4-stage">
+      
+      <!-- Side Nav Arrows -->
+      <button class="stage-arrow-btn left" id="viewerPrevBtn" onclick="prevPage()" title="이전 페이지">
+        <i data-lucide="chevron-left" style="width: 26px; height: 26px;"></i>
+      </button>
+      <button class="stage-arrow-btn right" id="viewerNextBtn" onclick="nextPage()" title="다음 페이지">
+        <i data-lucide="chevron-right" style="width: 26px; height: 26px;"></i>
+      </button>
+
+      <!-- The A4 Sheet Box -->
+      <div class="a4-landscape-sheet" id="a4Sheet">
+        
+        <!-- ============================================================ -->
+        <!-- A4 PAGE 1: COVER (지명원 표지 원본 레이아웃)                 -->
+        <!-- ============================================================ -->
+        <div class="a4-page-content" id="page-1-content" style="display: flex;">
+          <div class="a4-page-cover">
+            
+            <div class="cover-center-content">
+              <div class="cover-snowman-avatar" id="sheetSnowmanAvatar" title="마우스를 움직여보세요!">
+                <svg viewBox="0 0 220 220" style="width: 100%; height: 100%; overflow: visible;">
+                  <g class="snowman-arm">
+                    <line x1="45" y1="125" x2="20" y2="105" stroke="#000" stroke-width="4.5" stroke-linecap="round"/>
+                    <line x1="28" y1="112" x2="16" y2="124" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
+                    <line x1="26" y1="110" x2="30" y2="96" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
+                  </g>
+                  <circle cx="120" cy="115" r="75" fill="none" stroke="none"/>
+                  <g id="sheetEyesGroup">
+                    <circle cx="98" cy="88" r="4.5" fill="#000"/>
+                    <circle cx="140" cy="82" r="4.5" fill="#000"/>
+                  </g>
+                  <g id="sheetNoseGroup">
+                    <path d="M 128 98 L 165 104 C 168 105 168 108 165 109 L 128 116 Z" fill="#000"/>
+                  </g>
+                  <g id="sheetMouthGroup">
+                    <path d="M 104 125 Q 122 137 142 124" fill="none" stroke="#000" stroke-width="4.5" stroke-linecap="round"/>
+                  </g>
+                </svg>
+              </div>
+              
+              <img src="assets/logo.png" alt="SNOWMAN FACTORY" class="cover-logo-img">
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- A4 PAGE 2: OBSIDIAN GRAPH SYSTEM (지명원 P.02 & 네트워크 인포그래픽) -->
+        <!-- ============================================================ -->
+        <div class="a4-page-content" id="page-2-content" style="display: none;">
+          <div class="a4-page-solutions">
+            
+            <!-- Header Row (책자 에디토리얼 스타일) -->
+            <div class="obsidian-header-row">
+              <div class="obsidian-titles-wrap">
+                <div class="obsidian-main-title">
+                  <span>핵심 솔루션 및 통합 체계 현황</span>
+                  <span class="tag">6 CORE CAPABILITIES</span>
+                </div>
+                <div class="obsidian-sub-title">
+                  상위 카테고리 원을 클릭하면 해당 분야가 확대되며 세부 솔루션 글씨가 나타납니다.
+                </div>
+              </div>
+              <div class="solutions-header-right">
+                <div class="solutions-header-note">ZERO TO BIM ECOSYSTEM</div>
+              </div>
+            </div>
+
+            <!-- Obsidian Interactive Graph Stage (오비탈 네트워크 인포그래픽 SVG & 카메라 줌) -->
+            <div class="obsidian-graph-stage" id="graphContainer">
+              <!-- Floating Zoom Reset Button -->
+              <button class="graph-zoom-reset-btn" id="graphZoomResetBtn" onclick="resetGraphZoom()">
+                <i data-lucide="zoom-out" style="width: 14px; height: 14px;"></i>
+                <span>전체 보기 (ZOOM OUT)</span>
+              </button>
+
+              <svg id="graphSvg" viewBox="0 0 1000 460">
+                <defs>
+                  <filter id="nodeGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.14"/>
+                  </filter>
+                  <filter id="activeGlow" x="-40%" y="-40%" width="180%" height="180%">
+                    <feDropShadow dx="0" dy="8" stdDeviation="14" flood-opacity="0.32"/>
+                  </filter>
+                  <filter id="capsuleShadow" x="-20%" y="-40%" width="140%" height="200%">
+                    <feDropShadow dx="0" dy="5" stdDeviation="8" flood-opacity="0.14"/>
+                  </filter>
+                  <linearGradient id="streamGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#0070f3" stop-opacity="0.2"/>
+                    <stop offset="35%" stop-color="#38bdf8" stop-opacity="1"/>
+                    <stop offset="65%" stop-color="#818cf8" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#0070f3" stop-opacity="0.2"/>
+                  </linearGradient>
+                </defs>
+
+                <!-- Camera Zoomable Viewport Group -->
+                <g id="viewportGroup">
+                  <!-- Editorial Orbit Grid & Central Horizontal Axis -->
+                  <g class="bg-orbit-grid">
+                    <!-- 메인 수평 기준선 (전체 관통) -->
+                    <line x1="20" y1="230" x2="980" y2="230" stroke="#cbd5e1" stroke-width="1.5" />
+                    <!-- 살아 움직이는 데이터 펄스 광선 스트림 (Living Data Stream) -->
+                    <line class="data-pulse-stream" x1="20" y1="230" x2="980" y2="230" stroke="url(#streamGradient)" stroke-width="2.5" stroke-dasharray="16, 42" stroke-linecap="round" />
+                    
+                    <!-- 카테고리별 수직 기준선 및 궤도선 -->
+                    <g stroke="#e2e8f0" stroke-width="1" fill="none">
+                      <line x1="110" y1="30" x2="110" y2="430" stroke-dasharray="2,3" />
+                      <line x1="266" y1="30" x2="266" y2="430" stroke-dasharray="2,3" />
+                      <line x1="422" y1="30" x2="422" y2="430" stroke-dasharray="2,3" />
+                      <line x1="578" y1="30" x2="578" y2="430" stroke-dasharray="2,3" />
+                      <line x1="734" y1="30" x2="734" y2="430" stroke-dasharray="2,3" />
+                      <line x1="890" y1="30" x2="890" y2="430" stroke-dasharray="2,3" />
+
+                      <!-- 각 상위 노드별 점선 궤도 원 (하위 점들이 무작위로 위치하는 점선 원) -->
+                      <circle cx="110" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="266" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="422" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="578" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="734" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="890" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                    </g>
+                  </g>
+
+                  <!-- Dynamic Connections Layer -->
+                  <g id="edgesLayer"></g>
+
+                  <!-- Child Satellite Nodes (White Dots & Text Badges) Layer -->
+                  <g id="childNodesLayer"></g>
+
+                  <!-- 6 Parent Category Nodes Layer (중앙 수평 1열) -->
+                  <g id="parentNodesLayer"></g>
+                </g>
+              </svg>
+            </div>
+
+            <!-- 하단 심플 안내 문구 -->
+            <div class="graph-simple-hint">
+              원형 노드를 클릭하면 세부 내용을 확인 가능합니다.
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- A4 PAGE 3: PROJECT SHOWCASE (지명원 P.18 담바우 에너지 공급센터) -->
+        <!-- 사용자 최종 합성 포맷(media_1793770666066): 우측 상하우 0여백 Full Bleed -->
+        <!-- ============================================================ -->
+        <div class="a4-page-content" id="page-3-content" style="display: none;">
+          <div class="a4-page-project">
+            
+            <!-- Left Panel (폭 320px, 브랜드/정보/3단 피처) -->
+            <div class="project-left-panel">
+              <div>
+                <!-- Top Minimal Meta Bar -->
+                <div class="project-top-meta-bar">
+                  <span class="project-index-num">PROJECT 17</span>
+                  <span style="color: #cbd5e1; font-size: 11px;">/</span>
+                  <span class="project-category-badge">3D SCAN &amp; BIM ARCHITECTURE</span>
+                </div>
+
+                <!-- Top Pill Badge -->
+                <div class="project-pill-badge">
+                  <span class="pill-dot">●</span> 3D SCAN &amp; BIM
+                </div>
+
+                <!-- Main Hero Headline Title -->
+                <h2 class="project-hero-title">
+                  담바우 에너지 공급센터<br>
+                  초정밀 BIM 역설계<br>
+                  <span class="title-highlight">&amp; 디지털 트윈</span>
+                </h2>
+
+                <!-- Award Banner -->
+                <div class="project-award-banner">
+                  <i data-lucide="award" style="width: 14px; height: 14px; stroke-width: 2.5;"></i>
+                  <span>BIM AWARDS 2024 대상 수상</span>
+                  <span class="award-category">BUILDING CAT.</span>
+                </div>
+              </div>
+
+              <!-- 3-Step Feature List (사용자 합성 이미지 좌측 3단 피처 카드) -->
+              <div class="project-features-list">
+                
+                <!-- Feature 1: Scan / Radar -->
+                <div class="project-feature-item">
+                  <div class="feature-icon-box">
+                    <i data-lucide="scan" style="width: 15px; height: 15px; stroke-width: 2.2;"></i>
+                  </div>
+                  <div class="feature-content">
+                    <h4 class="feature-title">
+                      초정밀 LiDAR 1mm 역설계
+                      <span class="feature-en">On-site 3D Scan</span>
+                    </h4>
+                    <ul class="feature-bullets">
+                      <li>Leica BLK360 기반 고밀도 점군 취득 및 3차원 현황 실측</li>
+                      <li>기존 인허가 도면과 준공 시설 간 시공 오차 1:1 정합성 분석</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Feature 2: Layers / Box -->
+                <div class="project-feature-item">
+                  <div class="feature-icon-box">
+                    <i data-lucide="layers" style="width: 15px; height: 15px; stroke-width: 2.2;"></i>
+                  </div>
+                  <div class="feature-content">
+                    <h4 class="feature-title">
+                      복합 MEP 설비 모델링
+                      <span class="feature-en">MEP LOD 400</span>
+                    </h4>
+                    <ul class="feature-bullets">
+                      <li>고압 증기배관 및 보일러실 기계설비 1,200여 건 간섭 사전 100% 검출</li>
+                      <li>시공 시 재작업 및 배관 충돌을 차단하여 공기 18% 단축</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Feature 3: Shield-check / Award -->
+                <div class="project-feature-item">
+                  <div class="feature-icon-box">
+                    <i data-lucide="shield-check" style="width: 15px; height: 15px; stroke-width: 2.2;"></i>
+                  </div>
+                  <div class="feature-content">
+                    <h4 class="feature-title">
+                      조달청 기준 납품 &amp; 디지털 트윈
+                      <span class="feature-en">Delivery &amp; FM</span>
+                    </h4>
+                    <ul class="feature-bullets">
+                      <li>건축·구조·기계 복합 납품 기준 결과보고서 및 수량 산출서 납품</li>
+                      <li>산림에너지 자립마을 친환경 유지관리(FM) 시스템 데이터 인계</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Right Visual Stage (상/하/우 여백 0 Full Bleed 직각 사각 그리드) -->
+            <div class="project-right-visual">
+              
+              <!-- Top Hero Card: Point Cloud LiDAR (상단/우측 0여백 밀착) -->
+              <div class="media-card top-hero-card" id="mediaCardLidar" onclick="openLightbox('assets/project_01/point_cloud.png', '3D LiDAR 스캔 점군(Point Cloud) 데이터 및 정밀 역설계', 'Terrestrial Laser Scanning — 오차 ±1.2mm 이내 고밀도 3차원 포인트클라우드 검측 및 간섭 시뮬레이션')">
+                <div class="hud-tag top-left">SCAN ACCURACY: ±1.2mm</div>
+                <div class="hud-tag top-right">LEICA BLK360</div>
+                <div class="media-zoom-btn"><i data-lucide="maximize-2" style="width: 14px; height: 14px;"></i></div>
+                <img src="assets/project_01/point_cloud.png" alt="3D LiDAR 점군 조감도" loading="lazy">
+                <div class="media-bottom-hud">
+                  <span class="hud-title">3차원 지상 레이저 스캐닝(LiDAR) 포인트클라우드 조감도</span>
+                  <span class="hud-meta">POINT CLOUD DATA / 1,200+ CLASH DETECTED</span>
+                </div>
+              </div>
+
+              <!-- Bottom Split Grid (하단/우측 0여백 밀착: 좌측 현장 사진 / 우측 2단 MEP) -->
+              <div class="bottom-split-grid">
+                
+                <!-- Bottom Left: On-Site Completion Photo -->
+                <div class="media-card bottom-left-card" id="mediaCardSite" onclick="openLightbox('assets/project_01/site_photo.png', '담바우 에너지 공급센터 현장 완공 전경', 'On-Site Completion View — 고압 배관 및 증기 터빈 설비 시공 현장')">
+                  <div class="hud-tag top-left">[01] ON-SITE VIEW</div>
+                  <div class="media-zoom-btn"><i data-lucide="maximize-2" style="width: 14px; height: 14px;"></i></div>
+                  <img src="assets/project_01/site_photo.png" alt="현장 완공 사진" loading="lazy">
+                  <div class="media-bottom-hud">
+                    <span class="hud-title">현장 설비 시공 전경</span>
+                    <span class="hud-meta">ACTUAL FIELD</span>
+                  </div>
+                </div>
+
+                <!-- Bottom Right: Stacked 2 Rows (MEP BIM & MEP Detail) -->
+                <div class="bottom-right-stack">
+                  
+                  <div class="media-card stack-card" id="mediaCardMep" onclick="openLightbox('assets/project_01/mep_bim.png', '3D MEP 설비 통합 모델링 (LOD 400)', 'Revit MEP Modeling — 배관 및 밸브 헤더 정밀 디지털 트윈 구축')">
+                    <div class="hud-tag top-left">[02] MEP SYSTEM BIM</div>
+                    <div class="media-zoom-btn"><i data-lucide="maximize-2" style="width: 12px; height: 12px;"></i></div>
+                    <img src="assets/project_01/mep_bim.png" alt="MEP 설비 투시도" loading="lazy">
+                    <div class="media-bottom-hud compact">
+                      <span class="hud-title">MEP 3D 통합 모델링 (LOD 400)</span>
+                    </div>
+                  </div>
+
+                  <div class="media-card stack-card" id="mediaCardDetail" onclick="openLightbox('assets/project_01/mep_detail.png', '보일러실 배관 간섭 분석 클로즈업', 'Clash Analysis Detail — 고압 증기 배관 및 밸브 헤더 상호 간섭 100% 사전 검출')">
+                    <div class="hud-tag top-left">[03] CLASH ANALYSIS</div>
+                    <div class="media-zoom-btn"><i data-lucide="maximize-2" style="width: 12px; height: 12px;"></i></div>
+                    <img src="assets/project_01/mep_detail.png" alt="보일러실 배관 간섭 클로즈업" loading="lazy">
+                    <div class="media-bottom-hud compact">
+                      <span class="hud-title">배관 충돌 및 간섭 정밀 검측</span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- A4 PAGE 4: PROJECT CINEMA SHOWCASE (여백 없는 100% 풀 블리드 영상) -->
+        <!-- ============================================================ -->
+        <div class="a4-page-content" id="page-4-content" style="display: none;">
+          <div class="a4-page-cinema">
+            
+            <!-- 100% Full Bleed Video (여백 없이 A4 전체 화면 가득 채움) -->
+            <video id="dambauPromoVideo" class="cinema-full-video" controls preload="metadata" poster="assets/project_01/site_photo.png" playsinline>
+              <source src="assets/dambau_promo_1080p.mp4" type="video/mp4">
+              현재 브라우저가 비디오 재생을 지원하지 않습니다.
+            </video>
+
+            <!-- Top Floating HUD Overlay -->
+            <div class="cinema-overlay-top">
+              <div class="cinema-titles-wrap">
+                <div class="cinema-top-meta">
+                  <span class="cinema-index-num">PROJECT 17 • EXTENDED SHOWCASE</span>
+                  <span class="cinema-category-badge">BIM &amp; DIGITAL TWIN DOCUMENTARY</span>
+                </div>
+                <div class="cinema-main-title">
+                  담바우 에너지 공급센터 프로젝트 영상 기록
+                  <span class="film-badge"><i data-lucide="video" style="width: 11px; height: 11px; vertical-align: -1px;"></i> OFFICIAL FILM</span>
+                </div>
+                <div class="cinema-sub-desc">
+                  3D LiDAR 정밀 스캐닝 및 1,200여 건 MEP 간섭 검출, 시설 완공까지의 실증 영상 아카이브
+                </div>
+              </div>
+              <div class="cinema-header-right">
+                <div class="cinema-header-note">
+                  <span class="cinema-rec-dot"></span>
+                  <span>1080P MASTER • BIM AWARDS 대상</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Bottombar Controller -->
+    <footer class="motion-bottombar">
+      <!-- Blue Plus Button -->
+      <button class="bottom-plus-btn" title="핵심 역량 바로보기" onclick="openModal('bim')">
+        <i data-lucide="plus" style="width: 20px; height: 20px;"></i>
+      </button>
+
+      <!-- Center Nav -->
+      <div class="bottom-center-nav">
+        <button class="page-step-btn" id="btnFirst" onclick="goToPage(0)" title="표지(01)로">
+          <i data-lucide="chevrons-left" style="width: 18px; height: 18px;"></i>
+        </button>
+        <button class="page-step-btn" id="btnPrev" onclick="prevPage()" title="이전 페이지">
+          <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+        </button>
+
+        <button class="page-step-btn" id="btnNext" onclick="nextPage()" title="다음 페이지">
+          <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+        </button>
+        <button class="page-step-btn" id="btnLast" onclick="goToPage(3)" title="끝으로">
+          <i data-lucide="chevrons-right" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+
+      <!-- Right Mode Indicators -->
+      <div class="bottom-right-modes">
+        <button class="view-mode-btn active" title="A4 가로 단일 페이지 모드">
+          <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
+          <span>A4 Single</span>
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- SERVICE DETAIL MODAL -->
+  <div class="service-modal-backdrop" id="serviceModal" onclick="closeModal(event)">
+    <div class="service-modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeModal()"><i data-lucide="x" style="width: 16px; height: 16px;"></i></button>
+      <div class="modal-tag" id="modalTag">CAPABILITY OVERVIEW</div>
+      <h3 class="modal-title" id="modalTitle">서비스명</h3>
+      <p class="modal-desc" id="modalDesc">상세 설명</p>
+      
+      <div class="modal-box">
+        <h4>연관 포트폴리오 (From 지명원)</h4>
+        <ul id="modalProjects"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE LIGHTBOX MODAL -->
+  <div class="image-lightbox-backdrop" id="imageLightbox" onclick="closeLightbox(event)">
+    <div class="lightbox-dialog" onclick="event.stopPropagation()">
+      <button class="lightbox-close-btn" onclick="closeLightbox()">
+        <span>ESC / 닫기</span>
+        <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+      </button>
+      <img src="" alt="확대 뷰" class="lightbox-img" id="lightboxImg">
+      <div class="lightbox-caption-bar">
+        <div class="lightbox-title" id="lightboxTitle">이미지 제목</div>
+        <div class="lightbox-desc" id="lightboxDesc">설명 및 세부 정보</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // -------------------------------------------------------------
+    // INTRO & BROCHURE VIEWER STATE MANAGEMENT
+    // -------------------------------------------------------------
+    let inIntro = true;
+    let currentBrochurePage = 0; // 0: Cover (Page 1), 1: Solutions (Page 2), 2: Project 17 (Page 3), 3: Cinema (Page 4)
+    const totalBrochurePages = 4;
+
+    const introScreen = document.getElementById('intro-screen');
+    const page1Content = document.getElementById('page-1-content');
+    const page2Content = document.getElementById('page-2-content');
+    const page3Content = document.getElementById('page-3-content');
+    const page4Content = document.getElementById('page-4-content');
+    const promoVideo = document.getElementById('dambauPromoVideo');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const viewerPrevBtn = document.getElementById('viewerPrevBtn');
+    const viewerNextBtn = document.getElementById('viewerNextBtn');
+
+    function enterBrochure() {
+      inIntro = false;
+      introScreen.classList.add('hide-intro');
+      currentBrochurePage = 0;
+      updateBrochureUI();
+    }
+
+    function returnToIntro() {
+      inIntro = true;
+      introScreen.classList.remove('hide-intro');
+      if (promoVideo) promoVideo.pause();
+    }
+
+    function updateBrochureUI() {
+      const p1 = document.getElementById('page-1-content');
+      const p2 = document.getElementById('page-2-content');
+      const p3 = document.getElementById('page-3-content');
+      const p4 = document.getElementById('page-4-content');
+
+      // 다른 페이지로 이동 시 비디오 일시 정지
+      if (promoVideo && currentBrochurePage !== 3) {
+        promoVideo.pause();
+      }
+
+      if (currentBrochurePage === 0) {
+        if (p1) p1.style.display = 'flex';
+        if (p2) p2.style.display = 'none';
+        if (p3) p3.style.display = 'none';
+        if (p4) p4.style.display = 'none';
+        btnPrev.disabled = true;
+        if (viewerPrevBtn) viewerPrevBtn.disabled = true;
+        btnNext.disabled = false;
+        if (viewerNextBtn) viewerNextBtn.disabled = false;
+      } else if (currentBrochurePage === 1) {
+        if (p1) p1.style.display = 'none';
+        if (p2) p2.style.display = 'flex';
+        if (p3) p3.style.display = 'none';
+        if (p4) p4.style.display = 'none';
+        btnPrev.disabled = false;
+        if (viewerPrevBtn) viewerPrevBtn.disabled = false;
+        btnNext.disabled = false;
+        if (viewerNextBtn) viewerNextBtn.disabled = false;
+        // Re-render Obsidian Graph on page view
+        renderObsidianGraph();
+        resetCategoryDock();
+      } else if (currentBrochurePage === 2) {
+        if (p1) p1.style.display = 'none';
+        if (p2) p2.style.display = 'none';
+        if (p3) p3.style.display = 'flex';
+        if (p4) p4.style.display = 'none';
+        btnPrev.disabled = false;
+        if (viewerPrevBtn) viewerPrevBtn.disabled = false;
+        btnNext.disabled = false;
+        if (viewerNextBtn) viewerNextBtn.disabled = false;
+      } else if (currentBrochurePage === 3) {
+        if (p1) p1.style.display = 'none';
+        if (p2) p2.style.display = 'none';
+        if (p3) p3.style.display = 'none';
+        if (p4) p4.style.display = 'flex';
+        btnPrev.disabled = false;
+        if (viewerPrevBtn) viewerPrevBtn.disabled = false;
+        btnNext.disabled = true;
+        if (viewerNextBtn) viewerNextBtn.disabled = true;
+      }
+      lucide.createIcons();
+    }
+
+    // -------------------------------------------------------------
+    // OBSIDIAN GRAPH VIEW SYSTEM (첨부 레퍼런스 스타일: 원형 노드 & 교차 궤도 & 주석)
+    // -------------------------------------------------------------
+    const categoriesData = [
+      {
+        id: "bim",
+        name: "BIM",
+        sub: "디지털 트윈",
+        fullName: "BIM (Building Information Modeling)",
+        x: 110,
+        y: 230,
+        color: "#1d4ed8",
+        randomAngles: [35, 122, 215, 305],
+        children: [
+          { pos: "top-left", title: "BIM 정밀 모델링", en: "Integrated BIM 3D" },
+          { pos: "top-right", title: "설계 간섭체크", en: "Clash Detection" },
+          { pos: "bottom-left", title: "전환 BIM (조달청)", en: "PPS Standard BIM" },
+          { pos: "bottom-right", title: "시공 물량 산출", en: "Accurate QTO 5D" }
+        ],
+        annotations: [
+          { ko: "조달청 맞춤형 서비스 시설사업 기준 충족", en: "Public Procurement Service BIM Compliance" },
+          { ko: "건축·구조·MEP 전 분야 사전 간섭 100% 검출", en: "Multi-Disciplinary Clash Detection & Audit" },
+          { ko: "담바우 에너지공급센터 대상 수상 (2024)", en: "BIM AWARDS 2024 Grand Prize Winner" },
+          { ko: "네이버 1784 등 대형 프로젝트 레퍼런스", en: "Smart Building & Digital Twin Track Record" }
+        ],
+        project: "담바우 에너지공급센터 대상 수상(2024) / 네이버 1784 등 다수 프로젝트",
+        desc: "건축·구조·기계·전기 전 분야의 BIM 전환 및 설계 품질 자동 검증"
+      },
+      {
+        id: "scan",
+        name: "3D 스캐닝",
+        sub: "초정밀 역설계",
+        fullName: "3D LiDAR 스캐닝 & 역설계",
+        x: 266,
+        y: 230,
+        color: "#0891b2",
+        randomAngles: [22, 128, 205, 292],
+        children: [
+          { pos: "top-left", title: "LiDAR 1mm 오차", en: "High Precision Scan" },
+          { pos: "top-right", title: "Scan to BIM", en: "As-Built Reverse Eng." },
+          { pos: "bottom-left", title: "고밀도 점군 데이터", en: "Dense Point Cloud" },
+          { pos: "bottom-right", title: "시공 오차 정밀분석", en: "Deviation Analysis" }
+        ],
+        annotations: [
+          { ko: "1mm 단위 고밀도 3D LiDAR 현장 스캔", en: "High-Density Terrestrial Laser Scanning" },
+          { ko: "역설계를 통한 실측 준공 모델 구축", en: "Scan-to-BIM Reverse Engineering Workflow" },
+          { ko: "담바우 에너지공급센터 준공 현황 실측", en: "Mechanical & Piping Exact Position Scan" },
+          { ko: "메리어트 호텔 5개 타입 정합성 검증", en: "Luxury Hotel Renovation Quality Assurance" }
+        ],
+        project: "담바우 에너지공급센터 준공 현황 스캔 / 메리어트 호텔 5개 타입 정합성 검증",
+        desc: "1mm 단위 고밀도 3D LiDAR 스캔으로 시공 오차를 사전에 검출하고 디지털 자산화"
+      },
+      {
+        id: "xr",
+        name: "공간 컴퓨팅",
+        sub: "Spatial XR",
+        fullName: "공간 컴퓨팅 (AR · VR · MR)",
+        x: 422,
+        y: 230,
+        color: "#7c3aed",
+        randomAngles: [42, 138, 228, 318],
+        children: [
+          { pos: "top-left", title: "XR 시공 가이드", en: "Field AR Overlay" },
+          { pos: "top-right", title: "HoloLens 2 증강", en: "MS MR Headset Tech" },
+          { pos: "bottom-left", title: "디지털 트윈 아카이브", en: "Digital Twin Archive" },
+          { pos: "bottom-right", title: "가상 협업 메타버스", en: "Metaverse Collaboration" }
+        ],
+        annotations: [
+          { ko: "스마트 글래스를 통한 현장 시공 정보 증강", en: "Mixed Reality Hands-Free Inspection" },
+          { ko: "CAD/BIM 데이터와 실제 공간 1:1 정합", en: "1:1 Real-World Spatial Registration" },
+          { ko: "해성푸드원 스마트 식품공장 실증 완료", en: "Food Plant MEP Verification Deployment" },
+          { ko: "Uncommon Canvas 건축 IP 가상 전시", en: "Interactive Metaverse Architecture Archive" }
+        ],
+        project: "해성푸드원 식품공장 XR 정합성 실증 / Uncommon Canvas 건축 IP 협업 전시",
+        desc: "스마트 글래스를 통한 시공 가이드 오버레이 및 3차원 몰입형 실감 협업 환경"
+      },
+      {
+        id: "consulting",
+        name: "교육/컨설팅",
+        sub: "DX 가이드",
+        fullName: "교육 및 DX 표준 컨설팅",
+        x: 578,
+        y: 230,
+        color: "#ea580c",
+        randomAngles: [28, 114, 210, 302],
+        children: [
+          { pos: "top-left", title: "연성대 산학 협력", en: "Academia Partnership" },
+          { pos: "top-right", title: "BIM 표준 템플릿", en: "Standard Family Library" },
+          { pos: "bottom-left", title: "DX 전환 로드맵", en: "Digital Transformation" },
+          { pos: "bottom-right", title: "실무 밀착형 멘토링", en: "Hands-on Mentoring" }
+        ],
+        annotations: [
+          { ko: "연성대학교 산학 협력 패밀리 기업 협약", en: "University-Industry Research Partnership" },
+          { ko: "Revit 실무 프로세스 및 표준 템플릿 보급", en: "National Standard Family Deployment" },
+          { ko: "BIM 도입이 전무한 기업을 위한 0 to 1 가이드", en: "BIM Adoption 0 to 1 Step-by-Step" },
+          { ko: "중소 건축사 대상 1:1 실무 엔지니어링 전수", en: "Custom On-Site Engineering Coaching" }
+        ],
+        project: "연성대학교 산학 협력 컨설팅 / 중소 건축사 대상 Revit 실무 프로세스 전수",
+        desc: "BIM 도입이 0[ZERO]에 있는 파트너사를 위한 맞춤형 멘토링 및 실무 교육"
+      },
+      {
+        id: "simulation",
+        name: "시뮬레이션",
+        sub: "친환경 해석",
+        fullName: "친환경 에너지 BIM 시뮬레이션",
+        x: 734,
+        y: 230,
+        color: "#16a34a",
+        randomAngles: [48, 134, 224, 324],
+        children: [
+          { pos: "top-left", title: "일조 & 음영 해석", en: "Solar & Shading Sim." },
+          { pos: "top-right", title: "배관망 유체 해석", en: "Piping CFD Network" },
+          { pos: "bottom-left", title: "산림에너지 자립마을", en: "Forest Energy Village" },
+          { pos: "bottom-right", title: "탄소 배출 절감", en: "Carbon Neutrality" }
+        ],
+        annotations: [
+          { ko: "BIM 기반 일조·음영 및 일사량 정밀 시뮬레이션", en: "High-Accuracy Solar Exposure Analysis" },
+          { ko: "친환경 열원 공급 배관망 유체 유동 해석", en: "District Heating Fluid Dynamic Simulation" },
+          { ko: "담바우 산림에너지자립마을 열원 배관망 실증", en: "National Eco-Village Energy Verification" },
+          { ko: "은빛홍삼 경로당 건축물 단열·탄소 배출 저감", en: "Building Envelope Thermal Efficiency" }
+        ],
+        project: "담바우 산림에너지자립마을 열원 공급 배관망 시뮬레이션 / 은빛홍삼 경로당 단열 해석",
+        desc: "BIM 기반 일조·음영 및 에너지 설비 가동 효율을 정밀 시뮬레이션"
+      },
+      {
+        id: "rnd",
+        name: "연구 (R&D)",
+        sub: "자동화 설계",
+        fullName: "디지털 건축 알고리즘 & 자동화 R&D",
+        x: 890,
+        y: 230,
+        color: "#475569",
+        randomAngles: [35, 124, 208, 314],
+        children: [
+          { pos: "top-left", title: "Dynamo 자동 설계", en: "Algorithmic Design" },
+          { pos: "top-right", title: "NEOM 시설물 패밀리", en: "NEOM Metro Families" },
+          { pos: "bottom-left", title: "모듈러 건축 R&D", en: "Off-Site Modular DfMA" },
+          { pos: "bottom-right", title: "파라메트릭 알고리즘", en: "Parametric Geometry" }
+        ],
+        annotations: [
+          { ko: "Dynamo 알고리즘 기반 반복 설계 자동화", en: "Computational Parametric Architecture" },
+          { ko: "NEOM 지하철 12개 타입 시설물 패밀리 구축", en: "NEOM Mega Project BIM Family Delivery" },
+          { ko: "농산어촌 유학마을 3개 타입 모듈주택 현상설계", en: "Prefab Modular House Competition Winner" },
+          { ko: "미래 건축을 위한 파라메트릭 특허 기술 개발", en: "Next-Gen Digital Construction IP" }
+        ],
+        project: "농산어촌 유학마을 3개 타입 모듈주택 현상설계 / NEOM 지하철 12개 타입 자동화",
+        desc: "파라메트릭 알고리즘을 통한 반복 설계 자동화 및 미래 모듈러 건축 선도"
+      }
+    ];
+
+    let activeCategoryId = null;
+
+    function renderObsidianGraph() {
+      const parentNodesLayer = document.getElementById('parentNodesLayer');
+      const childNodesLayer = document.getElementById('childNodesLayer');
+      const edgesLayer = document.getElementById('edgesLayer');
+      const viewportGroup = document.getElementById('viewportGroup');
+      const zoomResetBtn = document.getElementById('graphZoomResetBtn');
+      
+      if (!parentNodesLayer || !childNodesLayer || !edgesLayer) return;
+
+      parentNodesLayer.innerHTML = '';
+      childNodesLayer.innerHTML = '';
+      edgesLayer.innerHTML = '';
+
+      // 1. 카메라 줌인 / 줌아웃 제어
+      if (activeCategoryId) {
+        const activeCat = categoriesData.find(c => c.id === activeCategoryId);
+        if (activeCat && viewportGroup) {
+          const zoomScale = 2.18;
+          const targetX = 500 - activeCat.x * zoomScale;
+          const targetY = 230 - activeCat.y * zoomScale;
+          viewportGroup.style.transform = `translate(${targetX}px, ${targetY}px) scale(${zoomScale})`;
+          if (zoomResetBtn) zoomResetBtn.classList.add('visible');
+        }
+      } else {
+        if (viewportGroup) {
+          viewportGroup.style.transform = `translate(0px, 0px) scale(1)`;
+        }
+        if (zoomResetBtn) zoomResetBtn.classList.remove('visible');
+      }
+
+      // 2. 각 카테고리 렌더링
+      categoriesData.forEach((cat, catIndex) => {
+        const isActive = activeCategoryId === cat.id;
+        const isDimmed = activeCategoryId !== null && !isActive;
+
+        // A. 활성(줌인) 상태: 첨부 레퍼런스와 동일한 원형 노드(Circle Node) + 외곽 교차 궤도선 + 주석 텍스트 렌더링
+        if (isActive) {
+          // 1) 대형 외곽 교차 궤도선 (Interlocking Orbit Rings)
+          const centralOuterOrbit = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          centralOuterOrbit.setAttribute('class', 'interlocking-orbit');
+          centralOuterOrbit.setAttribute('cx', cat.x);
+          centralOuterOrbit.setAttribute('cy', cat.y);
+          centralOuterOrbit.setAttribute('r', '88');
+          centralOuterOrbit.setAttribute('stroke', cat.color);
+          edgesLayer.appendChild(centralOuterOrbit);
+
+          // 2) 4개 하위 원형 노드 및 주변 주석 렌더링
+          cat.children.forEach((child, idx) => {
+            // 위치: 10시(-140°), 2시(-40°), 8시(140°), 4시(40°)
+            let angleRad = 0;
+            let isLeft = false;
+            let isTop = false;
+
+            if (child.pos === "top-left") { angleRad = (-140 * Math.PI) / 180; isLeft = true; isTop = true; }
+            else if (child.pos === "top-right") { angleRad = (-40 * Math.PI) / 180; isLeft = false; isTop = true; }
+            else if (child.pos === "bottom-left") { angleRad = (140 * Math.PI) / 180; isLeft = true; isTop = false; }
+            else if (child.pos === "bottom-right") { angleRad = (40 * Math.PI) / 180; isLeft = false; isTop = false; }
+
+            const circleDist = 78;
+            const cx = cat.x + Math.cos(angleRad) * circleDist;
+            const cy = cat.y + Math.sin(angleRad) * circleDist;
+
+            // 하위 원을 중심으로 하는 대형 교차 궤도선 (Interlocking Thin Circle)
+            const subOrbit = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            subOrbit.setAttribute('class', 'interlocking-orbit');
+            subOrbit.setAttribute('cx', cx);
+            subOrbit.setAttribute('cy', cy);
+            subOrbit.setAttribute('r', '60');
+            subOrbit.setAttribute('stroke', cat.color);
+            edgesLayer.appendChild(subOrbit);
+
+            // 중앙 원과 하위 원을 잇는 얇은 연결선
+            const edge = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            edge.setAttribute('class', 'child-edge-line');
+            edge.setAttribute('x1', cat.x + Math.cos(angleRad) * 44);
+            edge.setAttribute('y1', cat.y + Math.sin(angleRad) * 44);
+            edge.setAttribute('x2', cx - Math.cos(angleRad) * 22);
+            edge.setAttribute('y2', cy - Math.sin(angleRad) * 22);
+            edge.setAttribute('stroke', cat.color);
+            edge.setAttribute('stroke-width', '1.2');
+            edge.setAttribute('stroke-dasharray', '2.5,2.5');
+            edge.setAttribute('stroke-opacity', '0.65');
+            edgesLayer.appendChild(edge);
+
+            // [하위 원형 노드 (Circle Node)] - 흰색 바탕 + 섬세한 이중 링
+            const circleNodeG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            circleNodeG.setAttribute('class', 'child-circle-node');
+            circleNodeG.onclick = (e) => {
+              e.stopPropagation();
+              openModal(cat.id);
+            };
+
+            // 외곽 흰색 원 (Solid White Core)
+            const outerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            outerCircle.setAttribute('class', 'child-circle-outer');
+            outerCircle.setAttribute('cx', cx);
+            outerCircle.setAttribute('cy', cy);
+            outerCircle.setAttribute('r', '22');
+            outerCircle.setAttribute('stroke', cat.color);
+            circleNodeG.appendChild(outerCircle);
+
+            // 안쪽 얇은 이중 링 (Inner Thin Guide Ring)
+            const innerRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            innerRing.setAttribute('class', 'child-circle-inner-ring');
+            innerRing.setAttribute('cx', cx);
+            innerRing.setAttribute('cy', cy);
+            innerRing.setAttribute('r', '18.5');
+            innerRing.setAttribute('stroke', cat.color);
+            circleNodeG.appendChild(innerRing);
+
+            // 원 내부 텍스트 1: 국문 볼드 타이틀
+            const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            titleText.setAttribute('class', 'child-circle-title');
+            titleText.setAttribute('x', cx);
+            titleText.setAttribute('y', cy - 2.8);
+            titleText.setAttribute('fill', cat.color);
+            titleText.textContent = child.title;
+            circleNodeG.appendChild(titleText);
+
+            // 원 내부 텍스트 2: 영문 서브타이틀
+            const subText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            subText.setAttribute('class', 'child-circle-sub');
+            subText.setAttribute('x', cx);
+            subText.setAttribute('y', cy + 5.5);
+            subText.setAttribute('fill', cat.color);
+            subText.textContent = child.en;
+            circleNodeG.appendChild(subText);
+
+            childNodesLayer.appendChild(circleNodeG);
+
+            // [주변 세부 주석 텍스트 (Micro Annotation Blocks)]
+            if (cat.annotations && cat.annotations[idx]) {
+              const annoG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+              annoG.setAttribute('class', 'micro-annotation-group');
+
+              const annoX = isLeft ? cx - 26 : cx + 26;
+              const annoY = isTop ? cy - 14 : cy + 18;
+              const textAnchor = isLeft ? 'end' : 'start';
+
+              const koText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+              koText.setAttribute('class', 'micro-anno-ko');
+              koText.setAttribute('x', annoX);
+              koText.setAttribute('y', annoY);
+              koText.setAttribute('text-anchor', textAnchor);
+              koText.textContent = cat.annotations[idx].ko;
+              annoG.appendChild(koText);
+
+              const enText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+              enText.setAttribute('class', 'micro-anno-en');
+              enText.setAttribute('x', annoX);
+              enText.setAttribute('y', annoY + 7.5);
+              enText.setAttribute('text-anchor', textAnchor);
+              enText.textContent = cat.annotations[idx].en;
+              annoG.appendChild(enText);
+
+              childNodesLayer.appendChild(annoG);
+            }
+          });
+        } else {
+          // B. 비활성(전체보기) 상태: 회색 원 점선(r: 62, 중심: cat.x, 230)을 따라 자유롭게 공전하는 4개의 흰색 점
+          const dotsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+          dotsGroup.setAttribute('class', 'category-dots-group');
+          dotsGroup.setAttribute('data-id', cat.id);
+
+          // 카테고리별 유기적 공전 파라미터 (주기 20~36초, 시계/반시계 교차)
+          const orbitConfigs = [
+            { dur: "24s", dir: 1 },   // 0. BIM: 시계방향 24s
+            { dur: "32s", dir: -1 },  // 1. 3D 스캔: 반시계방향 32s
+            { dur: "20s", dir: 1 },   // 2. 공간컴퓨팅: 시계방향 20s
+            { dur: "36s", dir: -1 },  // 3. 교육/컨설팅: 반시계방향 36s
+            { dur: "28s", dir: 1 },   // 4. 시뮬레이션: 시계방향 28s
+            { dur: "22s", dir: -1 }   // 5. 연구 R&D: 반시계방향 22s
+          ];
+          const cfg = orbitConfigs[catIndex % orbitConfigs.length];
+
+          // 브라우저 오프셋 왜곡 없는 정밀 중심축 회전 animateTransform
+          const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animateTransform');
+          anim.setAttribute('attributeName', 'transform');
+          anim.setAttribute('type', 'rotate');
+          if (cfg.dir === 1) {
+            anim.setAttribute('from', `0 ${cat.x} 230`);
+            anim.setAttribute('to', `360 ${cat.x} 230`);
+          } else {
+            anim.setAttribute('from', `360 ${cat.x} 230`);
+            anim.setAttribute('to', `0 ${cat.x} 230`);
+          }
+          anim.setAttribute('dur', cfg.dur);
+          anim.setAttribute('repeatCount', 'indefinite');
+          dotsGroup.appendChild(anim);
+
+          const orbitRadius = 62;
+
+          cat.children.forEach((child, idx) => {
+            const randAngleDeg = cat.randomAngles[idx] || (idx * 90 + 35);
+            const randAngleRad = (randAngleDeg * Math.PI) / 180;
+            const dotX = cat.x + Math.cos(randAngleRad) * orbitRadius;
+            const dotY = cat.y + Math.sin(randAngleRad) * orbitRadius;
+
+            const childG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            childG.setAttribute('class', 'child-node-group');
+
+            const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            dot.setAttribute('class', 'child-white-dot');
+            dot.setAttribute('cx', dotX);
+            dot.setAttribute('cy', dotY);
+            dot.setAttribute('r', '4');
+            dot.setAttribute('fill', '#ffffff');
+            dot.setAttribute('stroke', cat.color);
+            dot.setAttribute('stroke-width', '1.8');
+            dot.setAttribute('opacity', isDimmed ? '0.2' : '1');
+            childG.appendChild(dot);
+
+            dotsGroup.appendChild(childG);
+          });
+
+          childNodesLayer.appendChild(dotsGroup);
+        }
+
+        // C. 상위 카테고리 메인 원 그룹 (Central Major Node)
+        const parentG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        parentG.setAttribute('class', `parent-node-group ${isActive ? 'active' : ''} ${isDimmed ? 'dimmed' : ''}`);
+        parentG.setAttribute('data-id', cat.id);
+        parentG.onclick = (e) => {
+          e.stopPropagation();
+          toggleCategoryNode(cat.id);
+        };
+
+        // 1) 외곽 가이드 링 (이중 링 장식)
+        const outerRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        outerRing.setAttribute('class', 'parent-outer-ring');
+        outerRing.setAttribute('cx', cat.x);
+        outerRing.setAttribute('cy', cat.y);
+        outerRing.setAttribute('r', '44');
+        outerRing.setAttribute('fill', 'none');
+        outerRing.setAttribute('stroke', cat.color);
+        outerRing.setAttribute('stroke-opacity', isActive ? '0.75' : '0.22');
+        outerRing.setAttribute('stroke-width', isActive ? '1.8' : '1');
+        parentG.appendChild(outerRing);
+
+        // 2) 메인 원 코어 (Fill Color)
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('class', 'parent-node-circle');
+        circle.setAttribute('cx', cat.x);
+        circle.setAttribute('cy', cat.y);
+        circle.setAttribute('r', '37');
+        circle.setAttribute('fill', cat.color);
+        circle.setAttribute('stroke', '#ffffff');
+        circle.setAttribute('stroke-width', isActive ? '3.5' : '2');
+        circle.setAttribute('filter', isActive ? 'url(#activeGlow)' : 'url(#nodeGlow)');
+        parentG.appendChild(circle);
+
+        // 3) 메인 원 텍스트
+        const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        titleText.setAttribute('class', 'parent-node-text');
+        titleText.setAttribute('x', cat.x);
+        titleText.setAttribute('y', cat.y - 4);
+        titleText.textContent = cat.name;
+        parentG.appendChild(titleText);
+
+        const subText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        subText.setAttribute('class', 'parent-node-subtext');
+        subText.setAttribute('x', cat.x);
+        subText.setAttribute('y', cat.y + 13);
+        subText.textContent = cat.sub;
+        parentG.appendChild(subText);
+
+        parentNodesLayer.appendChild(parentG);
+      });
+
+      // 확대(줌인) 시 하위 노드와 궤도선, 주석 텍스트가 흔들림 없이 단정하고 안정되게 고정 표시됨
+    }
+
+    // -------------------------------------------------------------
+    // 하단 단순 안내 모드 (독 제거 및 no-op 안전 처리)
+    // -------------------------------------------------------------
+    function showCategoryDock(catId) {}
+    function resetCategoryDock() {}
+
+    function toggleCategoryNode(id) {
+      if (activeCategoryId === id) {
+        activeCategoryId = null; // 줌아웃 복귀
+        resetCategoryDock();
+      } else {
+        activeCategoryId = id; // 해당 노드로 카메라 줌인
+        showCategoryDock(id);
+      }
+      renderObsidianGraph();
+    }
+
+    function resetGraphZoom() {
+      activeCategoryId = null;
+      resetCategoryDock();
+      renderObsidianGraph();
+    }
+
+    // SVG 배경 클릭 시 줌아웃 복귀
+    const graphSvgElem = document.getElementById('graphSvg');
+    if (graphSvgElem) {
+      graphSvgElem.addEventListener('click', (e) => {
+        if (e.target === graphSvgElem || e.target.tagName === 'line' || e.target.classList.contains('bg-orbit-grid')) {
+          resetGraphZoom();
+        }
+      });
+    }
+
+    function goToPage(idx) {
+      if (idx >= 0 && idx < totalBrochurePages) {
+        currentBrochurePage = idx;
+        updateBrochureUI();
+      }
+    }
+
+    function prevPage() {
+      if (inIntro) return;
+      if (currentBrochurePage > 0) {
+        currentBrochurePage--;
+        updateBrochureUI();
+      } else {
+        // Return to intro if on page 1 and pressing prev
+        returnToIntro();
+      }
+    }
+
+    function nextPage() {
+      if (inIntro) {
+        enterBrochure();
+        return;
+      }
+      if (currentBrochurePage < totalBrochurePages - 1) {
+        currentBrochurePage++;
+        updateBrochureUI();
+      }
+    }
+
+    // -------------------------------------------------------------
+    // IMAGE LIGHTBOX INTERACTION (고해상도 비주얼 확대 모달)
+    // -------------------------------------------------------------
+    const imageLightbox = document.getElementById('imageLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxDesc = document.getElementById('lightboxDesc');
+
+    function openLightbox(src, title, desc) {
+      if (!imageLightbox || !lightboxImg) return;
+      lightboxImg.src = src;
+      if (lightboxTitle) lightboxTitle.textContent = title || '';
+      if (lightboxDesc) lightboxDesc.textContent = desc || '';
+      imageLightbox.classList.add('show');
+      lucide.createIcons();
+    }
+
+    function closeLightbox(e) {
+      if (!imageLightbox) return;
+      if (e && e.target !== imageLightbox && !e.target.closest('.lightbox-close-btn')) return;
+      imageLightbox.classList.remove('show');
+    }
+
+    // Keyboard Arrow Keys & Modal Control
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const vid = document.getElementById('dambauPromoVideo');
+        if (vid && !vid.paused) {
+          vid.pause();
+        }
+        if (imageLightbox && imageLightbox.classList.contains('show')) {
+          imageLightbox.classList.remove('show');
+          return;
+        }
+        const serviceModal = document.getElementById('serviceModal');
+        if (serviceModal && serviceModal.classList.contains('show')) {
+          closeModal();
+          return;
+        }
+        returnToIntro();
+      } else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        nextPage();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevPage();
+      }
+    });
+
+    // Disable all mouse wheel scrolling completely
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+    }, { passive: false });
+
+    // -------------------------------------------------------------
+    // THREE.JS 3D ARCHITECTURAL LIDAR POINT CLOUD & WIREFRAME SPACE
+    // (6,000개 고밀도 파티클 수렴 애니메이션 & 건축 와이어프레임 큐브 공간)
+    // -------------------------------------------------------------
+    const introCanvas = document.getElementById('intro-canvas');
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 4, 28);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: introCanvas,
+      alpha: true,
+      antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // 1. 3D Architectural LiDAR Point Cloud (총 6,000개 파티클: 지형 3,800 + 큐브 라이다 2,200)
+    const particleCount = 6000;
+    const targetPositions = new Float32Array(particleCount * 3);
+    const initialPositions = new Float32Array(particleCount * 3);
+    const currentPositions = new Float32Array(particleCount * 3);
+    const particleDelays = new Float32Array(particleCount);
+
+    for (let i = 0; i < particleCount; i++) {
+      const idx = i * 3;
+      let tx, ty, tz;
+
+      if (i < 3800) {
+        // A. 고밀도 바닥 웨이브 지형 파티클 (3,800개: x, z 범위 -24 ~ +24)
+        tx = (Math.random() - 0.5) * 48;
+        tz = (Math.random() - 0.5) * 48;
+        ty = -7.5 + Math.sin(tx * 0.28) * 1.6 + Math.cos(tz * 0.28) * 1.6 + (Math.random() - 0.5) * 0.25;
+      } else {
+        // B. 건축 큐브 공간(16x18x16) 및 층별 슬래브 레벨 라이다 산란 파티클 (2,200개)
+        const isSlab = Math.random() > 0.45;
+        if (isSlab) {
+          // 3개 층별 슬래브 레벨 (-4.5, 0.5, 5.5) 주변 집약 스캔
+          const slabLevels = [-4.5, 0.5, 5.5];
+          const slabY = slabLevels[Math.floor(Math.random() * slabLevels.length)];
+          tx = (Math.random() - 0.5) * 15;
+          tz = (Math.random() - 0.5) * 15;
+          ty = slabY + (Math.random() - 0.5) * 0.7;
+        } else {
+          // 큐브 외벽 및 기둥 공간 산란
+          tx = (Math.random() - 0.5) * 16;
+          ty = -8 + Math.random() * 18;
+          tz = (Math.random() - 0.5) * 16;
+        }
+      }
+
+      targetPositions[idx] = tx;
+      targetPositions[idx + 1] = ty;
+      targetPositions[idx + 2] = tz;
+
+      // 광활한 3D 공간 사방(반경 60 ~ 110)으로 흩어진 초기 위치
+      const radius = 60 + Math.random() * 50;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2.0 * Math.random() - 1.0);
+
+      const ix = radius * Math.sin(phi) * Math.cos(theta);
+      const iy = radius * Math.cos(phi) * 0.8 + (Math.random() - 0.5) * 15;
+      const iz = radius * Math.sin(phi) * Math.sin(theta);
+
+      initialPositions[idx] = ix;
+      initialPositions[idx + 1] = iy;
+      initialPositions[idx + 2] = iz;
+
+      currentPositions[idx] = ix;
+      currentPositions[idx + 1] = iy;
+      currentPositions[idx + 2] = iz;
+
+      // 유기적 수렴을 위한 파티클별 미세한 시간차 (0 ~ 0.35초)
+      particleDelays[i] = Math.random() * 0.35;
+    }
+
+    const particlesGeometry = new THREE.BufferGeometry();
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      color: 0x3b82f6,
+      size: 0.14,
+      transparent: true,
+      opacity: 0.72
+    });
+
+    const pointCloud = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(pointCloud);
+
+    // 2. Architectural Wireframe Box (건축 공간 와이어프레임 박스)
+    const boxGeometry = new THREE.BoxGeometry(16, 18, 16);
+    const wireframeGeometry = new THREE.WireframeGeometry(boxGeometry);
+    const wireframeMaterial = new THREE.LineBasicMaterial({
+      color: 0xbfdbfe,
+      transparent: true,
+      opacity: 0.0
+    });
+    const wireframeBox = new THREE.LineSegments(wireframeGeometry, wireframeMaterial);
+    wireframeBox.scale.set(0.1, 0.1, 0.1);
+    scene.add(wireframeBox);
+
+    let targetCameraX = 0;
+    let targetCameraY = 4;
+
+    const introCoordDisplay = document.getElementById('introCoordDisplay');
+    const sysStatusText = document.getElementById('sysStatusText');
+    if (sysStatusText) {
+      sysStatusText.textContent = 'ASSEMBLING POINT CLOUD: 0%';
+    }
+
+    const sheetEyesGroup = document.getElementById('sheetEyesGroup');
+    const sheetNoseGroup = document.getElementById('sheetNoseGroup');
+    const sheetMouthGroup = document.getElementById('sheetMouthGroup');
+    const sheetSnowmanAvatar = document.getElementById('sheetSnowmanAvatar');
+
+    window.addEventListener('mousemove', (e) => {
+      const normX = (e.clientX / window.innerWidth) * 2 - 1;
+      const normY = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      targetCameraX = normX * 8;
+      targetCameraY = 4 + normY * 5;
+
+      if (introCoordDisplay) {
+        introCoordDisplay.textContent = `X: ${(normX * 14.25).toFixed(3)} | Y: ${(normY * 9.85).toFixed(3)} | Z: ${(28 + normY * 3).toFixed(3)}`;
+      }
+
+      // Sheet Cover Face Tracking (Page 1)
+      if (sheetEyesGroup && sheetNoseGroup && sheetMouthGroup && sheetSnowmanAvatar) {
+        sheetEyesGroup.style.transform = `translate(${normX * 8}px, ${-normY * 6}px)`;
+        sheetNoseGroup.style.transform = `translate(${normX * 14}px, ${-normY * 9}px)`;
+        sheetMouthGroup.style.transform = `translate(${normX * 4}px, ${-normY * 3}px)`;
+        sheetSnowmanAvatar.style.transform = `perspective(500px) rotateY(${normX * 10}deg) rotateX(${-normY * 8}deg)`;
+      }
+    });
+
+    // -----------------------------------------------------------------
+    // ANIMATION LOOP (수렴 애니메이션 2.4초 + 이후 60fps 자율 회전 및 패닝)
+    // -----------------------------------------------------------------
+    const ASSEMBLY_DURATION = 2.4;
+    let isAssemblyFinished = false;
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+
+      if (!isAssemblyFinished) {
+        const rawProgress = Math.min(elapsedTime / ASSEMBLY_DURATION, 1.0);
+        const posAttr = particlesGeometry.attributes.position;
+        const posArr = posAttr.array;
+
+        for (let i = 0; i < particleCount; i++) {
+          const delay = particleDelays[i];
+          const localTime = Math.max(0, elapsedTime - delay);
+          const localDur = Math.max(0.1, ASSEMBLY_DURATION - delay);
+          const pRaw = Math.min(localTime / localDur, 1.0);
+          // Smooth Cubic Out Easing
+          const progress = 1 - Math.pow(1 - pRaw, 3);
+
+          const idx = i * 3;
+          const ix = initialPositions[idx];
+          const iy = initialPositions[idx + 1];
+          const iz = initialPositions[idx + 2];
+
+          const tx = targetPositions[idx];
+          const ty = targetPositions[idx + 1];
+          const tz = targetPositions[idx + 2];
+
+          // 부드러운 나선형 소용돌이(Vortex Swirl) 회전각
+          const swirl = (1 - progress) * 1.6;
+          const cosS = Math.cos(swirl);
+          const sinS = Math.sin(swirl);
+
+          const lx = ix + (tx - ix) * progress;
+          const ly = iy + (ty - iy) * progress;
+          const lz = iz + (tz - iz) * progress;
+
+          posArr[idx] = lx * cosS - lz * sinS;
+          posArr[idx + 1] = ly;
+          posArr[idx + 2] = lx * sinS + lz * cosS;
+        }
+        posAttr.needsUpdate = true;
+
+        // 와이어프레임 큐브 스케일업 (0.1 -> 1.0) 및 투명도 페이드인
+        const boxEase = 1 - Math.pow(1 - rawProgress, 3);
+        const boxScale = 0.1 + 0.9 * boxEase;
+        wireframeBox.scale.set(boxScale, boxScale, boxScale);
+        wireframeMaterial.opacity = 0.5 * boxEase;
+
+        if (sysStatusText) {
+          sysStatusText.textContent = `ASSEMBLING POINT CLOUD: ${Math.round(rawProgress * 100)}%`;
+        }
+
+        if (rawProgress >= 1.0) {
+          posArr.set(targetPositions);
+          posAttr.needsUpdate = true;
+          wireframeBox.scale.set(1.0, 1.0, 1.0);
+          wireframeMaterial.opacity = 0.5;
+          if (sysStatusText) {
+            sysStatusText.textContent = 'POINT CLOUD ENGINE ACTIVE';
+          }
+          isAssemblyFinished = true;
+        }
+      }
+
+      // 회전 애니메이션
+      pointCloud.rotation.y = elapsedTime * 0.035;
+      wireframeBox.rotation.y = elapsedTime * 0.035;
+
+      camera.position.x += (targetCameraX - camera.position.x) * 0.05;
+      camera.position.y += (targetCameraY - camera.position.y) * 0.05;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Fullscreen Toggle
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => alert(err.message));
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Modal Details
+    const serviceDetails = {
+      bim: {
+        tag: "SOLUTION 01",
+        title: "건축정보모델링 (BIM)",
+        desc: "조달청 시설사업 기준에 완벽히 부합하는 전환 BIM을 수행하며, 건축·구조·MEP 전 분야를 통합 모델링하여 사전 간섭 오류를 100% 검출하고 신뢰도 높은 물량 산출 데이터를 제공합니다.",
+        projects: [
+          "대구보훈병원 계획/실시설계 BIM 모델링 (조달청 납품 기준)",
+          "신동초등학교 계획·중간·실시설계 BIM (건축, 구조, MEP 작성)",
+          "해운대 오피스텔 BIM 모델 기반 중간설계 도면화",
+          "북천안 데이터센터 기본/실시설계 건축·구조 BIM 및 간섭검토"
+        ]
+      },
+      scan: {
+        tag: "SOLUTION 02",
+        title: "3D 스캐닝 (Scan to BIM)",
+        desc: "초정밀 LiDAR 스캐너(Leica BLK360, Trimble X7)를 활용하여 현장을 1mm 오차 범위 내 포인트 클라우드로 취득하고, 기존 CAD 도면과의 오차 정합성 분석 및 고정밀 역설계를 수행합니다.",
+        projects: [
+          "담바우 에너지 공급센터 준공 현황 3D 스캔 및 설계안 정밀 비교 (BIM AWARDS 2024 대상)",
+          "페어필드바이 메리어트 호텔 객실 5개 타입 3D 스캔 데이터 Revit 도면 정합성 검토",
+          "보라매병원 대강당 리모델링을 위한 현장 3D 스캔 데이터 구축"
+        ]
+      },
+      xr: {
+        tag: "SOLUTION 03",
+        title: "공간 컴퓨팅 (AR · VR · MR)",
+        desc: "스마트 글래스(MS HoloLens 2)와 Matterport 기술을 융합하여 3차원 공간 속에서 시공 가이드를 오버레이하고 실시간 몰입형 협업 검토 환경을 제공합니다.",
+        projects: [
+          "해성푸드원 식품공장 현장 3D 스캔 & XR 정합성 실증",
+          "연성대학교 실내건축과 홀로렌즈 기반 공간컴퓨팅 산학교육",
+          "Uncommon Canvas 전시: 건축 IP 및 3D Scan 갤러리 협업 전시"
+        ]
+      },
+      simulation: {
+        tag: "SOLUTION 04",
+        title: "친환경 BIM 시뮬레이션",
+        desc: "BIM 데이터를 기반으로 일조, 음영, 단열 및 에너지 소비 시뮬레이션을 수행하여 제로에너지 건축물 인증 및 재생에너지 공급 설비 최적화 설계를 지원합니다.",
+        projects: [
+          "담바우 산림에너지자립마을 열원 공급 배관망 및 기계설비 운용 시뮬레이션",
+          "은빛홍삼 경로당 그린 리모델링 단열 개선 효과 사전 해석"
+        ]
+      },
+      rnd: {
+        tag: "SOLUTION 05",
+        title: "디지털 건축 & 자동화 R&D",
+        desc: "Dynamo 및 파라메트릭 알고리즘을 활용한 반복 설계 자동화, 프리팹 모듈러 건축 최적 배합 알고리즘 등 미래 건축 기술을 선도합니다.",
+        projects: [
+          "농산어촌 유학마을 조성사업 3개 타입 모듈주택 현상설계",
+          "NEOM 지하철 12개 타입 시설물 Revit 패밀리 파라메트릭 자동 모델링"
+        ]
+      }
+    };
+
+    function openModal(key) {
+      const data = serviceDetails[key];
+      if (!data) return;
+      document.getElementById('modalTag').textContent = data.tag;
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalDesc').textContent = data.desc;
+      document.getElementById('modalProjects').innerHTML = data.projects.map(p => `<li>• ${p}</li>`).join('');
+      document.getElementById('serviceModal').classList.add('open');
+      lucide.createIcons();
+    }
+
+    function closeModal() {
+      document.getElementById('serviceModal').classList.remove('open');
+    }
+
+    // Mobile Rotate Toast Close
+    function closeRotateToast() {
+      const toast = document.getElementById('mobileRotateToast');
+      if (toast) {
+        toast.classList.remove('active');
+        toast.style.display = 'none';
+      }
+    }
+
+    // 7초 후 자동으로 모바일 토스트 사라짐
+    setTimeout(() => {
+      closeRotateToast();
+    }, 7000);
+
+    // Mobile Touch Swipe Handling (좌우 넘김 스와이프)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const a4Stage = document.querySelector('main.a4-stage');
+    if (a4Stage) {
+      a4Stage.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+
+      a4Stage.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+        // 수평 스와이프 거리가 40px 이상이고 수직 이동보다 클 때
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+          if (diffX < 0) {
+            nextPage(); // 왼쪽으로 쓸어넘기면 다음 페이지
+          } else {
+            prevPage(); // 오른쪽으로 쓸어넘기면 이전 페이지
+          }
+        }
+      }, { passive: true });
+    }
+  </script>
+</body>
+</html>
