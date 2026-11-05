@@ -2674,7 +2674,7 @@
     // -------------------------------------------------------------
     let inIntro = true;
     let currentBrochurePage = 0; // 0: Cover (Page 1), 1: Solutions (Page 2), 2: Project 17 (Page 3), 3: Cinema (Page 4)
-    const totalBrochurePages = 4;
+    let totalBrochurePages = 4;
 
     const introScreen = document.getElementById('intro-screen');
     const page1Content = document.getElementById('page-1-content');
@@ -3781,6 +3781,7 @@
       const newPageDiv = document.createElement('div');
       newPageDiv.className = 'a4-page-content';
       newPageDiv.id = 'custom-page-' + Date.now();
+      newPageDiv.style.display = 'none';
 
       if (type === 'project') {
         newPageDiv.innerHTML = `
