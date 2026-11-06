@@ -2225,6 +2225,36 @@
     .tp-minimal-top { flex: 1; background: #cbd5e1; }
     .tp-minimal-bottom { height: 20px; background: #0f172a; }
 
+    .tp-divider {
+      width: 100%;
+      height: 100%;
+      background: #080d1a;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 6px;
+      box-sizing: border-box;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .tp-divider-num {
+      position: absolute;
+      right: 4px;
+      bottom: -2px;
+      font-size: 32px;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.08);
+      line-height: 1;
+      font-family: monospace;
+    }
+    .tp-divider-line {
+      width: 24px;
+      height: 2px;
+      background: #0070f3;
+      margin: 4px 0;
+    }
+
     .tp-full-img { width: 100%; height: 100%; background: #94a3b8; position: relative; }
     .tp-caption { position: absolute; bottom: 6px; left: 6px; right: 6px; height: 14px; background: rgba(15, 23, 42, 0.7); border-radius: 3px; }
 
@@ -2563,6 +2593,23 @@
         <div id="subviewOtherTemplatesSection" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.12);">
           <span class="admin-section-label">OTHER TEMPLATES (기타 템플릿)</span>
           <div style="display: flex; flex-direction: column; gap: 7px;">
+            <div class="panel-layout-card" onclick="handleLayoutSelect('divider')" data-layout="divider" style="border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.06);">
+              <div class="panel-card-thumb">
+                <div class="tp-divider">
+                  <div style="font-size: 8px; color: #38bdf8; font-family: monospace;">CAT 01</div>
+                  <div class="tp-divider-line"></div>
+                  <div class="tp-divider-num">01</div>
+                </div>
+              </div>
+              <div class="panel-card-info">
+                <div class="panel-card-title">
+                  <span style="color: #38bdf8;">솔루션 카테고리 간지</span>
+                  <span style="font-size: 9px; background: #0ea5e9; color: #fff; padding: 1px 4px; border-radius: 3px;">추천</span>
+                </div>
+                <div class="panel-card-desc">대분류 섹션을 구분하는 에디토리얼 프리미엄 인트로 간지</div>
+              </div>
+            </div>
+
             <div class="panel-layout-card" onclick="handleLayoutSelect('gallery')">
               <div class="panel-card-thumb"><div class="tp-full-img"><div class="tp-caption"></div></div></div>
               <div class="panel-card-info">
@@ -2919,6 +2966,98 @@
         </div>
 
         <!-- ============================================================ -->
+        <!-- A4 PAGE 3: SOLUTION CATEGORY SECTION DIVIDER (솔루션 카테고리 간지) -->
+        <!-- 대분류 섹션을 구분하는 에디토리얼 프리미엄 간지 페이지 -->
+        <!-- ============================================================ -->
+        <div class="a4-page-content" id="page-3-divider-content" style="display: none;">
+          <div class="a4-page-divider" style="width: 100%; height: 100%; position: relative; overflow: hidden; background: #080d1a; color: #ffffff; display: flex; flex-direction: column; justify-content: space-between; padding: 46px 54px; box-sizing: border-box; background-image: radial-gradient(circle at 12% 18%, rgba(0,112,243,0.14) 0%, transparent 45%), linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 100% 100%, 32px 32px, 32px 32px;">
+            
+            <!-- Right Half Faded Visual Graphic with Soft Mask -->
+            <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 54%; opacity: 0.35; pointer-events: none; mix-blend-mode: screen; mask-image: linear-gradient(to left, black 40%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 40%, transparent 100%);">
+              <img src="assets/project_01/point_cloud.png" alt="카테고리 비주얼" class="admin-editable-img" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) contrast(1.2);">
+            </div>
+
+            <!-- Watermark Background Big Number -->
+            <div style="position: absolute; left: 42px; top: 80px; font-size: 140px; font-weight: 900; font-family: 'Space Grotesk', sans-serif; color: rgba(255,255,255,0.035); line-height: 1; pointer-events: none; user-select: none;">
+              01
+            </div>
+
+            <!-- Top Meta Row -->
+            <div style="position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 14px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-family: 'Space Grotesk', monospace; font-size: 10.5px; font-weight: 800; letter-spacing: 2px; color: #38bdf8; background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.3); padding: 3px 10px; border-radius: 4px;">CATEGORY 01</span>
+                <span style="font-size: 11px; color: #64748b; font-family: monospace;">CORE CAPABILITY SECTION</span>
+              </div>
+              <div style="font-family: 'Space Grotesk', monospace; font-size: 11px; font-weight: 700; color: #94a3b8; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
+                <span style="color: #0070f3;">●</span> SNOWMAN FACTORY · ARCHITECTURE &amp; BIM
+              </div>
+            </div>
+
+            <!-- Center Editorial Headline Area -->
+            <div style="position: relative; z-index: 2; max-width: 660px; margin: 30px 0;">
+              <div style="font-family: 'Space Grotesk', monospace; font-size: 12px; font-weight: 700; color: #38bdf8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <span style="width: 18px; height: 1.5px; background: #38bdf8;"></span>
+                TERRESTRIAL 3D LIDAR SCANNING &amp; AS-BUILT BIM REVERSE ENGINEERING
+              </div>
+              
+              <h1 style="font-size: 38px; font-weight: 900; letter-spacing: -0.8px; line-height: 1.2; margin: 0 0 18px; color: #ffffff;">
+                3D 스캐닝 &amp; 역설계<br>
+                <span style="color: #38bdf8; font-weight: 900;">초정밀 BIM 통합 체계</span>
+              </h1>
+
+              <div style="width: 48px; height: 3px; background: linear-gradient(90deg, #0070f3, #38bdf8); margin-bottom: 20px;"></div>
+
+              <p style="font-size: 14.5px; color: #cbd5e1; line-height: 1.7; margin: 0;">
+                현장 오차 ±1.2mm 이내의 초정밀 3차원 LiDAR 지상 레이저 스캐닝을 통해 복잡한 배관 및 비정형 구조물을 1:1 역설계하고, 시공 간섭 100% 사전 검출 및 조달청 납품 기준 디지털 자산화를 구현합니다.
+              </p>
+            </div>
+
+            <!-- Bottom Capabilities & Breadcrumbs -->
+            <div style="position: relative; z-index: 2;">
+              
+              <!-- 4 Key Deliverable Cards -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px;">
+                <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px;">
+                  <div style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">01. SCAN TO BIM</div>
+                  <div style="font-size: 12.5px; font-weight: 800; color: #ffffff; margin-bottom: 3px;">초정밀 3D LiDAR 실측</div>
+                  <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">±1.2mm 이내 고밀도 점군 취득</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px;">
+                  <div style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">02. MEP LOD 400</div>
+                  <div style="font-size: 12.5px; font-weight: 800; color: #ffffff; margin-bottom: 3px;">복합 설비 1:1 역설계</div>
+                  <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">배관·기계 정밀 디지털 트윈</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px;">
+                  <div style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">03. CLASH DETECTION</div>
+                  <div style="font-size: 12.5px; font-weight: 800; color: #ffffff; margin-bottom: 3px;">설계 간섭 100% 검출</div>
+                  <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">시공 전 충돌 1,200건 사전 차단</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px;">
+                  <div style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">04. FM INTEGRATION</div>
+                  <div style="font-size: 12.5px; font-weight: 800; color: #ffffff; margin-bottom: 3px;">조달청 납품 &amp; 시설 관리</div>
+                  <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">디지털 트윈 운영 인프라 인계</div>
+                </div>
+              </div>
+
+              <!-- 6-Category Breadcrumb Tracker -->
+              <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 10.5px; font-family: 'Space Grotesk', monospace;">
+                <div style="display: flex; gap: 16px;">
+                  <span style="color: #38bdf8; font-weight: 800;">● 01. 3D스캔 &amp; 역설계</span>
+                  <span style="color: #64748b;">○ 02. 통합 BIM 구축</span>
+                  <span style="color: #64748b;">○ 03. 공간 컴퓨팅(XR)</span>
+                  <span style="color: #64748b;">○ 04. 친환경 시뮬레이션</span>
+                  <span style="color: #64748b;">○ 05. DX 표준 컨설팅</span>
+                  <span style="color: #64748b;">○ 06. 미래건축 R&amp;D</span>
+                </div>
+                <span style="color: #64748b;">INTERLEAF DIVIDER</span>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+                <!-- ============================================================ -->
         <!-- A4 PAGE 3: PROJECT SHOWCASE (지명원 P.18 담바우 에너지 공급센터) -->
         <!-- 사용자 최종 합성 포맷(media_1793770666066): 우측 상하우 0여백 Full Bleed -->
         <!-- ============================================================ -->
@@ -4897,6 +5036,84 @@
       return '';
     }
 
+
+    // 솔루션 카테고리 간지(Section Divider) HTML 생성 엔진
+    function getCategoryDividerHTML(data = {}) {
+      const catNum = data.num || '01';
+      const title = data.title || '3D 스캐닝 &amp; 역설계<br><span style="color: #38bdf8;">초정밀 BIM 통합 체계</span>';
+      const enTitle = data.enTitle || 'TERRESTRIAL 3D LIDAR SCANNING &amp; AS-BUILT BIM REVERSE ENGINEERING';
+      const desc = data.desc || '현장 오차 ±1.2mm 이내의 초정밀 3차원 LiDAR 지상 레이저 스캐닝을 통해 복잡한 배관 및 비정형 구조물을 1:1 역설계하고, 시공 간섭 100% 사전 검출 및 조달청 납품 기준 디지털 자산화를 구현합니다.';
+      const bgImg = data.bgImg || 'assets/project_01/point_cloud.png';
+
+      return `
+        <div class="a4-page-divider" style="width: 100%; height: 100%; position: relative; overflow: hidden; background: #080d1a; color: #ffffff; display: flex; flex-direction: column; justify-content: space-between; padding: 46px 54px; box-sizing: border-box; background-image: radial-gradient(circle at 12% 18%, rgba(0,112,243,0.14) 0%, transparent 45%), linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 100% 100%, 32px 32px, 32px 32px;">
+          <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 54%; opacity: 0.35; pointer-events: none; mix-blend-mode: screen; mask-image: linear-gradient(to left, black 40%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 40%, transparent 100%);">
+            <img src="${bgImg}" alt="카테고리 비주얼" class="admin-editable-img" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) contrast(1.2);">
+          </div>
+          <div style="position: absolute; left: 42px; top: 80px; font-size: 140px; font-weight: 900; font-family: 'Space Grotesk', sans-serif; color: rgba(255,255,255,0.035); line-height: 1; pointer-events: none; user-select: none;">
+            ${catNum}
+          </div>
+          <div style="position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 14px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-family: 'Space Grotesk', monospace; font-size: 10.5px; font-weight: 800; letter-spacing: 2px; color: #38bdf8; background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.3); padding: 3px 10px; border-radius: 4px;">CATEGORY ${catNum}</span>
+              <span style="font-size: 11px; color: #64748b; font-family: monospace;">CORE CAPABILITY SECTION</span>
+            </div>
+            <div style="font-family: 'Space Grotesk', monospace; font-size: 11px; font-weight: 700; color: #94a3b8; letter-spacing: 1px; display: flex; align-items: center; gap: 6px;">
+              <span style="color: #0070f3;">●</span> SNOWMAN FACTORY · ARCHITECTURE &amp; BIM
+            </div>
+          </div>
+          <div style="position: relative; z-index: 2; max-width: 660px; margin: 30px 0;">
+            <div style="font-family: 'Space Grotesk', monospace; font-size: 12px; font-weight: 700; color: #38bdf8; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span style="width: 18px; height: 1.5px; background: #38bdf8;"></span>
+              ${enTitle}
+            </div>
+            <h1 style="font-size: 38px; font-weight: 900; letter-spacing: -0.8px; line-height: 1.2; margin: 0 0 18px; color: #ffffff;">
+              ${title}
+            </h1>
+            <div style="width: 48px; height: 3px; background: linear-gradient(90deg, #0070f3, #38bdf8); margin-bottom: 20px;"></div>
+            <p style="font-size: 14.5px; color: #cbd5e1; line-height: 1.7; margin: 0;">
+              ${desc}
+            </p>
+          </div>
+          <div style="position: relative; z-index: 2;">
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px;">
+              <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px;">
+                <div style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">01. SCAN TO BIM</div>
+                <div style="font-size: 12.5px; font-weight: 800; color: #ffffff; margin-bottom: 3px;">초정밀 3D LiDAR 실측</div>
+                <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">±1.2mm 이내 고밀도 점군 취득</div>
+              </div>
+              <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px;">
+                <div style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">02. MEP LOD 400</div>
+                <div style="font-size: 12.5px; font-weight: 800; color: #ffffff; margin-bottom: 3px;">복합 설비 1:1 역설계</div>
+                <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">배관·기계 정밀 디지털 트윈</div>
+              </div>
+              <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px;">
+                <div style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">03. CLASH DETECTION</div>
+                <div style="font-size: 12.5px; font-weight: 800; color: #ffffff; margin-bottom: 3px;">설계 간섭 100% 검출</div>
+                <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">시공 전 충돌 1,200건 사전 차단</div>
+              </div>
+              <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px;">
+                <div style="font-family: monospace; font-size: 10px; color: #38bdf8; font-weight: 700; margin-bottom: 4px;">04. FM INTEGRATION</div>
+                <div style="font-size: 12.5px; font-weight: 800; color: #ffffff; margin-bottom: 3px;">조달청 납품 &amp; 시설 관리</div>
+                <div style="font-size: 11px; color: #94a3b8; line-height: 1.4;">디지털 트윈 운영 인프라 인계</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); font-size: 10.5px; font-family: 'Space Grotesk', monospace;">
+              <div style="display: flex; gap: 16px;">
+                <span style="color: #38bdf8; font-weight: 800;">● 01. 3D스캔 &amp; 역설계</span>
+                <span style="color: #64748b;">○ 02. 통합 BIM 구축</span>
+                <span style="color: #64748b;">○ 03. 공간 컴퓨팅(XR)</span>
+                <span style="color: #64748b;">○ 04. 친환경 시뮬레이션</span>
+                <span style="color: #64748b;">○ 05. DX 표준 컨설팅</span>
+                <span style="color: #64748b;">○ 06. 미래건축 R&amp;D</span>
+              </div>
+              <span style="color: #64748b;">INTERLEAF DIVIDER</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     // 신규 페이지 생성 함수
     function createPageFromTemplate(type) {
       closeAddPageModal();
@@ -4911,6 +5128,8 @@
       // 6종 프로젝트 레이아웃인 경우
       if (type.startsWith('project')) {
         newPageDiv.innerHTML = getProjectLayoutHTML(type);
+      } else if (type === 'divider' || type === 'category-divider') {
+        newPageDiv.innerHTML = getCategoryDividerHTML();
       } else if (type === 'gallery') {
         newPageDiv.innerHTML = `
           <div style="width: 100%; height: 100%; position: relative; background: #0f172a; overflow: hidden; display: flex; align-items: center; justify-content: center;">
@@ -5062,14 +5281,14 @@
       if (!sheet) return;
 
       // contenteditable 임시 제거본을 저장하지 않고 내부 HTML 그대로 보관
-      localStorage.setItem('snowman_brochure_sheet_v1', sheet.innerHTML);
+      localStorage.setItem('snowman_brochure_sheet_v2', sheet.innerHTML);
       if (showMessage) {
         showAdminToast('✅ 브라우저에 모든 변경사항이 안전하게 저장되었습니다.');
       }
     }
 
     function restoreBrochureChanges() {
-      const saved = localStorage.getItem('snowman_brochure_sheet_v1');
+      const saved = localStorage.getItem('snowman_brochure_sheet_v2');
       if (saved) {
         const sheet = document.getElementById('a4Sheet');
         if (sheet) {
@@ -5083,7 +5302,7 @@
       if (!confirm('정말로 모든 수정 사항을 초기화하고 원래 기본 브로슈어로 되돌리시겠습니까?')) {
         return;
       }
-      localStorage.removeItem('snowman_brochure_sheet_v1');
+      localStorage.removeItem('snowman_brochure_sheet_v2');
       location.reload();
     }
 
