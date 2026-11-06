@@ -652,12 +652,13 @@
 
     .child-white-dot {
       fill: #ffffff;
-      transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: filter 0.2s ease, stroke 0.2s ease;
       filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
     }
 
     .child-node-group:hover .child-white-dot {
-      transform: scale(1.35);
+      /* 튀듯이 움직이는 scale 모션 완전 삭제 - 제자리에 단정하게 고정 */
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.22));
     }
 
     .child-edge-line {
@@ -770,7 +771,6 @@
 
     .child-label-badge:hover rect {
       filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.22));
-      transform: translateY(-1.5px);
     }
 
     /* ----------------------------------------------------------------- */
@@ -2345,7 +2345,7 @@
             <div class="obsidian-header-row">
               <div class="obsidian-titles-wrap">
                 <div class="obsidian-main-title">
-                  <span>핵심 솔루션 및 통합 체계 현황</span>
+                  <span style="letter-spacing: -0.5px;">Solution</span>
                   <span class="tag">6 CORE CAPABILITIES</span>
                 </div>
                 <div class="obsidian-sub-title">
@@ -2388,27 +2388,27 @@
                 <g id="viewportGroup">
                   <!-- Editorial Orbit Grid & Central Horizontal Axis -->
                   <g class="bg-orbit-grid">
-                    <!-- 메인 수평 기준선 (전체 관통) -->
-                    <line x1="20" y1="230" x2="980" y2="230" stroke="#cbd5e1" stroke-width="1.5" />
-                    <!-- 살아 움직이는 데이터 펄스 광선 스트림 (Living Data Stream) -->
-                    <line class="data-pulse-stream" x1="20" y1="230" x2="980" y2="230" stroke="url(#streamGradient)" stroke-width="2.5" stroke-dasharray="16, 42" stroke-linecap="round" />
-                    
-                    <!-- 카테고리별 수직 기준선 및 궤도선 -->
-                    <g stroke="#e2e8f0" stroke-width="1" fill="none">
-                      <line x1="110" y1="30" x2="110" y2="430" stroke-dasharray="2,3" />
-                      <line x1="266" y1="30" x2="266" y2="430" stroke-dasharray="2,3" />
-                      <line x1="422" y1="30" x2="422" y2="430" stroke-dasharray="2,3" />
-                      <line x1="578" y1="30" x2="578" y2="430" stroke-dasharray="2,3" />
-                      <line x1="734" y1="30" x2="734" y2="430" stroke-dasharray="2,3" />
-                      <line x1="890" y1="30" x2="890" y2="430" stroke-dasharray="2,3" />
+                    <!-- 상단 행 수평 기준선 (y=125) & 데이터 펄스 광선 -->
+                    <line x1="30" y1="125" x2="970" y2="125" stroke="#cbd5e1" stroke-width="1.5" />
+                    <line class="data-pulse-stream" x1="30" y1="125" x2="970" y2="125" stroke="url(#streamGradient)" stroke-width="2.5" stroke-dasharray="16, 42" stroke-linecap="round" />
 
-                      <!-- 각 상위 노드별 점선 궤도 원 (하위 점들이 무작위로 위치하는 점선 원) -->
-                      <circle cx="110" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="266" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="422" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="578" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="734" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="890" cy="230" r="62" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                    <!-- 하단 행 수평 기준선 (y=335) & 데이터 펄스 광선 -->
+                    <line x1="30" y1="335" x2="970" y2="335" stroke="#cbd5e1" stroke-width="1.5" />
+                    <line class="data-pulse-stream" x1="30" y1="335" x2="970" y2="335" stroke="url(#streamGradient)" stroke-width="2.5" stroke-dasharray="16, 42" stroke-linecap="round" />
+                    
+                    <!-- 3열 수직 기준선 및 궤도선 -->
+                    <g stroke="#e2e8f0" stroke-width="1" fill="none">
+                      <line x1="180" y1="30" x2="180" y2="430" stroke-dasharray="2,3" />
+                      <line x1="500" y1="30" x2="500" y2="430" stroke-dasharray="2,3" />
+                      <line x1="820" y1="30" x2="820" y2="430" stroke-dasharray="2,3" />
+
+                      <!-- 2열 6개 상위 노드별 대형 점선 궤도 원 (r=72, 화면 가득 채움) -->
+                      <circle cx="180" cy="125" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="500" cy="125" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="820" cy="125" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="180" cy="335" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="500" cy="335" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                      <circle cx="820" cy="335" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
                     </g>
                   </g>
 
@@ -2737,8 +2737,8 @@
         name: "BIM",
         sub: "디지털 트윈",
         fullName: "BIM (Building Information Modeling)",
-        x: 110,
-        y: 230,
+        x: 180,
+        y: 125,
         color: "#1d4ed8",
         randomAngles: [35, 122, 215, 305],
         children: [
@@ -2761,8 +2761,8 @@
         name: "3D 스캐닝",
         sub: "초정밀 역설계",
         fullName: "3D LiDAR 스캐닝 & 역설계",
-        x: 266,
-        y: 230,
+        x: 500,
+        y: 125,
         color: "#0891b2",
         randomAngles: [22, 128, 205, 292],
         children: [
@@ -2785,8 +2785,8 @@
         name: "공간 컴퓨팅",
         sub: "Spatial XR",
         fullName: "공간 컴퓨팅 (AR · VR · MR)",
-        x: 422,
-        y: 230,
+        x: 820,
+        y: 125,
         color: "#7c3aed",
         randomAngles: [42, 138, 228, 318],
         children: [
@@ -2809,8 +2809,8 @@
         name: "교육/컨설팅",
         sub: "DX 가이드",
         fullName: "교육 및 DX 표준 컨설팅",
-        x: 578,
-        y: 230,
+        x: 180,
+        y: 335,
         color: "#ea580c",
         randomAngles: [28, 114, 210, 302],
         children: [
@@ -2833,8 +2833,8 @@
         name: "시뮬레이션",
         sub: "친환경 해석",
         fullName: "친환경 에너지 BIM 시뮬레이션",
-        x: 734,
-        y: 230,
+        x: 500,
+        y: 335,
         color: "#16a34a",
         randomAngles: [48, 134, 224, 324],
         children: [
@@ -2857,8 +2857,8 @@
         name: "연구 (R&D)",
         sub: "자동화 설계",
         fullName: "디지털 건축 알고리즘 & 자동화 R&D",
-        x: 890,
-        y: 230,
+        x: 820,
+        y: 335,
         color: "#475569",
         randomAngles: [35, 124, 208, 314],
         children: [
@@ -3060,17 +3060,17 @@
           anim.setAttribute('attributeName', 'transform');
           anim.setAttribute('type', 'rotate');
           if (cfg.dir === 1) {
-            anim.setAttribute('from', `0 ${cat.x} 230`);
-            anim.setAttribute('to', `360 ${cat.x} 230`);
+            anim.setAttribute('from', `0 ${cat.x} ${cat.y}`);
+            anim.setAttribute('to', `360 ${cat.x} ${cat.y}`);
           } else {
-            anim.setAttribute('from', `360 ${cat.x} 230`);
-            anim.setAttribute('to', `0 ${cat.x} 230`);
+            anim.setAttribute('from', `360 ${cat.x} ${cat.y}`);
+            anim.setAttribute('to', `0 ${cat.x} ${cat.y}`);
           }
           anim.setAttribute('dur', cfg.dur);
           anim.setAttribute('repeatCount', 'indefinite');
           dotsGroup.appendChild(anim);
 
-          const orbitRadius = 62;
+          const orbitRadius = 72;
 
           cat.children.forEach((child, idx) => {
             const randAngleDeg = cat.randomAngles[idx] || (idx * 90 + 35);
@@ -3112,19 +3112,19 @@
         outerRing.setAttribute('class', 'parent-outer-ring');
         outerRing.setAttribute('cx', cat.x);
         outerRing.setAttribute('cy', cat.y);
-        outerRing.setAttribute('r', '44');
+        outerRing.setAttribute('r', '52');
         outerRing.setAttribute('fill', 'none');
         outerRing.setAttribute('stroke', cat.color);
         outerRing.setAttribute('stroke-opacity', isActive ? '0.75' : '0.22');
         outerRing.setAttribute('stroke-width', isActive ? '1.8' : '1');
         parentG.appendChild(outerRing);
 
-        // 2) 메인 원 코어 (Fill Color)
+        // 2) 메인 원 코어 (Fill Color - 2열에 맞춰 더욱 시원하고 꽉 차게)
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute('class', 'parent-node-circle');
         circle.setAttribute('cx', cat.x);
         circle.setAttribute('cy', cat.y);
-        circle.setAttribute('r', '37');
+        circle.setAttribute('r', '44');
         circle.setAttribute('fill', cat.color);
         circle.setAttribute('stroke', '#ffffff');
         circle.setAttribute('stroke-width', isActive ? '3.5' : '2');
@@ -3135,14 +3135,14 @@
         const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         titleText.setAttribute('class', 'parent-node-text');
         titleText.setAttribute('x', cat.x);
-        titleText.setAttribute('y', cat.y - 4);
+        titleText.setAttribute('y', cat.y - 5);
         titleText.textContent = cat.name;
         parentG.appendChild(titleText);
 
         const subText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         subText.setAttribute('class', 'parent-node-subtext');
         subText.setAttribute('x', cat.x);
-        subText.setAttribute('y', cat.y + 13);
+        subText.setAttribute('y', cat.y + 15);
         subText.textContent = cat.sub;
         parentG.appendChild(subText);
 
