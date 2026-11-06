@@ -1771,114 +1771,173 @@
       line-height: 1.35;
     }
 
-    /* Floating Right-Side Admin Status Panel (우측 상태창) */
+    /* Right-Side Full-Height Admin Sidebar Panel (우측 풀하이트 패널) */
     .admin-toolbar {
       position: fixed;
-      top: 50%;
-      right: 20px;
-      transform: translateY(-50%) translateX(240px);
-      z-index: 500;
-      background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: -8px 12px 35px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 112, 243, 0.3);
-      border-radius: 16px;
-      padding: 14px 12px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 340px;
+      max-width: 90vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.97);
+      backdrop-filter: blur(22px);
+      border-left: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: -12px 0 40px rgba(0, 0, 0, 0.65);
+      z-index: 550;
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      gap: 7px;
+      padding: 0;
       color: #ffffff;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      width: 175px;
+      transform: translateX(105%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+      box-sizing: border-box;
     }
 
     .admin-toolbar.visible {
-      transform: translateY(-50%) translateX(0);
+      transform: translateX(0);
       opacity: 1;
       pointer-events: auto;
     }
 
-    .admin-toolbar-left {
+    .admin-panel-header {
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      flex-shrink: 0;
     }
 
     .admin-badge {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
       background: #0070f3;
       color: #ffffff;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 5px 10px;
-      border-radius: 8px;
+      padding: 4px 9px;
+      border-radius: 6px;
       font-family: 'Space Grotesk', sans-serif;
       letter-spacing: 0.3px;
     }
 
+    .admin-page-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 4px 8px;
+    }
+
+    .nav-arrow-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nav-arrow-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+    }
+
     .admin-page-indicator {
       font-family: 'Space Grotesk', monospace;
-      font-size: 11.5px;
-      color: #94a3b8;
-      font-weight: 700;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 4px 0;
-      border-radius: 6px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 12px;
+      color: #38bdf8;
+      font-weight: 800;
+    }
+
+    .admin-panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    }
+
+    .admin-panel-footer {
+      padding: 12px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.9);
+      flex-shrink: 0;
+    }
+
+    .admin-section-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: #64748b;
+      letter-spacing: 0.5px;
+      font-family: monospace;
+      margin: 8px 0 2px;
+      display: block;
     }
 
     .admin-divider {
       width: 100%;
       height: 1px;
-      background: rgba(255, 255, 255, 0.12);
-      margin: 2px 0;
-    }
-
-    .admin-toolbar-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 4px 0;
     }
 
     .admin-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: #e2e8f0;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 600;
-      padding: 7px 11px;
+      padding: 9px 12px;
       border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
       transition: all 0.2s ease;
-      white-space: nowrap;
       width: 100%;
       text-align: left;
+      box-sizing: border-box;
     }
     .admin-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.15);
       color: #ffffff;
       transform: translateX(-2px);
     }
     .admin-btn.primary {
-      background: rgba(0, 112, 243, 0.22);
-      border-color: rgba(0, 112, 243, 0.55);
+      background: rgba(0, 112, 243, 0.2);
+      border-color: rgba(0, 112, 243, 0.5);
       color: #60a5fa;
     }
     .admin-btn.primary:hover {
       background: #0070f3;
+      color: #ffffff;
+    }
+    .admin-btn.accent-cyan {
+      background: rgba(14, 165, 233, 0.2);
+      border-color: rgba(14, 165, 233, 0.5);
+      color: #38bdf8;
+    }
+    .admin-btn.accent-cyan:hover {
+      background: #0ea5e9;
       color: #ffffff;
     }
     .admin-btn.danger {
@@ -1909,11 +1968,38 @@
       color: #ffffff;
     }
     .admin-btn.close {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(255, 255, 255, 0.15);
-      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #94a3b8;
       justify-content: center;
-      margin-top: 3px;
+      margin-top: 4px;
+    }
+    .admin-btn.close:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .btn-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .shortcut-tag {
+      font-size: 10px;
+      font-family: monospace;
+      color: #64748b;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .live-pill {
+      font-size: 9px;
+      font-weight: 800;
+      color: #ffffff;
+      background: #10b981;
+      padding: 2px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
     }
     .admin-btn.close:hover {
       background: rgba(239, 68, 68, 0.3);
@@ -2246,64 +2332,274 @@
   <!-- ADMIN INLINE CMS SYSTEM (관리자 인라인 편집 및 페이지 관리 UI) -->
   <!-- ============================================================ -->
   
-  <!-- Floating Right-Side Admin Status Panel (우측 상태창) -->
-  <div id="adminToolbar" class="admin-toolbar">
-    <div class="admin-toolbar-left">
-      <div class="admin-badge">
-        <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
-        <span>편집 상태창</span>
+  <!-- Right-Side Full-Height Admin Sidebar Panel (우측 풀하이트 패널) -->
+  <aside id="adminToolbar" class="admin-toolbar">
+    
+    <!-- Panel Header -->
+    <div class="admin-panel-header">
+      <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span class="admin-badge">
+            <i data-lucide="sliders" style="width: 13px; height: 13px;"></i>
+            <span>편집 상태창</span>
+          </span>
+        </div>
+        <button onclick="exitAdminMode()" title="편집 모드 종료" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(239, 68, 68, 0.3)'; this.style.color='#fca5a5';" onmouseleave="this.style.background='rgba(255, 255, 255, 0.08)'; this.style.color='#cbd5e1';">
+          <i data-lucide="x" style="width: 15px; height: 15px;"></i>
+        </button>
       </div>
-      <span class="admin-page-indicator" id="adminPageIndicator">P.1 / 4</span>
+
+      <!-- Quick Page Navigator -->
+      <div class="admin-page-nav-row">
+        <button class="nav-arrow-btn" onclick="goToPrevBrochurePage()" title="이전 페이지">
+          <i data-lucide="chevron-left" style="width: 14px; height: 14px;"></i>
+        </button>
+        <span class="admin-page-indicator" id="adminPageIndicator">P.1 / 4</span>
+        <button class="nav-arrow-btn" onclick="goToNextBrochurePage()" title="다음 페이지">
+          <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+        </button>
+      </div>
     </div>
 
-    <div class="admin-toolbar-actions">
-      <!-- 페이지 조작 -->
-      <button class="admin-btn primary" onclick="openAddPageModal()" title="새 페이지 추가">
-        <i data-lucide="plus-circle" style="width: 15px; height: 15px;"></i>
-        <span>페이지 추가</span>
-      </button>
-      <button class="admin-btn" onclick="openChangeLayoutModal()" title="현재 보고 있는 페이지의 레이아웃 변경" style="background: rgba(14, 165, 233, 0.22); border-color: rgba(14, 165, 233, 0.55); color: #38bdf8;">
-        <i data-lucide="layout-template" style="width: 15px; height: 15px;"></i>
-        <span>레이아웃 변경</span>
-      </button>
-      <button class="admin-btn danger" onclick="deleteCurrentPage()" title="현재 페이지 삭제">
-        <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
-        <span>페이지 삭제</span>
-      </button>
-      <button class="admin-btn" onclick="openNodeColorModal()" title="솔루션 노드 색상 설정 (Theme 4 및 커스텀 컬러)">
-        <i data-lucide="palette" style="width: 15px; height: 15px;"></i>
-        <span>노드 색상</span>
-      </button>
+    <!-- Panel Body (Scrollable with Subviews) -->
+    <div class="admin-panel-body">
       
-      <div class="admin-divider"></div>
+      <!-- SUBVIEW 1: MAIN MENU (기본 도구 목록) -->
+      <div id="adminViewMain" style="display: flex; flex-direction: column; gap: 7px;">
+        <span class="admin-section-label">PAGE CONTROLS (페이지 조작)</span>
+        
+        <button class="admin-btn primary" onclick="showAdminSubview('addPage')" title="새 페이지 추가 템플릿 선택">
+          <div class="btn-left">
+            <i data-lucide="plus-circle" style="width: 15px; height: 15px;"></i>
+            <span>페이지 추가</span>
+          </div>
+          <i data-lucide="chevron-right" style="width: 14px; height: 14px; opacity: 0.6;"></i>
+        </button>
 
-      <!-- 저장 및 배포 -->
-      <button class="admin-btn" onclick="saveBrochureChanges(true)" title="현재 변경사항 브라우저 저장">
-        <i data-lucide="save" style="width: 15px; height: 15px;"></i>
-        <span>내용 저장</span>
-      </button>
-      <button class="admin-btn success" id="btnPushToGithub" onclick="pushChangesToGitHub()" title="수정 사항을 GitHub에 즉시 커밋 & 푸시하여 Vercel 자동 배포">
-        <i data-lucide="git-pull-request" style="width: 15px; height: 15px;"></i>
-        <span>GitHub 배포</span>
-      </button>
-      <button class="admin-btn" onclick="openGitHubSettingsModal()" title="GitHub 저장소 및 Personal Access Token 설정">
-        <i data-lucide="settings" style="width: 14px; height: 14px;"></i>
-        <span>GitHub 설정</span>
-      </button>
-      <button class="admin-btn warning" onclick="resetBrochureChanges()" title="초기 기본 상태로 복원">
-        <i data-lucide="rotate-ccw" style="width: 15px; height: 15px;"></i>
-        <span>초기화</span>
-      </button>
+        <button class="admin-btn accent-cyan" onclick="showAdminSubview('changeLayout')" title="현재 페이지 레이아웃 실시간 변경">
+          <div class="btn-left">
+            <i data-lucide="layout-template" style="width: 15px; height: 15px;"></i>
+            <span>레이아웃 변경 (6종)</span>
+          </div>
+          <i data-lucide="chevron-right" style="width: 14px; height: 14px; opacity: 0.6;"></i>
+        </button>
 
-      <div class="admin-divider"></div>
+        <button class="admin-btn danger" onclick="deleteCurrentPage()" title="현재 페이지 삭제">
+          <div class="btn-left">
+            <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
+            <span>페이지 삭제</span>
+          </div>
+        </button>
 
-      <!-- 편집 모드 종료 -->
-      <button class="admin-btn close" onclick="exitAdminMode()" title="관리자 편집 모드 종료">
-        <i data-lucide="x" style="width: 15px; height: 15px;"></i>
-        <span>편집 종료</span>
-      </button>
+        <button class="admin-btn" onclick="openNodeColorModal()" title="솔루션 노드 색상 설정 (Theme 4 및 커스텀 컬러)">
+          <div class="btn-left">
+            <i data-lucide="palette" style="width: 15px; height: 15px;"></i>
+            <span>노드 색상</span>
+          </div>
+        </button>
+
+        <div class="admin-divider"></div>
+        <span class="admin-section-label">SAVE &amp; PUBLISH (저장 및 배포)</span>
+
+        <button class="admin-btn" onclick="saveBrochureChanges(true)" title="현재 변경사항 브라우저 저장">
+          <div class="btn-left">
+            <i data-lucide="save" style="width: 15px; height: 15px; color: #34d399;"></i>
+            <span>내용 저장</span>
+          </div>
+          <span class="shortcut-tag">Ctrl+S</span>
+        </button>
+
+        <button class="admin-btn success" id="btnPushToGithub" onclick="pushChangesToGitHub()" title="수정 사항을 GitHub에 즉시 커밋 & 푸시하여 Vercel 자동 배포">
+          <div class="btn-left">
+            <i data-lucide="git-pull-request" style="width: 15px; height: 15px;"></i>
+            <span>GitHub 배포</span>
+          </div>
+          <span class="live-pill">LIVE</span>
+        </button>
+
+        <button class="admin-btn" onclick="openGitHubSettingsModal()" title="GitHub 저장소 및 Personal Access Token 설정">
+          <div class="btn-left">
+            <i data-lucide="settings" style="width: 15px; height: 15px;"></i>
+            <span>GitHub 설정</span>
+          </div>
+        </button>
+
+        <button class="admin-btn warning" onclick="resetBrochureChanges()" title="초기 기본 상태로 복원">
+          <div class="btn-left">
+            <i data-lucide="rotate-ccw" style="width: 15px; height: 15px;"></i>
+            <span>초기화</span>
+          </div>
+        </button>
+
+        <div class="admin-divider"></div>
+
+        <button class="admin-btn close" onclick="exitAdminMode()" title="관리자 편집 모드 종료">
+          <div class="btn-left" style="width: 100%; justify-content: center;">
+            <i data-lucide="power" style="width: 15px; height: 15px;"></i>
+            <span>편집 종료</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- SUBVIEW 2: LAYOUT SELECTOR (레이아웃 실시간 변경 및 추가) -->
+      <div id="adminViewLayout" style="display: none; flex-direction: column; gap: 8px;">
+        
+        <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: 4px;">
+          <button onclick="showAdminSubview('main')" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); color: #cbd5e1; padding: 4px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+            <i data-lucide="arrow-left" style="width: 13px; height: 13px;"></i>
+            <span>메뉴로 돌아가기</span>
+          </button>
+          <span id="subviewLayoutModeBadge" style="font-size: 10px; font-weight: 800; background: #0ea5e9; color: #fff; padding: 2px 7px; border-radius: 4px; font-family: monospace;">변경 모드</span>
+        </div>
+
+        <div style="margin-bottom: 6px;">
+          <h4 id="subviewLayoutTitle" style="font-size: 14px; font-weight: 800; color: #ffffff; margin: 0 0 2px;">P.3 레이아웃 변경</h4>
+          <p id="subviewLayoutDesc" style="font-size: 11px; color: #94a3b8; margin: 0; line-height: 1.35;">원하는 레이아웃을 클릭하면 좌측 브로슈어에 즉시 반영됩니다.</p>
+        </div>
+
+        <span class="admin-section-label">PROJECT SHOWCASE (6종)</span>
+        
+        <!-- 6 Layout Cards -->
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          <!-- 1. 기본형 -->
+          <div class="panel-layout-card" onclick="handleLayoutSelect('project-classic')" data-layout="project-classic">
+            <div class="panel-card-thumb">
+              <div class="tp-split">
+                <div class="tp-col-left"></div>
+                <div class="tp-col-right">
+                  <div style="display: flex; flex-direction: column; gap: 2px; height: 100%;">
+                    <div style="height: 52%; background: #94a3b8; border-radius: 2px;"></div>
+                    <div style="height: 48%; display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
+                      <div style="background: #cbd5e1; border-radius: 2px;"></div>
+                      <div style="background: #cbd5e1; border-radius: 2px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-card-info">
+              <div class="panel-card-title">1. 기본형 (와이드+2분할)</div>
+              <div class="panel-card-desc">상단 3D 조감도 + 하단 2분할(현장+MEP) 직관적 배치</div>
+            </div>
+          </div>
+
+          <!-- 2. 균등 2x2 -->
+          <div class="panel-layout-card" onclick="handleLayoutSelect('project-grid2x2')" data-layout="project-grid2x2">
+            <div class="panel-card-thumb">
+              <div class="tp-split">
+                <div class="tp-col-left"></div>
+                <div class="tp-col-right"><div class="tp-grid-4"><div></div><div></div><div></div><div></div></div></div>
+              </div>
+            </div>
+            <div class="panel-card-info">
+              <div class="panel-card-title">2. 균등 2x2 매트릭스</div>
+              <div class="panel-card-desc">우측 4개 동등 비율 직각 그리드 (도면/간섭/점군/현장 동시 검측)</div>
+            </div>
+          </div>
+
+          <!-- 3. 메인 포커스 -->
+          <div class="panel-layout-card" onclick="handleLayoutSelect('project-focus')" data-layout="project-focus">
+            <div class="panel-card-thumb">
+              <div class="tp-split">
+                <div class="tp-col-left"></div>
+                <div class="tp-col-right">
+                  <div class="tp-focus-split">
+                    <div class="tp-focus-main"></div>
+                    <div class="tp-focus-sub"><div></div><div></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-card-info">
+              <div class="panel-card-title">3. 메인 포커스 (70:30)</div>
+              <div class="panel-card-desc">대형 메인 투시도 1장(68%) + 우측 세로 2단 상세(32%)</div>
+            </div>
+          </div>
+
+          <!-- 4. 상하 2단 와이드 -->
+          <div class="panel-layout-card" onclick="handleLayoutSelect('project-split2-rows')" data-layout="project-split2-rows">
+            <div class="panel-card-thumb">
+              <div class="tp-split">
+                <div class="tp-col-left"></div>
+                <div class="tp-col-right"><div class="tp-split2-rows"><div></div><div></div></div></div>
+              </div>
+            </div>
+            <div class="panel-card-info">
+              <div class="panel-card-title">4. 상하 2단 와이드 (B&amp;A)</div>
+              <div class="panel-card-desc">상단 실측 점군 데이터 vs 하단 역설계 모델 1:1 대조</div>
+            </div>
+          </div>
+
+          <!-- 5. 1:1 수직 분할 -->
+          <div class="panel-layout-card" onclick="handleLayoutSelect('project-split2-cols')" data-layout="project-split2-cols">
+            <div class="panel-card-thumb">
+              <div class="tp-split">
+                <div class="tp-col-left"></div>
+                <div class="tp-col-right"><div class="tp-split2-cols"><div></div><div></div></div></div>
+              </div>
+            </div>
+            <div class="panel-card-info">
+              <div class="panel-card-title">5. 1:1 수직 분할</div>
+              <div class="panel-card-desc">좌측 2D 도면/점군 실측 vs 우측 3D 모델링 1:1 세로 대조</div>
+            </div>
+          </div>
+
+          <!-- 6. 풀블리드 & 하단 스펙 -->
+          <div class="panel-layout-card" onclick="handleLayoutSelect('project-minimal')" data-layout="project-minimal">
+            <div class="panel-card-thumb">
+              <div class="tp-minimal-box">
+                <div class="tp-minimal-top"></div>
+                <div class="tp-minimal-bottom"></div>
+              </div>
+            </div>
+            <div class="panel-card-info">
+              <div class="panel-card-title">6. 풀블리드 &amp; 하단 스펙</div>
+              <div class="panel-card-desc">화면 85% 전면 고해상도 렌더링 + 하단 네이비 스펙 바</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 기타 템플릿 (신규 페이지 추가 모드일 때만 표시) -->
+        <div id="subviewOtherTemplatesSection" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.12);">
+          <span class="admin-section-label">OTHER TEMPLATES (기타 템플릿)</span>
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <div class="panel-layout-card" onclick="handleLayoutSelect('gallery')">
+              <div class="panel-card-thumb"><div class="tp-full-img"><div class="tp-caption"></div></div></div>
+              <div class="panel-card-info">
+                <div class="panel-card-title">전면 비주얼 갤러리</div>
+                <div class="panel-card-desc">화면 가득 차는 고화질 메인 이미지 + 하단 타이틀</div>
+              </div>
+            </div>
+            <div class="panel-card-info">
+              <div class="panel-layout-card" onclick="handleLayoutSelect('video')">
+                <div class="panel-card-thumb"><div class="tp-video">▶</div></div>
+                <div class="panel-card-info">
+                  <div class="panel-card-title">미디어 &amp; 비디오</div>
+                  <div class="panel-card-desc">여백 없는 전면 동영상 플레이어</div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-layout-card" onclick="handleLayoutSelect('editorial')">
+              <div class="panel-card-thumb"><div class="tp-editorial"><div class="tp-header"></div><div class="tp-cols"><div></div><div></div></div></div></div>
+              <div class="panel-card-info">
+                <div class="panel-card-title">에디토리얼 / 2단 소개</div>
+                <div class="panel-card-desc">헤드라인 타이틀 + 2단 본문 텍스트 영역</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
-  </div>
+
+    <!-- Panel Footer -->
+    <div class="admin-panel-footer">
+      <span style="font-size: 10.5px; color: #64748b; font-family: monospace;">SNOWMAN CMS v2.0</span>
+      <span style="font-size: 10px; color: #38bdf8; font-weight: 700;">PANEL ACTIVE</span>
+    </div>
+
+  </aside>
 
   <!-- Admin Login Modal -->
   <div id="adminLoginModal" class="admin-modal-backdrop">
@@ -2380,196 +2676,6 @@
         <button class="admin-modal-btn confirm" onclick="closeNodeColorModal()">설정 완료</button>
       </div>
     </div>
-  </div>
-
-  <!-- Right-Side Slide-Over Layout & Template Panel (우측 슬라이드 패널) -->
-  <div id="addPageModal" class="admin-side-drawer">
-    
-    <!-- Drawer Header -->
-    <div class="drawer-header">
-      <div>
-        <div style="display: flex; align-items: center; gap: 7px; margin-bottom: 4px;">
-          <span style="font-size: 10px; font-weight: 800; background: #0070f3; color: #fff; padding: 2px 7px; border-radius: 4px; font-family: monospace;">SIDE PANEL</span>
-          <h3 id="layoutModalTitle" style="font-size: 16px; font-weight: 800; color: #fff; margin: 0;">레이아웃 선택 패널</h3>
-        </div>
-        <p id="layoutModalDesc" style="font-size: 11.5px; color: #94a3b8; margin: 0; line-height: 1.4;">원하는 레이아웃을 클릭하면 실시간으로 즉시 적용됩니다.</p>
-      </div>
-      <button onclick="closeAddPageModal()" title="패널 닫기" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(239, 68, 68, 0.3)'; this.style.color='#fca5a5';" onmouseleave="this.style.background='rgba(255, 255, 255, 0.08)'; this.style.color='#cbd5e1';">
-        <i data-lucide="x" style="width: 16px; height: 16px;"></i>
-      </button>
-    </div>
-
-    <!-- Drawer Body -->
-    <div class="drawer-body">
-      
-      <!-- Section 1: 프로젝트 쇼케이스 레이아웃 (6종) -->
-      <div>
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-          <span style="font-size: 11px; font-weight: 800; color: #38bdf8; font-family: monospace; letter-spacing: 0.5px;">PROJECT LAYOUTS (6종)</span>
-          <span style="font-size: 10.5px; color: #64748b;">클릭 시 실시간 변경</span>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          
-          <!-- 1. 기본형: 상단 와이드 + 하단 2분할 -->
-          <div class="panel-layout-card" onclick="handleLayoutSelect('project-classic')" data-layout="project-classic">
-            <div class="panel-card-thumb">
-              <div class="tp-split">
-                <div class="tp-col-left"></div>
-                <div class="tp-col-right">
-                  <div style="display: flex; flex-direction: column; gap: 2px; height: 100%;">
-                    <div style="height: 52%; background: #94a3b8; border-radius: 2px;"></div>
-                    <div style="height: 48%; display: grid; grid-template-columns: 1fr 1fr; gap: 2px;">
-                      <div style="background: #cbd5e1; border-radius: 2px;"></div>
-                      <div style="background: #cbd5e1; border-radius: 2px;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">1. 기본형: 상단와이드 + 하단2분할</div>
-              <div class="panel-card-desc">상단 와이드 3D 메인 조감도 + 하단 2분할(현장+MEP) 직관적 배치</div>
-            </div>
-          </div>
-
-          <!-- 2. 균등 2x2 매트릭스 -->
-          <div class="panel-layout-card" onclick="handleLayoutSelect('project-grid2x2')" data-layout="project-grid2x2">
-            <div class="panel-card-thumb">
-              <div class="tp-split">
-                <div class="tp-col-left"></div>
-                <div class="tp-col-right">
-                  <div class="tp-grid-4"><div></div><div></div><div></div><div></div></div>
-                </div>
-              </div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">2. 균등 2x2 매트릭스</div>
-              <div class="panel-card-desc">우측 4개 동등 비율 직각 그리드 (도면/간섭/점군/현장 동시 검측)</div>
-            </div>
-          </div>
-
-          <!-- 3. 메인 포커스 (70:30) -->
-          <div class="panel-layout-card" onclick="handleLayoutSelect('project-focus')" data-layout="project-focus">
-            <div class="panel-card-thumb">
-              <div class="tp-split">
-                <div class="tp-col-left"></div>
-                <div class="tp-col-right">
-                  <div class="tp-focus-split">
-                    <div class="tp-focus-main"></div>
-                    <div class="tp-focus-sub"><div></div><div></div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">3. 메인 포커스 (70:30)</div>
-              <div class="panel-card-desc">압도적인 대형 메인 투시도 1장(68%) + 우측 세로 2단 상세 디테일(32%)</div>
-            </div>
-          </div>
-
-          <!-- 4. 상하 2단 와이드 (B&A) -->
-          <div class="panel-layout-card" onclick="handleLayoutSelect('project-split2-rows')" data-layout="project-split2-rows">
-            <div class="panel-card-thumb">
-              <div class="tp-split">
-                <div class="tp-col-left"></div>
-                <div class="tp-col-right">
-                  <div class="tp-split2-rows"><div></div><div></div></div>
-                </div>
-              </div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">4. 상하 2단 와이드 (B&amp;A)</div>
-              <div class="panel-card-desc">상단 실측 점군 데이터 vs 하단 역설계 BIM 모델 1:1 대조 비교형</div>
-            </div>
-          </div>
-
-          <!-- 5. 1:1 수직 분할 -->
-          <div class="panel-layout-card" onclick="handleLayoutSelect('project-split2-cols')" data-layout="project-split2-cols">
-            <div class="panel-card-thumb">
-              <div class="tp-split">
-                <div class="tp-col-left"></div>
-                <div class="tp-col-right">
-                  <div class="tp-split2-cols"><div></div><div></div></div>
-                </div>
-              </div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">5. 1:1 수직 분할</div>
-              <div class="panel-card-desc">좌측 2D 도면/점군 실측 vs 우측 3D 모델링/렌더링 1:1 세로 대조</div>
-            </div>
-          </div>
-
-          <!-- 6. 풀블리드 & 하단 스펙 -->
-          <div class="panel-layout-card" onclick="handleLayoutSelect('project-minimal')" data-layout="project-minimal">
-            <div class="panel-card-thumb">
-              <div class="tp-minimal-box">
-                <div class="tp-minimal-top"></div>
-                <div class="tp-minimal-bottom"></div>
-              </div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">6. 풀블리드 &amp; 하단 스펙</div>
-              <div class="panel-card-desc">화면 85% 전면 고해상도 렌더링 + 하단 네이비 건축 스펙 인포 바</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Section 2: 기타 페이지 템플릿 (3종) (신규 페이지 추가 시 노출) -->
-      <div id="otherTemplatesSection" style="margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.12);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
-          <span style="font-size: 11px; font-weight: 800; color: #94a3b8; font-family: monospace; letter-spacing: 0.5px;">OTHER TEMPLATES (3종)</span>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div class="panel-layout-card" onclick="handleLayoutSelect('gallery')" data-layout="gallery">
-            <div class="panel-card-thumb">
-              <div class="tp-full-img"><div class="tp-caption"></div></div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">전면 비주얼 갤러리</div>
-              <div class="panel-card-desc">화면 가득 차는 고화질 메인 이미지 + 하단 타이틀 및 설명</div>
-            </div>
-          </div>
-
-          <div class="panel-layout-card" onclick="handleLayoutSelect('video')" data-layout="video">
-            <div class="panel-card-thumb">
-              <div class="tp-video">▶</div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">미디어 &amp; 비디오</div>
-              <div class="panel-card-desc">여백 없는 전면 동영상 플레이어</div>
-            </div>
-          </div>
-
-          <div class="panel-layout-card" onclick="handleLayoutSelect('editorial')" data-layout="editorial">
-            <div class="panel-card-thumb">
-              <div class="tp-editorial">
-                <div class="tp-header"></div>
-                <div class="tp-cols"><div></div><div></div></div>
-              </div>
-            </div>
-            <div class="panel-card-info">
-              <div class="panel-card-title">에디토리얼 / 2단 소개</div>
-              <div class="panel-card-desc">헤드라인 타이틀 + 2단 본문 텍스트 및 상세 리스트</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Drawer Footer -->
-    <div class="drawer-footer">
-      <span style="font-size: 11px; color: #64748b;">ESC 또는 닫기 클릭 시 패널 닫힘</span>
-      <button class="admin-btn close" onclick="closeAddPageModal()" style="width: auto; padding: 6px 14px; margin: 0;">
-        <i data-lucide="x" style="width: 14px; height: 14px;"></i>
-        <span>패널 닫기</span>
-      </button>
-    </div>
-
   </div>
 
   <!-- GitHub Token & Repository Settings Modal -->
@@ -4467,74 +4573,56 @@
     });
 
     // -------------------------------------------------------------
-    // 페이지 추가 / 레이아웃 변경 / 삭제 기능 (우측 슬라이드 패널 연동)
+    // 페이지 추가 / 레이아웃 변경 / 삭제 기능 (우측 사이드바 패널 서브뷰 엔진)
     // -------------------------------------------------------------
-    let layoutModalMode = 'add'; // 'add' | 'change'
+    let layoutModalMode = 'change'; // 'add' | 'change'
 
-    // 패널 열기: 신규 페이지 추가 모드
-    function openAddPageModal() {
-      layoutModalMode = 'add';
-      const titleEl = document.getElementById('layoutModalTitle');
-      const descEl = document.getElementById('layoutModalDesc');
-      const otherSec = document.getElementById('otherTemplatesSection');
-      if (titleEl) titleEl.innerText = '새 페이지 템플릿 & 레이아웃';
-      if (descEl) descEl.innerText = '추가할 레이아웃을 클릭하면 새 페이지가 즉시 생성됩니다.';
-      if (otherSec) otherSec.style.display = 'block';
+    // 사이드바 서브뷰 전환 함수
+    function showAdminSubview(viewName) {
+      const mainView = document.getElementById('adminViewMain');
+      const layoutView = document.getElementById('adminViewLayout');
+      
+      if (viewName === 'main') {
+        if (mainView) mainView.style.display = 'flex';
+        if (layoutView) layoutView.style.display = 'none';
+      } else if (viewName === 'add' || viewName === 'addPage') {
+        layoutModalMode = 'add';
+        const titleEl = document.getElementById('subviewLayoutTitle');
+        const descEl = document.getElementById('subviewLayoutDesc');
+        const badgeEl = document.getElementById('subviewLayoutModeBadge');
+        const otherSec = document.getElementById('subviewOtherTemplatesSection');
+        if (titleEl) titleEl.innerText = '새 페이지 템플릿 & 레이아웃';
+        if (descEl) descEl.innerText = '추가할 레이아웃을 클릭하면 새 페이지가 즉시 생성됩니다.';
+        if (badgeEl) { badgeEl.innerText = '추가 모드'; badgeEl.style.background = '#0070f3'; }
+        if (otherSec) otherSec.style.display = 'block';
+        if (mainView) mainView.style.display = 'none';
+        if (layoutView) layoutView.style.display = 'flex';
+        document.querySelectorAll('.panel-layout-card').forEach(c => c.classList.remove('active'));
+      } else if (viewName === 'changeLayout') {
+        layoutModalMode = 'change';
+        const titleEl = document.getElementById('subviewLayoutTitle');
+        const descEl = document.getElementById('subviewLayoutDesc');
+        const badgeEl = document.getElementById('subviewLayoutModeBadge');
+        const otherSec = document.getElementById('subviewOtherTemplatesSection');
+        if (titleEl) titleEl.innerHTML = `<span style="color: #38bdf8;">P.${currentBrochurePage + 1}</span> 레이아웃 실시간 변경`;
+        if (descEl) descEl.innerText = '원하는 레이아웃을 클릭하면 좌측 브로슈어에 즉시 실시간 반영됩니다.';
+        if (badgeEl) { badgeEl.innerText = '변경 모드'; badgeEl.style.background = '#0ea5e9'; }
+        if (otherSec) otherSec.style.display = 'none';
+        if (mainView) mainView.style.display = 'none';
+        if (layoutView) layoutView.style.display = 'flex';
+        document.querySelectorAll('.panel-layout-card').forEach(c => c.classList.remove('active'));
+      }
 
-      // 활성화 카드 리셋
-      document.querySelectorAll('.panel-layout-card').forEach(c => c.classList.remove('active'));
-
-      const panel = document.getElementById('addPageModal');
-      if (panel) panel.classList.add('open');
       if (window.lucide) lucide.createIcons();
     }
 
-    // 패널 열기: 현재 페이지 레이아웃 변경 모드
-    function openChangeLayoutModal() {
-      layoutModalMode = 'change';
-      const titleEl = document.getElementById('layoutModalTitle');
-      const descEl = document.getElementById('layoutModalDesc');
-      const otherSec = document.getElementById('otherTemplatesSection');
-      if (titleEl) titleEl.innerHTML = `<span style="color: #38bdf8;">P.${currentBrochurePage + 1}</span> 레이아웃 변경 패널`;
-      if (descEl) descEl.innerText = '원하는 레이아웃을 클릭하면 실시간으로 즉시 적용됩니다.';
-      if (otherSec) otherSec.style.display = 'none'; // 레이아웃 변경 시에는 6종 프로젝트에 집중
-
-      // 활성화 카드 리셋
-      document.querySelectorAll('.panel-layout-card').forEach(c => c.classList.remove('active'));
-
-      const panel = document.getElementById('addPageModal');
-      if (panel) panel.classList.add('open');
-      if (window.lucide) lucide.createIcons();
-    }
-
-    // 패널 닫기
-    function closeAddPageModal() {
-      const panel = document.getElementById('addPageModal');
-      if (panel) panel.classList.remove('open');
-    }
-
-    // 외부 영역 클릭 시 패널 닫기 이벤트 등록
-    document.addEventListener('pointerdown', (e) => {
-      const panel = document.getElementById('addPageModal');
-      const toolbar = document.getElementById('adminToolbar');
-      if (panel && panel.classList.contains('open')) {
-        // 패널 내부 및 관리자 상태창 클릭은 무시
-        if (!panel.contains(e.target) && (!toolbar || !toolbar.contains(e.target))) {
-          closeAddPageModal();
-        }
-      }
-    });
-
-    // ESC 키 입력 시 패널 닫기
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeAddPageModal();
-      }
-    });
+    // 하위 호환 별칭 함수들
+    function openAddPageModal() { showAdminSubview('addPage'); }
+    function openChangeLayoutModal() { showAdminSubview('changeLayout'); }
+    function closeAddPageModal() { showAdminSubview('main'); }
 
     // 템플릿 카드 클릭 디스패처
     function handleLayoutSelect(type) {
-      // 선택된 카드 active 표시
       document.querySelectorAll('.panel-layout-card').forEach(c => {
         if (c.getAttribute('data-layout') === type) {
           c.classList.add('active');
@@ -4547,6 +4635,7 @@
         changeCurrentPageLayout(type);
       } else {
         createPageFromTemplate(type);
+        showAdminSubview('main'); // 새 페이지 생성 후 메인 메뉴로 복귀
       }
     }
 
