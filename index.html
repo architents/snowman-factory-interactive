@@ -621,7 +621,7 @@
 
     .parent-node-text {
       font-family: 'Pretendard', sans-serif;
-      font-size: 13.5px;
+      font-size: 19px;
       font-weight: 800;
       fill: #ffffff;
       text-anchor: middle;
@@ -632,7 +632,7 @@
 
     .parent-node-subtext {
       font-family: 'Space Grotesk', monospace;
-      font-size: 8.5px;
+      font-size: 12px;
       font-weight: 600;
       fill: rgba(255, 255, 255, 0.95);
       text-anchor: middle;
@@ -699,7 +699,7 @@
 
     .child-circle-title {
       font-family: 'Pretendard', sans-serif;
-      font-size: 7.0px;
+      font-size: 10.5px;
       font-weight: 800;
       text-anchor: middle;
       dominant-baseline: central;
@@ -709,7 +709,7 @@
 
     .child-circle-sub {
       font-family: 'Space Grotesk', monospace;
-      font-size: 4.8px;
+      font-size: 7.2px;
       font-weight: 600;
       text-anchor: middle;
       dominant-baseline: central;
@@ -736,7 +736,7 @@
 
     .micro-anno-ko {
       font-family: 'Pretendard', sans-serif;
-      font-size: 6.2px;
+      font-size: 8.5px;
       font-weight: 700;
       fill: #334155;
       letter-spacing: -0.15px;
@@ -744,7 +744,7 @@
 
     .micro-anno-en {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 4.8px;
+      font-size: 6.5px;
       font-weight: 500;
       fill: #94a3b8;
       letter-spacing: 0.1px;
@@ -2387,28 +2387,36 @@
                 <!-- Camera Zoomable Viewport Group -->
                 <g id="viewportGroup">
                   <!-- Editorial Orbit Grid & Central Horizontal Axis -->
-                  <g class="bg-orbit-grid">
-                    <!-- 상단 행 수평 기준선 (y=125) & 데이터 펄스 광선 -->
-                    <line x1="30" y1="125" x2="970" y2="125" stroke="#cbd5e1" stroke-width="1.5" />
-                    <line class="data-pulse-stream" x1="30" y1="125" x2="970" y2="125" stroke="url(#streamGradient)" stroke-width="2.5" stroke-dasharray="16, 42" stroke-linecap="round" />
+                  <g class="bg-orbit-grid" id="bgOrbitGrid">
+                    <!-- 상위 카테고리 노드 간 견고한 격자형(Grid Matrix) 연결선 -->
+                    <!-- 가로 연결선 1: 상단 행 (180, 125) <-> (500, 125) <-> (820, 125) -->
+                    <line x1="180" y1="125" x2="820" y2="125" stroke="#cbd5e1" stroke-width="2.5" />
+                    <line class="data-pulse-stream" x1="180" y1="125" x2="820" y2="125" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="20, 48" stroke-linecap="round" />
 
-                    <!-- 하단 행 수평 기준선 (y=335) & 데이터 펄스 광선 -->
-                    <line x1="30" y1="335" x2="970" y2="335" stroke="#cbd5e1" stroke-width="1.5" />
-                    <line class="data-pulse-stream" x1="30" y1="335" x2="970" y2="335" stroke="url(#streamGradient)" stroke-width="2.5" stroke-dasharray="16, 42" stroke-linecap="round" />
-                    
-                    <!-- 3열 수직 기준선 및 궤도선 -->
-                    <g stroke="#e2e8f0" stroke-width="1" fill="none">
-                      <line x1="180" y1="30" x2="180" y2="430" stroke-dasharray="2,3" />
-                      <line x1="500" y1="30" x2="500" y2="430" stroke-dasharray="2,3" />
-                      <line x1="820" y1="30" x2="820" y2="430" stroke-dasharray="2,3" />
+                    <!-- 가로 연결선 2: 하단 행 (180, 335) <-> (500, 335) <-> (820, 335) -->
+                    <line x1="180" y1="335" x2="820" y2="335" stroke="#cbd5e1" stroke-width="2.5" />
+                    <line class="data-pulse-stream" x1="180" y1="335" x2="820" y2="335" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="20, 48" stroke-linecap="round" />
 
-                      <!-- 2열 6개 상위 노드별 대형 점선 궤도 원 (r=72, 화면 가득 채움) -->
-                      <circle cx="180" cy="125" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="500" cy="125" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="820" cy="125" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="180" cy="335" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="500" cy="335" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
-                      <circle cx="820" cy="335" r="72" stroke-dasharray="3,3" stroke="#cbd5e1" stroke-width="1.2" />
+                    <!-- 세로 연결선 1: 1열 (180, 125) <-> (180, 335) -->
+                    <line x1="180" y1="125" x2="180" y2="335" stroke="#cbd5e1" stroke-width="2.5" />
+                    <line class="data-pulse-stream" x1="180" y1="125" x2="180" y2="335" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="20, 48" stroke-linecap="round" />
+
+                    <!-- 세로 연결선 2: 2열 (500, 125) <-> (500, 335) -->
+                    <line x1="500" y1="125" x2="500" y2="335" stroke="#cbd5e1" stroke-width="2.5" />
+                    <line class="data-pulse-stream" x1="500" y1="125" x2="500" y2="335" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="20, 48" stroke-linecap="round" />
+
+                    <!-- 세로 연결선 3: 3열 (820, 125) <-> (820, 335) -->
+                    <line x1="820" y1="125" x2="820" y2="335" stroke="#cbd5e1" stroke-width="2.5" />
+                    <line class="data-pulse-stream" x1="820" y1="125" x2="820" y2="335" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="20, 48" stroke-linecap="round" />
+
+                    <!-- 각 상위 카테고리 노드 중심에 정확히 위치하는 점선 원 (r=96, 1.5배 확대 노드를 완벽히 감쌈) -->
+                    <g stroke="#cbd5e1" stroke-width="1.4" stroke-dasharray="4,4" fill="none">
+                      <circle cx="180" cy="125" r="96" />
+                      <circle cx="500" cy="125" r="96" />
+                      <circle cx="820" cy="125" r="96" />
+                      <circle cx="180" cy="335" r="96" />
+                      <circle cx="500" cy="335" r="96" />
+                      <circle cx="820" cy="335" r="96" />
                     </g>
                   </g>
 
@@ -2892,12 +2900,61 @@
       parentNodesLayer.innerHTML = '';
       childNodesLayer.innerHTML = '';
       edgesLayer.innerHTML = '';
+      // A. 상위 카테고리 노드 간 2x3 격자형(Grid Matrix) 연결선 및 노드 중심 점선 원 동적 렌더링
+      const gridG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      gridG.setAttribute('class', 'dynamic-grid-connections');
+
+      // 1) 격자형 연결선 (가로 2줄, 세로 3줄)
+      const lines = [
+        { x1: 180, y1: 125, x2: 820, y2: 125 }, // 상단 가로
+        { x1: 180, y1: 335, x2: 820, y2: 335 }, // 하단 가로
+        { x1: 180, y1: 125, x2: 180, y2: 335 }, // 1열 세로
+        { x1: 500, y1: 125, x2: 500, y2: 335 }, // 2열 세로
+        { x1: 820, y1: 125, x2: 820, y2: 335 }  // 3열 세로
+      ];
+      lines.forEach(l => {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', l.x1);
+        line.setAttribute('y1', l.y1);
+        line.setAttribute('x2', l.x2);
+        line.setAttribute('y2', l.y2);
+        line.setAttribute('stroke', '#cbd5e1');
+        line.setAttribute('stroke-width', '2.5');
+        gridG.appendChild(line);
+
+        const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        pulse.setAttribute('class', 'data-pulse-stream');
+        pulse.setAttribute('x1', l.x1);
+        pulse.setAttribute('y1', l.y1);
+        pulse.setAttribute('x2', l.x2);
+        pulse.setAttribute('y2', l.y2);
+        pulse.setAttribute('stroke', 'url(#streamGradient)');
+        pulse.setAttribute('stroke-width', '3');
+        pulse.setAttribute('stroke-dasharray', '20, 48');
+        pulse.setAttribute('stroke-linecap', 'round');
+        gridG.appendChild(pulse);
+      });
+
+      // 2) 각 상위 카테고리 노드 중심에 정확히 위치하는 점선 원 (r=96)
+      categoriesData.forEach(cat => {
+        const dottedOrbit = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        dottedOrbit.setAttribute('cx', cat.x);
+        dottedOrbit.setAttribute('cy', cat.y);
+        dottedOrbit.setAttribute('r', '96');
+        dottedOrbit.setAttribute('fill', 'none');
+        dottedOrbit.setAttribute('stroke', '#cbd5e1');
+        dottedOrbit.setAttribute('stroke-width', '1.4');
+        dottedOrbit.setAttribute('stroke-dasharray', '4,4');
+        gridG.appendChild(dottedOrbit);
+      });
+      edgesLayer.appendChild(gridG);
+
 
       // 1. 카메라 줌인 / 줌아웃 제어
       if (activeCategoryId) {
         const activeCat = categoriesData.find(c => c.id === activeCategoryId);
         if (activeCat && viewportGroup) {
-          const zoomScale = 2.18;
+          const zoomScale = 1.48;
           const targetX = 500 - activeCat.x * zoomScale;
           const targetY = 230 - activeCat.y * zoomScale;
           viewportGroup.style.transform = `translate(${targetX}px, ${targetY}px) scale(${zoomScale})`;
@@ -2922,7 +2979,7 @@
           centralOuterOrbit.setAttribute('class', 'interlocking-orbit');
           centralOuterOrbit.setAttribute('cx', cat.x);
           centralOuterOrbit.setAttribute('cy', cat.y);
-          centralOuterOrbit.setAttribute('r', '88');
+          centralOuterOrbit.setAttribute('r', '132');
           centralOuterOrbit.setAttribute('stroke', cat.color);
           edgesLayer.appendChild(centralOuterOrbit);
 
@@ -2938,7 +2995,7 @@
             else if (child.pos === "bottom-left") { angleRad = (140 * Math.PI) / 180; isLeft = true; isTop = false; }
             else if (child.pos === "bottom-right") { angleRad = (40 * Math.PI) / 180; isLeft = false; isTop = false; }
 
-            const circleDist = 78;
+            const circleDist = 118;
             const cx = cat.x + Math.cos(angleRad) * circleDist;
             const cy = cat.y + Math.sin(angleRad) * circleDist;
 
@@ -2947,17 +3004,17 @@
             subOrbit.setAttribute('class', 'interlocking-orbit');
             subOrbit.setAttribute('cx', cx);
             subOrbit.setAttribute('cy', cy);
-            subOrbit.setAttribute('r', '60');
+            subOrbit.setAttribute('r', '90');
             subOrbit.setAttribute('stroke', cat.color);
             edgesLayer.appendChild(subOrbit);
 
             // 중앙 원과 하위 원을 잇는 얇은 연결선
             const edge = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             edge.setAttribute('class', 'child-edge-line');
-            edge.setAttribute('x1', cat.x + Math.cos(angleRad) * 44);
-            edge.setAttribute('y1', cat.y + Math.sin(angleRad) * 44);
-            edge.setAttribute('x2', cx - Math.cos(angleRad) * 22);
-            edge.setAttribute('y2', cy - Math.sin(angleRad) * 22);
+            edge.setAttribute('x1', cat.x + Math.cos(angleRad) * 66);
+            edge.setAttribute('y1', cat.y + Math.sin(angleRad) * 66);
+            edge.setAttribute('x2', cx - Math.cos(angleRad) * 33);
+            edge.setAttribute('y2', cy - Math.sin(angleRad) * 33);
             edge.setAttribute('stroke', cat.color);
             edge.setAttribute('stroke-width', '1.2');
             edge.setAttribute('stroke-dasharray', '2.5,2.5');
@@ -2977,7 +3034,7 @@
             outerCircle.setAttribute('class', 'child-circle-outer');
             outerCircle.setAttribute('cx', cx);
             outerCircle.setAttribute('cy', cy);
-            outerCircle.setAttribute('r', '22');
+            outerCircle.setAttribute('r', '33');
             outerCircle.setAttribute('stroke', cat.color);
             circleNodeG.appendChild(outerCircle);
 
@@ -2986,7 +3043,7 @@
             innerRing.setAttribute('class', 'child-circle-inner-ring');
             innerRing.setAttribute('cx', cx);
             innerRing.setAttribute('cy', cy);
-            innerRing.setAttribute('r', '18.5');
+            innerRing.setAttribute('r', '27.5');
             innerRing.setAttribute('stroke', cat.color);
             circleNodeG.appendChild(innerRing);
 
@@ -2994,7 +3051,7 @@
             const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
             titleText.setAttribute('class', 'child-circle-title');
             titleText.setAttribute('x', cx);
-            titleText.setAttribute('y', cy - 2.8);
+            titleText.setAttribute('y', cy - 3.8);
             titleText.setAttribute('fill', cat.color);
             titleText.textContent = child.title;
             circleNodeG.appendChild(titleText);
@@ -3070,7 +3127,7 @@
           anim.setAttribute('repeatCount', 'indefinite');
           dotsGroup.appendChild(anim);
 
-          const orbitRadius = 72;
+          const orbitRadius = 96;
 
           cat.children.forEach((child, idx) => {
             const randAngleDeg = cat.randomAngles[idx] || (idx * 90 + 35);
@@ -3085,10 +3142,10 @@
             dot.setAttribute('class', 'child-white-dot');
             dot.setAttribute('cx', dotX);
             dot.setAttribute('cy', dotY);
-            dot.setAttribute('r', '4');
+            dot.setAttribute('r', '6');
             dot.setAttribute('fill', '#ffffff');
             dot.setAttribute('stroke', cat.color);
-            dot.setAttribute('stroke-width', '1.8');
+            dot.setAttribute('stroke-width', '2.6');
             dot.setAttribute('opacity', isDimmed ? '0.2' : '1');
             childG.appendChild(dot);
 
@@ -3107,24 +3164,24 @@
           toggleCategoryNode(cat.id);
         };
 
-        // 1) 외곽 가이드 링 (이중 링 장식)
+        // 1) 외곽 가이드 링 (이중 링 장식 - 1.5배 확대 r=78)
         const outerRing = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         outerRing.setAttribute('class', 'parent-outer-ring');
         outerRing.setAttribute('cx', cat.x);
         outerRing.setAttribute('cy', cat.y);
-        outerRing.setAttribute('r', '52');
+        outerRing.setAttribute('r', '78');
         outerRing.setAttribute('fill', 'none');
         outerRing.setAttribute('stroke', cat.color);
         outerRing.setAttribute('stroke-opacity', isActive ? '0.75' : '0.22');
-        outerRing.setAttribute('stroke-width', isActive ? '1.8' : '1');
+        outerRing.setAttribute('stroke-width', isActive ? '2.4' : '1.2');
         parentG.appendChild(outerRing);
 
-        // 2) 메인 원 코어 (Fill Color - 2열에 맞춰 더욱 시원하고 꽉 차게)
+        // 2) 메인 원 코어 (Fill Color - 1.5배 확대 r=66, 지름 132px로 화면에 꽉 찬 압도적 비주얼)
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute('class', 'parent-node-circle');
         circle.setAttribute('cx', cat.x);
         circle.setAttribute('cy', cat.y);
-        circle.setAttribute('r', '44');
+        circle.setAttribute('r', '66');
         circle.setAttribute('fill', cat.color);
         circle.setAttribute('stroke', '#ffffff');
         circle.setAttribute('stroke-width', isActive ? '3.5' : '2');
@@ -3135,14 +3192,14 @@
         const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         titleText.setAttribute('class', 'parent-node-text');
         titleText.setAttribute('x', cat.x);
-        titleText.setAttribute('y', cat.y - 5);
+        titleText.setAttribute('y', cat.y - 7);
         titleText.textContent = cat.name;
         parentG.appendChild(titleText);
 
         const subText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         subText.setAttribute('class', 'parent-node-subtext');
         subText.setAttribute('x', cat.x);
-        subText.setAttribute('y', cat.y + 15);
+        subText.setAttribute('y', cat.y + 20);
         subText.textContent = cat.sub;
         parentG.appendChild(subText);
 
