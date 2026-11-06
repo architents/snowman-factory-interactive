@@ -1811,6 +1811,12 @@
       outline-offset: -2px !important;
       filter: brightness(0.85) !important;
     }
+    body.admin-mode-active img.admin-editable-img.admin-img-selected {
+      outline: 3.5px solid #10b981 !important;
+      outline-offset: -3px !important;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.5) !important;
+      filter: brightness(1.05) !important;
+    }
 
     /* Admin Modals */
     .admin-modal-backdrop {
@@ -4030,7 +4036,11 @@
       });
     }
 
-    // 이미지 클릭 시 교체 트리거 부여
+    // -------------------------------------------------------------
+    // 이미지 클릭, 드래그&드롭, 및 Ctrl+V 복사 붙여넣기(Paste) 시스템
+    // -------------------------------------------------------------
+    let hoveredImageElem = null;
+
     function bindImageUploadHandlers() {
       const sheet = document.getElementById('a4Sheet');
       if (!sheet) return;
@@ -4038,32 +4048,120 @@
       const imgs = sheet.querySelectorAll('img');
       imgs.forEach(img => {
         img.classList.add('admin-editable-img');
+        img.setAttribute('title', '클릭: 파일 선택 | Ctrl+V: 클립보드 이미지 붙여넣기 | 드래그&드롭 지원');
+
+        // 1) 마우스 호버 감지 (마우스 올려둔 채로 Ctrl+V 누르면 즉시 해당 이미지에 붙여넣기)
+        img.onmouseenter = () => {
+          if (isAdminMode) hoveredImageElem = img;
+        };
+        img.onmouseleave = () => {
+          if (hoveredImageElem === img) hoveredImageElem = null;
+        };
+
+        // 2) 클릭 시 타겟 선택 및 아웃라인 표시
         img.onclick = (e) => {
           if (!isAdminMode) return;
           e.stopPropagation();
-          targetImageElem = img;
+          selectTargetImage(img);
+
+          // 클릭 시 파일 선택창도 함께 열리도록 지원 (취소하고 Ctrl+V 눌러도 타겟 유지)
           const fileInput = document.getElementById('adminImageFileInput');
           if (fileInput) {
             fileInput.value = '';
             fileInput.click();
           }
         };
+
+        // 3) 드래그 앤 드롭 파일 투척 교체 지원
+        img.ondragover = (e) => {
+          if (!isAdminMode) return;
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'copy';
+          img.classList.add('admin-img-selected');
+        };
+        img.ondragleave = () => {
+          if (targetImageElem !== img) img.classList.remove('admin-img-selected');
+        };
+        img.ondrop = (e) => {
+          if (!isAdminMode) return;
+          e.preventDefault();
+          img.classList.remove('admin-img-selected');
+          const file = e.dataTransfer.files && e.dataTransfer.files[0];
+          if (file && file.type.startsWith('image/')) {
+            applyImageFileToTarget(img, file, '드래그한 이미지가 성공적으로 적용되었습니다.');
+          }
+        };
       });
     }
 
-    // 이미지 파일 업로드 처리
-    function handleAdminImageUpload(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file || !targetImageElem) return;
+    function selectTargetImage(img) {
+      // 기존 선택 클래스 해제 후 새 이미지 선택
+      document.querySelectorAll('img.admin-img-selected').forEach(el => el.classList.remove('admin-img-selected'));
+      targetImageElem = img;
+      if (img) img.classList.add('admin-img-selected');
+    }
 
+    // 파일 객체를 대상 이미지에 Base64로 적용하는 공통 함수
+    function applyImageFileToTarget(targetImg, file, successMsg = '이미지가 성공적으로 변경되었습니다.') {
+      if (!targetImg || !file) return;
       const reader = new FileReader();
       reader.onload = function(e) {
-        targetImageElem.src = e.target.result;
+        targetImg.src = e.target.result;
         saveBrochureChanges(false);
-        showAdminToast('이미지가 성공적으로 교체되었습니다.');
+        showAdminToast(successMsg);
+        // 녹색 선택 테두리 1.5초 후 자연스럽게 제거
+        setTimeout(() => targetImg.classList.remove('admin-img-selected'), 1500);
       };
       reader.readAsDataURL(file);
     }
+
+    // 파일 탐색기 업로드 처리
+    function handleAdminImageUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file || !targetImageElem) return;
+      applyImageFileToTarget(targetImageElem, file, '파일 탐색기 이미지가 성공적으로 적용되었습니다.');
+    }
+
+    // [핵심] 글로벌 Ctrl+V 이미지 복사/붙여넣기 리스너
+    window.addEventListener('paste', function(e) {
+      if (!isAdminMode) return;
+
+      const items = (e.clipboardData || e.originalEvent?.clipboardData)?.items;
+      if (!items) return;
+
+      let imageFile = null;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          imageFile = items[i].getAsFile();
+          break;
+        }
+      }
+
+      // 클립보드에 이미지가 복사되어 있는 경우
+      if (imageFile) {
+        e.preventDefault(); // 기본 웹 붙여넣기 방지
+
+        // 대상 이미지 결정 순서:
+        // 1. 현재 마우스가 올라가 있는 이미지 (hoveredImageElem)
+        // 2. 이전에 클릭하여 선택해 둔 이미지 (targetImageElem)
+        // 3. 현재 보고 있는 페이지 내의 첫 번째 편집 가능 이미지
+        let target = hoveredImageElem || targetImageElem;
+        if (!target) {
+          const allPages = getAllPages();
+          const currPage = allPages[currentBrochurePage];
+          if (currPage) {
+            target = currPage.querySelector('img.admin-editable-img') || currPage.querySelector('img');
+          }
+        }
+
+        if (target) {
+          selectTargetImage(target);
+          applyImageFileToTarget(target, imageFile, '📋 클립보드 이미지가 성공적으로 붙여넣어졌습니다! (Ctrl+V)');
+        } else {
+          showAdminToast('⚠️ 붙여넣을 대상 이미지를 먼저 클릭하거나 마우스를 올려주세요.');
+        }
+      }
+    });
 
     // -------------------------------------------------------------
     // 페이지 추가 / 삭제 기능
