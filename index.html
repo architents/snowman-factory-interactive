@@ -1653,51 +1653,55 @@
     /* ---------------------------------------------------------------- */
     /* ADMIN INLINE CMS SYSTEM STYLES                                   */
     /* ---------------------------------------------------------------- */
-    /* Floating Admin Bar */
+    /* Floating Right-Side Admin Status Panel (우측 상태창) */
     .admin-toolbar {
       position: fixed;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100px);
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%) translateX(240px);
       z-index: 500;
       background: rgba(15, 23, 42, 0.94);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.16);
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 112, 243, 0.3);
-      border-radius: 999px;
-      padding: 6px 14px;
+      box-shadow: -8px 12px 35px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 112, 243, 0.3);
+      border-radius: 16px;
+      padding: 14px 12px;
       display: flex;
-      align-items: center;
-      gap: 12px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 7px;
       color: #ffffff;
       opacity: 0;
       pointer-events: none;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      max-width: 95vw;
+      width: 175px;
     }
 
     .admin-toolbar.visible {
-      transform: translateX(-50%) translateY(0);
+      transform: translateY(-50%) translateX(0);
       opacity: 1;
       pointer-events: auto;
     }
 
     .admin-toolbar-left {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
     .admin-badge {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       background: #0070f3;
       color: #ffffff;
       font-size: 11.5px;
       font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
+      padding: 5px 10px;
+      border-radius: 8px;
       font-family: 'Space Grotesk', sans-serif;
       letter-spacing: 0.3px;
     }
@@ -1706,44 +1710,53 @@
       font-family: 'Space Grotesk', monospace;
       font-size: 11.5px;
       color: #94a3b8;
-      font-weight: 600;
+      font-weight: 700;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 0;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .admin-divider {
-      width: 1px;
-      height: 20px;
-      background: rgba(255, 255, 255, 0.15);
+      width: 100%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      margin: 2px 0;
     }
 
     .admin-toolbar-actions {
       display: flex;
-      align-items: center;
-      gap: 6px;
+      flex-direction: column;
+      gap: 5px;
+      width: 100%;
     }
 
     .admin-btn {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: #e2e8f0;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 600;
-      padding: 5px 11px;
-      border-radius: 999px;
+      padding: 7px 11px;
+      border-radius: 8px;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
       transition: all 0.2s ease;
       white-space: nowrap;
+      width: 100%;
+      text-align: left;
     }
     .admin-btn:hover {
       background: rgba(255, 255, 255, 0.18);
       color: #ffffff;
-      transform: translateY(-1px);
+      transform: translateX(-2px);
     }
     .admin-btn.primary {
-      background: rgba(0, 112, 243, 0.2);
-      border-color: rgba(0, 112, 243, 0.5);
+      background: rgba(0, 112, 243, 0.22);
+      border-color: rgba(0, 112, 243, 0.55);
       color: #60a5fa;
     }
     .admin-btn.primary:hover {
@@ -1778,8 +1791,15 @@
       color: #ffffff;
     }
     .admin-btn.close {
-      padding: 5px 7px;
-      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      justify-content: center;
+      margin-top: 3px;
+    }
+    .admin-btn.close:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
     }
 
     /* Admin Edit Mode Visual Feedback */
@@ -2108,22 +2128,23 @@
   <!-- ADMIN INLINE CMS SYSTEM (관리자 인라인 편집 및 페이지 관리 UI) -->
   <!-- ============================================================ -->
   
-  <!-- Floating Admin Bar -->
+  <!-- Floating Right-Side Admin Status Panel (우측 상태창) -->
   <div id="adminToolbar" class="admin-toolbar">
     <div class="admin-toolbar-left">
       <div class="admin-badge">
-        <i data-lucide="edit-3" style="width: 14px; height: 14px;"></i>
-        <span>편집 모드 ON</span>
+        <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+        <span>편집 상태창</span>
       </div>
       <span class="admin-page-indicator" id="adminPageIndicator">P.1 / 4</span>
     </div>
 
     <div class="admin-toolbar-actions">
+      <!-- 페이지 조작 -->
       <button class="admin-btn primary" onclick="openAddPageModal()" title="새 페이지 추가">
         <i data-lucide="plus-circle" style="width: 15px; height: 15px;"></i>
         <span>페이지 추가</span>
       </button>
-      <button class="admin-btn" onclick="openChangeLayoutModal()" title="현재 보고 있는 페이지의 레이아웃 변경" style="background: rgba(14, 165, 233, 0.2); border-color: rgba(14, 165, 233, 0.5); color: #38bdf8;">
+      <button class="admin-btn" onclick="openChangeLayoutModal()" title="현재 보고 있는 페이지의 레이아웃 변경" style="background: rgba(14, 165, 233, 0.22); border-color: rgba(14, 165, 233, 0.55); color: #38bdf8;">
         <i data-lucide="layout-template" style="width: 15px; height: 15px;"></i>
         <span>레이아웃 변경</span>
       </button>
@@ -2135,25 +2156,33 @@
         <i data-lucide="palette" style="width: 15px; height: 15px;"></i>
         <span>노드 색상</span>
       </button>
+      
       <div class="admin-divider"></div>
+
+      <!-- 저장 및 배포 -->
       <button class="admin-btn" onclick="saveBrochureChanges(true)" title="현재 변경사항 브라우저 저장">
         <i data-lucide="save" style="width: 15px; height: 15px;"></i>
-        <span>저장</span>
+        <span>내용 저장</span>
       </button>
       <button class="admin-btn success" id="btnPushToGithub" onclick="pushChangesToGitHub()" title="수정 사항을 GitHub에 즉시 커밋 & 푸시하여 Vercel 자동 배포">
         <i data-lucide="git-pull-request" style="width: 15px; height: 15px;"></i>
-        <span>GitHub에 배포</span>
+        <span>GitHub 배포</span>
       </button>
       <button class="admin-btn" onclick="openGitHubSettingsModal()" title="GitHub 저장소 및 Personal Access Token 설정">
         <i data-lucide="settings" style="width: 14px; height: 14px;"></i>
+        <span>GitHub 설정</span>
       </button>
       <button class="admin-btn warning" onclick="resetBrochureChanges()" title="초기 기본 상태로 복원">
         <i data-lucide="rotate-ccw" style="width: 15px; height: 15px;"></i>
         <span>초기화</span>
       </button>
+
       <div class="admin-divider"></div>
-      <button class="admin-btn close" onclick="exitAdminMode()" title="관리자 모드 종료">
-        <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+
+      <!-- 편집 모드 종료 -->
+      <button class="admin-btn close" onclick="exitAdminMode()" title="관리자 편집 모드 종료">
+        <i data-lucide="x" style="width: 15px; height: 15px;"></i>
+        <span>편집 종료</span>
       </button>
     </div>
   </div>
@@ -4287,18 +4316,8 @@
     });
 
     // -------------------------------------------------------------
-    // 페이지 추가 / 삭제 기능
+    // 페이지 추가 / 레이아웃 변경 / 삭제 기능
     // -------------------------------------------------------------
-    function openAddPageModal() {
-      const modal = document.getElementById('addPageModal');
-      if (modal) { modal.classList.add('open'); lucide.createIcons(); }
-    }
-
-    function closeAddPageModal() {
-      const modal = document.getElementById('addPageModal');
-      if (modal) modal.classList.remove('open');
-    }
-
     let layoutModalMode = 'add'; // 'add' | 'change'
 
     // 모달 열기: 신규 페이지 추가 모드
@@ -4312,33 +4331,44 @@
       if (otherSec) otherSec.style.display = 'block';
 
       const modal = document.getElementById('addPageModal');
-      if (modal) modal.style.display = 'flex';
+      if (modal) {
+        modal.classList.add('open');
+        modal.style.display = 'flex';
+        modal.style.opacity = '1';
+        modal.style.pointerEvents = 'auto';
+      }
       if (window.lucide) lucide.createIcons();
     }
 
     // 모달 열기: 현재 페이지 레이아웃 변경 모드
     function openChangeLayoutModal() {
-      const allPages = getAllPages();
-      if (currentBrochurePage === 0) {
-        alert('표지(Cover) 페이지는 레이아웃 변경 대상이 아닙니다.');
-        return;
-      }
-      if (currentBrochurePage === 1) {
-        alert('Solutions 인포그래픽 페이지는 전용 인터랙티브 시스템이므로 레이아웃 변경 대상이 아닙니다.');
-        return;
-      }
-
       layoutModalMode = 'change';
       const titleEl = document.getElementById('layoutModalTitle');
       const descEl = document.getElementById('layoutModalDesc');
       const otherSec = document.getElementById('otherTemplatesSection');
       if (titleEl) titleEl.innerHTML = `<span style="color: #0070f3;">P.${currentBrochurePage + 1}</span> 페이지 레이아웃 변경`;
       if (descEl) descEl.innerText = '현재 페이지에 입력된 텍스트와 이미지들을 유지하면서 선택한 새 레이아웃 구조로 즉시 재배치합니다.';
-      if (otherSec) otherSec.style.display = 'none'; // 레이아웃 변경 시에는 프로젝트 6종에 집중
+      if (otherSec) otherSec.style.display = 'none'; // 레이아웃 변경 시에는 6종 프로젝트 레이아웃에 집중
 
       const modal = document.getElementById('addPageModal');
-      if (modal) modal.style.display = 'flex';
+      if (modal) {
+        modal.classList.add('open');
+        modal.style.display = 'flex';
+        modal.style.opacity = '1';
+        modal.style.pointerEvents = 'auto';
+      }
       if (window.lucide) lucide.createIcons();
+    }
+
+    // 모달 닫기
+    function closeAddPageModal() {
+      const modal = document.getElementById('addPageModal');
+      if (modal) {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+        modal.style.opacity = '0';
+        modal.style.pointerEvents = 'none';
+      }
     }
 
     // 템플릿 카드 클릭 디스패처
