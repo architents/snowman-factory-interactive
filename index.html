@@ -2400,19 +2400,12 @@
         <div class="a4-page-content" id="page-2-content" style="display: none;">
           <div class="a4-page-solutions">
             
-            <!-- Header Row (책자 에디토리얼 스타일) -->
-            <div class="obsidian-header-row">
+            <!-- Header Row (Only Title: Solutions) -->
+            <div class="obsidian-header-row" style="margin-bottom: 8px; padding-bottom: 12px; border-bottom: 1.5px solid #0f172a;">
               <div class="obsidian-titles-wrap">
-                <div class="obsidian-main-title">
-                  <span style="letter-spacing: -0.5px;">Solution</span>
-                  <span class="tag">6 CORE CAPABILITIES</span>
-                </div>
-                <div class="obsidian-sub-title">
-                  상위 카테고리 원을 클릭하면 해당 분야가 확대되며 세부 솔루션 글씨가 나타납니다.
-                </div>
-              </div>
-              <div class="solutions-header-right">
-                <div class="solutions-header-note">ZERO TO BIM ECOSYSTEM</div>
+                <h2 class="obsidian-main-title" style="font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: #0f172a; margin: 0; line-height: 1.2;">
+                  Solutions
+                </h2>
               </div>
             </div>
 
@@ -3893,6 +3886,21 @@
 
     // 동적 페이지 수 계산 및 내비게이션 UI 업데이트
     function updateBrochureUI() {
+      // Solutions 페이지 헤더: 오직 제목 "Solutions"만 나오도록 강제 동기화 (구버전 캐시/로컬스토리지 잔재 완벽 정화)
+      const solHeader = document.querySelector('#page-2-content .obsidian-header-row');
+      if (solHeader) {
+        solHeader.innerHTML = `
+          <div class="obsidian-titles-wrap">
+            <h2 class="obsidian-main-title" style="font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: #0f172a; margin: 0; line-height: 1.2;">
+              Solutions
+            </h2>
+          </div>
+        `;
+        solHeader.style.marginBottom = '8px';
+        solHeader.style.paddingBottom = '12px';
+        solHeader.style.borderBottom = '1.5px solid #0f172a';
+      }
+
       const allPages = getAllPages();
       totalBrochurePages = allPages.length;
 
