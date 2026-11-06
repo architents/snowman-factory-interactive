@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang="ko"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>눈사람공장 (SNOWMAN FACTORY) — Interactive Motion Brochure</title>
   
   <!-- Fonts -->
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="stylesheet" as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
   
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -2523,30 +2522,30 @@
 
 </style>
 </head>
-<body>
+<body class="">
 
   <!-- ================================================================ -->
   <!-- PHASE 0: INTRO SCREEN (맨 처음 구현했던 멋진 3D 히어로 페이지)     -->
   <!-- ================================================================ -->
-  <div id="intro-screen">
+  <div id="intro-screen" class="hide-intro">
     <!-- WebGL Canvas for Point Cloud -->
-    <canvas id="intro-canvas"></canvas>
+    <canvas id="intro-canvas" width="1921" height="895" style="width: 1740px; height: 811px;"></canvas>
     <div class="intro-overlay"></div>
 
     <!-- CAD Crosshairs -->
-    <svg class="cad-crosshair top-left" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"/></svg>
-    <svg class="cad-crosshair top-right" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"/></svg>
-    <svg class="cad-crosshair bottom-left" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"/></svg>
-    <svg class="cad-crosshair bottom-right" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"/></svg>
+    <svg class="cad-crosshair top-left" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"></path></svg>
+    <svg class="cad-crosshair top-right" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"></path></svg>
+    <svg class="cad-crosshair bottom-left" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"></path></svg>
+    <svg class="cad-crosshair bottom-right" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none"><path d="M12 0v24M0 12h24"></path></svg>
 
     <!-- Intro Header -->
     <header class="intro-header">
-      <span class="brand-tag">DIGITAL TWIN & BIM STUDIO</span>
+      <span class="brand-tag">DIGITAL TWIN &amp; BIM STUDIO</span>
     </header>
 
     <!-- Center Brand Visual (3D 포인트클라우드 눈사람과 어우러지는 미니멀 타이포그래피) -->
     <div class="intro-center">
-      <div class="intro-title-sub">ZERO TO BIM · 3D LIDAR SCAN & SPATIAL COMPUTING</div>
+      <div class="intro-title-sub">ZERO TO BIM · 3D LIDAR SCAN &amp; SPATIAL COMPUTING</div>
       <img src="assets/logo.png" alt="SNOWMAN FACTORY" class="intro-logo-img">
       <p class="intro-slogan">
         눈사람공장은 <strong>무형의 데이터</strong>에서 <strong>새로운 건축의 가치</strong>를 찾습니다.<br>
@@ -2555,7 +2554,7 @@
 
       <!-- Minimal Clickable Action -->
       <div class="intro-enter-action" onclick="enterBrochure()">
-        <i data-lucide="arrow-down-circle" style="width: 28px; height: 28px;"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-down-circle" aria-hidden="true" style="width: 28px; height: 28px;" class="lucide lucide-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="m8 12 4 4 4-4"></path></svg>
         <span>CLICK TO ENTER BROCHURE</span>
       </div>
     </div>
@@ -2564,7 +2563,7 @@
     <footer class="intro-footer">
       <div class="status-hud">
         <div>SYS: <span id="sysStatusText">POINT CLOUD ENGINE ACTIVE</span></div>
-        <div>COORDS: <span id="introCoordDisplay">X: 0.000 | Y: 0.000 | Z: 10.000</span></div>
+        <div>COORDS: <span id="introCoordDisplay">X: 10.925 | Y: -3.073 | Z: 27.064</span></div>
         <div>SCAN RESOLUTION: <span>1mm HIGH PRECISION</span></div>
       </div>
       <div style="font-family: 'Space Grotesk', monospace; font-size: 11px; color: #94a3b8; letter-spacing: 1px;">
@@ -2582,30 +2581,30 @@
   <!-- ============================================================ -->
   
   <!-- Right-Side Full-Height Admin Sidebar Panel (우측 풀하이트 패널) -->
-  <aside id="adminToolbar" class="admin-toolbar">
+  <aside id="adminToolbar" class="admin-toolbar visible">
     
     <!-- Panel Header -->
     <div class="admin-panel-header">
       <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
         <div style="display: flex; align-items: center; gap: 8px;">
           <span class="admin-badge">
-            <i data-lucide="sliders" style="width: 13px; height: 13px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-sliders"><path d="M10 8h4"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M17 16h4"></path><path d="M19 12V3"></path><path d="M19 21v-5"></path><path d="M3 14h4"></path><path d="M5 10V3"></path><path d="M5 21v-7"></path></svg>
             <span>편집 상태창</span>
           </span>
         </div>
         <button onclick="exitAdminMode()" title="편집 모드 종료" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(239, 68, 68, 0.3)'; this.style.color='#fca5a5';" onmouseleave="this.style.background='rgba(255, 255, 255, 0.08)'; this.style.color='#cbd5e1';">
-          <i data-lucide="x" style="width: 15px; height: 15px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
       </div>
 
       <!-- Quick Page Navigator -->
       <div class="admin-page-nav-row">
         <button class="nav-arrow-btn" onclick="goToPrevBrochurePage()" title="이전 페이지">
-          <i data-lucide="chevron-left" style="width: 14px; height: 14px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-left" aria-hidden="true" style="width: 14px; height: 14px;" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"></path></svg>
         </button>
-        <span class="admin-page-indicator" id="adminPageIndicator">P.1 / 4</span>
+        <span class="admin-page-indicator" id="adminPageIndicator">P.3 / 4</span>
         <button class="nav-arrow-btn" onclick="goToNextBrochurePage()" title="다음 페이지">
-          <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" style="width: 14px; height: 14px;" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
         </button>
       </div>
     </div>
@@ -2619,7 +2618,7 @@
         
         <button class="admin-btn accent-cyan" onclick="openTocPanel()" title="전체 목차 확인 및 페이지 순서 변경">
           <div class="btn-left">
-            <i data-lucide="list-ordered" style="width: 15px; height: 15px; color: #38bdf8;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="list-ordered" aria-hidden="true" style="width: 15px; height: 15px; color: #38bdf8;" class="lucide lucide-list-ordered"><path d="M11 5h10"></path><path d="M11 12h10"></path><path d="M11 19h10"></path><path d="M4 4h1v5"></path><path d="M4 9h2"></path><path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02"></path></svg>
             <span>목차 및 순서 변경</span>
           </div>
           <span style="font-size: 9.5px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 1px 6px; border-radius: 4px; font-weight: 700;">TOC</span>
@@ -2627,30 +2626,30 @@
         
         <button class="admin-btn primary" onclick="showAdminSubview('addPage')" title="새 페이지 추가 템플릿 선택">
           <div class="btn-left">
-            <i data-lucide="plus-circle" style="width: 15px; height: 15px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus-circle" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-plus-circle"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg>
             <span>페이지 추가</span>
           </div>
-          <i data-lucide="chevron-right" style="width: 14px; height: 14px; opacity: 0.6;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" style="width: 14px; height: 14px; opacity: 0.6;" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
         </button>
 
         <button class="admin-btn accent-cyan" onclick="showAdminSubview('changeLayout')" title="현재 페이지 레이아웃 실시간 변경">
           <div class="btn-left">
-            <i data-lucide="layout-template" style="width: 15px; height: 15px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layout-template" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-layout-template"><rect width="18" height="7" x="3" y="3" rx="1"></rect><rect width="9" height="7" x="3" y="14" rx="1"></rect><rect width="5" height="7" x="16" y="14" rx="1"></rect></svg>
             <span>레이아웃 변경 (6종)</span>
           </div>
-          <i data-lucide="chevron-right" style="width: 14px; height: 14px; opacity: 0.6;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" style="width: 14px; height: 14px; opacity: 0.6;" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
         </button>
 
         <button class="admin-btn danger" onclick="deleteCurrentPage()" title="현재 페이지 삭제">
           <div class="btn-left">
-            <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             <span>페이지 삭제</span>
           </div>
         </button>
 
         <button class="admin-btn" onclick="openProjectDbModal()" title="프로젝트 실적 데이터베이스 엑셀형 편집기">
           <div class="btn-left">
-            <i data-lucide="database" style="width: 15px; height: 15px; color: #38bdf8;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="database" aria-hidden="true" style="width: 15px; height: 15px; color: #38bdf8;" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>
             <span>프로젝트 DB 관리</span>
           </div>
           <span style="font-size: 9.5px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 1px 6px; border-radius: 4px; font-weight: 700;">EXCEL DB</span>
@@ -2658,7 +2657,7 @@
 
         <button class="admin-btn" onclick="openNodeColorModal()" title="솔루션 노드 색상 설정 (Theme 4 및 커스텀 컬러)">
           <div class="btn-left">
-            <i data-lucide="palette" style="width: 15px; height: 15px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="palette" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-palette"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"></path><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>
             <span>노드 색상</span>
           </div>
         </button>
@@ -2668,30 +2667,24 @@
 
         <button class="admin-btn" onclick="saveBrochureChanges(true)" title="현재 변경사항 브라우저 저장">
           <div class="btn-left">
-            <i data-lucide="save" style="width: 15px; height: 15px; color: #34d399;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="save" aria-hidden="true" style="width: 15px; height: 15px; color: #34d399;" class="lucide lucide-save"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></svg>
             <span>내용 저장</span>
           </div>
           <span class="shortcut-tag">Ctrl+S</span>
         </button>
 
-        <button class="admin-btn success" id="btnPushToGithub" onclick="pushChangesToGitHub()" title="수정 사항을 GitHub에 즉시 커밋 & 푸시하여 Vercel 자동 배포">
-          <div class="btn-left">
-            <i data-lucide="git-pull-request" style="width: 15px; height: 15px;"></i>
-            <span>GitHub 배포</span>
-          </div>
-          <span class="live-pill">LIVE</span>
-        </button>
+        <button class="admin-btn success" id="btnPushToGithub" onclick="pushChangesToGitHub()" title="수정 사항을 GitHub에 즉시 커밋 &amp; 푸시하여 Vercel 자동 배포" disabled=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader" aria-hidden="true" class="lucide lucide-loader admin-spin" style="width: 15px; height: 15px;"><path d="M12 2v4"></path><path d="m16.2 7.8 2.9-2.9"></path><path d="M18 12h4"></path><path d="m16.2 16.2 2.9 2.9"></path><path d="M12 18v4"></path><path d="m4.9 19.1 2.9-2.9"></path><path d="M2 12h4"></path><path d="m4.9 4.9 2.9 2.9"></path></svg> <span>전송 중...</span></button>
 
         <button class="admin-btn" onclick="openGitHubSettingsModal()" title="GitHub 저장소 및 Personal Access Token 설정">
           <div class="btn-left">
-            <i data-lucide="settings" style="width: 15px; height: 15px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="settings" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
             <span>GitHub 설정</span>
           </div>
         </button>
 
         <button class="admin-btn warning" onclick="resetBrochureChanges()" title="초기 기본 상태로 복원">
           <div class="btn-left">
-            <i data-lucide="rotate-ccw" style="width: 15px; height: 15px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="rotate-ccw" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
             <span>초기화</span>
           </div>
         </button>
@@ -2700,7 +2693,7 @@
 
         <button class="admin-btn close" onclick="exitAdminMode()" title="관리자 편집 모드 종료">
           <div class="btn-left" style="width: 100%; justify-content: center;">
-            <i data-lucide="power" style="width: 15px; height: 15px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="power" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-power"><path d="M12 2v10"></path><path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path></svg>
             <span>편집 종료</span>
           </div>
         </button>
@@ -2711,7 +2704,7 @@
         
         <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: 4px;">
           <button onclick="showAdminSubview('main')" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); color: #cbd5e1; padding: 4px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            <i data-lucide="arrow-left" style="width: 13px; height: 13px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-left" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
             <span>메뉴로 돌아가기</span>
           </button>
           <span id="subviewLayoutModeBadge" style="font-size: 10px; font-weight: 800; background: #0ea5e9; color: #fff; padding: 2px 7px; border-radius: 4px; font-family: monospace;">변경 모드</span>
@@ -2888,7 +2881,7 @@
     <div class="admin-modal-box">
       <div class="admin-modal-header">
         <div class="admin-modal-icon">
-          <i data-lucide="shield-check" style="width: 26px; height: 26px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-check" aria-hidden="true" style="width: 26px; height: 26px;" class="lucide lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
         </div>
         <h3>관리자 편집 모드</h3>
         <p>페이지 추가/삭제, 텍스트 실시간 수정, 이미지 교체를 시작하려면 비밀번호를 입력하세요.</p>
@@ -2909,14 +2902,14 @@
   <!-- ============================================================ -->
   <!-- EXCEL-STYLE PROJECT DATABASE MANAGEMENT MODAL (프로젝트 DB 관리 모달) -->
   <!-- ============================================================ -->
-  <div id="projectDbModal" class="admin-modal-backdrop" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 100000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
+  <div id="projectDbModal" class="admin-modal-backdrop" style="display: none; position: fixed; inset: 0px; background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(8px); z-index: 100000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
     <div style="background: #0b1120; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 14px; width: 100%; max-width: 980px; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(14, 165, 233, 0.15); overflow: hidden; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
       
       <!-- Modal Header -->
       <div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.95);">
         <div style="display: flex; align-items: center; gap: 10px;">
           <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); display: flex; align-items: center; justify-content: center; color: #38bdf8;">
-            <i data-lucide="database" style="width: 18px; height: 18px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="database" aria-hidden="true" style="width: 18px; height: 18px;" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>
           </div>
           <div>
             <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 8px;">
@@ -2926,8 +2919,8 @@
             <p style="margin: 3px 0 0; font-size: 11.5px; color: #94a3b8;">각 솔루션 간지 페이지에 연도별로 연동되는 프로젝트 목록을 엑셀처럼 자유롭게 추가·수정·관리합니다.</p>
           </div>
         </div>
-        <button onclick="closeProjectDbModal()" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(239, 68, 68, 0.3)'; this.style.color='#fca5a5';" onmouseleave="this.style.background='rgba(255, 255, 255, 0.08)'; this.style.color='#cbd5e1';">
-          <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+        <button onclick="closeProjectDbModal()" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: rgb(203, 213, 225); width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;" onmouseenter="this.style.background='rgba(239, 68, 68, 0.3)'; this.style.color='#fca5a5';" onmouseleave="this.style.background='rgba(255, 255, 255, 0.08)'; this.style.color='#cbd5e1';">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" style="width: 16px; height: 16px;" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </button>
       </div>
 
@@ -2948,24 +2941,24 @@
 
           <div style="position: relative; flex: 1;">
             <input type="text" id="projectDbSearchInput" oninput="renderProjectDbTable()" placeholder="프로젝트명 검색..." style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.18); color: #ffffff; padding: 6px 10px 6px 28px; border-radius: 6px; font-size: 12px; outline: none;">
-            <i data-lucide="search" style="position: absolute; left: 8px; top: 7px; width: 14px; height: 14px; color: #64748b;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" style="position: absolute; left: 8px; top: 7px; width: 14px; height: 14px; color: #64748b;" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
           </div>
         </div>
 
         <!-- Right: Action Buttons -->
         <div style="display: flex; align-items: center; gap: 8px;">
           <button onclick="addProjectDbRow()" style="background: #0284c7; border: none; color: #ffffff; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: background 0.15s;">
-            <i data-lucide="plus" style="width: 14px; height: 14px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" style="width: 14px; height: 14px;" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
             <span>행 추가</span>
           </button>
           
           <button onclick="openExcelPasteModal()" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16); color: #e2e8f0; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px;">
-            <i data-lucide="clipboard-paste" style="width: 14px; height: 14px; color: #38bdf8;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clipboard-paste" aria-hidden="true" style="width: 14px; height: 14px; color: #38bdf8;" class="lucide lucide-clipboard-paste"><path d="M11 14h10"></path><path d="M16 4h2a2 2 0 0 1 2 2v1.344"></path><path d="m17 18 4-4-4-4"></path><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 1.793-1.113"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect></svg>
             <span>엑셀 붙여넣기</span>
           </button>
 
           <button onclick="exportProjectDbToCSV()" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16); color: #cbd5e1; padding: 6px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 5px;" title="CSV로 내보내기">
-            <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" aria-hidden="true" style="width: 14px; height: 14px;" class="lucide lucide-download"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
             <span>CSV</span>
           </button>
 
@@ -2988,22 +2981,245 @@
             </tr>
           </thead>
           <tbody id="projectDbTableBody">
-            <!-- Rendered dynamically by renderProjectDbTable() -->
-          </tbody>
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">1</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2026" onchange="updateProjectDbField('p_1793965495463', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_1793965495463', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="충청지역본부 청사 건립 설계용역(BIM)" onchange="updateProjectDbField('p_1793965495463', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_1793965495463')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">2</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2026" onchange="updateProjectDbField('p_1793965485377', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_1793965485377', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="대구청 제1기동대 BIM용역" onchange="updateProjectDbField('p_1793965485377', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_1793965485377')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">3</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2026" onchange="updateProjectDbField('p_1793965465110', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_1793965465110', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="광명 CM병원 BIM용역" onchange="updateProjectDbField('p_1793965465110', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_1793965465110')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">4</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2026" onchange="updateProjectDbField('p_101', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_101', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="Post Tower 건립공사" onchange="updateProjectDbField('p_101', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_101')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">5</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2026" onchange="updateProjectDbField('p_102', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_102', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="커피그라인더 전시관 BIM 용역" onchange="updateProjectDbField('p_102', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_102')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">6</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2025" onchange="updateProjectDbField('p_1793965633884', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_1793965633884', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="영은페이퍼 충무로 사옥 실시 BIM" onchange="updateProjectDbField('p_1793965633884', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_1793965633884')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">7</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2025" onchange="updateProjectDbField('p_1793965621545', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_1793965621545', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="인천통합보훈회관 건립사업 설계용역" onchange="updateProjectDbField('p_1793965621545', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_1793965621545')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">8</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2025" onchange="updateProjectDbField('p_1793965601806', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_1793965601806', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="북천안데이터센터 BIM 용역" onchange="updateProjectDbField('p_1793965601806', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_1793965601806')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      
+        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.07); transition: background 0.15s; background: transparent;" onmouseenter="this.style.background='rgba(255,255,255,0.03)'" onmouseleave="this.style.background='transparent'">
+          <td style="padding: 8px 10px; color: #64748b; text-align: center; font-family: monospace;">9</td>
+          <td style="padding: 8px 12px;">
+            <input type="number" value="2025" onchange="updateProjectDbField('p_1793965585866', 'year', this.value)" style="width: 75px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #38bdf8; font-weight: 700; padding: 4px 8px; border-radius: 4px; font-family: monospace; outline: none;">
+          </td>
+          <td style="padding: 8px 12px;">
+            <select onchange="updateProjectDbField('p_1793965585866', 'category', this.value)" style="width: 100%; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #f1f5f9; padding: 4px 6px; border-radius: 4px; outline: none; font-size: 11.5px;">
+              <option value="bim" selected="">01. BIM</option>
+              <option value="scan">02. 3D 스캐닝</option>
+              <option value="xr">03. 공간 컴퓨팅</option>
+              <option value="simulation">04. 시뮬레이션</option>
+              <option value="consulting">05. 교육/컨설팅</option>
+              <option value="rnd">06. 미래건축 R&amp;D</option>
+            </select>
+          </td>
+          <td style="padding: 8px 12px;">
+            <input type="text" value="담바우마을 에너지공급센터 BIM용역" onchange="updateProjectDbField('p_1793965585866', 'name', this.value)" placeholder="프로젝트명 입력" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.16); color: #ffffff; padding: 4px 8px; border-radius: 4px; outline: none; font-size: 12.5px;">
+          </td>
+          <td style="padding: 8px 8px; text-align: center;">
+            <button onclick="deleteProjectDbRow('p_1793965585866')" title="삭제" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; width: 26px; height: 26px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
         </table>
       </div>
 
       <!-- Modal Footer -->
       <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.95);">
         <div style="font-size: 12px; color: #64748b;">
-          총 <span id="projectDbTotalCount" style="color: #38bdf8; font-weight: 700;">0</span>건 등록됨 (수정 후 반드시 [저장 및 간지 반영]을 눌러주세요)
+          총 <span id="projectDbTotalCount" style="color: #38bdf8; font-weight: 700;">9</span>건 등록됨 (수정 후 반드시 [저장 및 간지 반영]을 눌러주세요)
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
           <button onclick="closeProjectDbModal()" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer;">
             닫기
           </button>
           <button onclick="saveProjectDbAndSync()" style="background: #10b981; border: none; color: #ffffff; padding: 8px 20px; border-radius: 6px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
-            <i data-lucide="check" style="width: 15px; height: 15px;"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg>
             <span>저장 및 간지 페이지 일괄 반영</span>
           </button>
         </div>
@@ -3017,15 +3233,18 @@
     <div style="background: #0f172a; border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; width: 100%; max-width: 650px; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); color: #f8fafc;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
         <h4 style="margin: 0; font-size: 15px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 6px;">
-          <i data-lucide="clipboard" style="width: 16px; height: 16px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clipboard" aria-hidden="true" style="width: 16px; height: 16px;" class="lucide lucide-clipboard"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path></svg>
           <span>엑셀 / 스프레드시트 일괄 붙여넣기</span>
         </h4>
-        <button onclick="closeExcelPasteModal()" style="background: none; border: none; color: #94a3b8; cursor: pointer;"><i data-lucide="x" style="width: 16px; height: 16px;"></i></button>
+        <button onclick="closeExcelPasteModal()" style="background: none; border: none; color: #94a3b8; cursor: pointer;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" style="width: 16px; height: 16px;" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
       </div>
       <p style="font-size: 12px; color: #94a3b8; margin: 0 0 10px; line-height: 1.5;">
         엑셀에서 <strong>[연도(Year) / 카테고리(선택) / 프로젝트명]</strong> 행들을 복사(Ctrl+C)한 후 아래 텍스트 상자에 붙여넣기(Ctrl+V)하세요. 탭 또는 쉼표 구분자를 자동 인식하여 일괄 등록합니다.
       </p>
-      <textarea id="excelPasteTextarea" rows="8" placeholder="예시:&#10;2024&#9;bim&#9;담바우 에너지공급센터 BIM 용역&#10;2024&#9;bim&#9;네이버 1784 제2사옥 디지털 트윈 모델링&#10;2023&#9;scan&#9;인천 파라다이스시티 &amp; 메리어트 호텔 역설계" style="width: 100%; box-sizing: border-box; background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; color: #ffffff; padding: 10px; font-family: monospace; font-size: 12px; line-height: 1.5; outline: none;"></textarea>
+      <textarea id="excelPasteTextarea" rows="8" placeholder="예시:
+2024	bim	담바우 에너지공급센터 BIM 용역
+2024	bim	네이버 1784 제2사옥 디지털 트윈 모델링
+2023	scan	인천 파라다이스시티 &amp; 메리어트 호텔 역설계" style="width: 100%; box-sizing: border-box; background: #080d1a; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 6px; color: #ffffff; padding: 10px; font-family: monospace; font-size: 12px; line-height: 1.5; outline: none;"></textarea>
       
       <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px;">
         <button onclick="closeExcelPasteModal()" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #cbd5e1; padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer;">취소</button>
@@ -3039,7 +3258,7 @@
     <div class="admin-modal-box wide" style="max-width: 680px;">
       <div class="admin-modal-header">
         <div class="admin-modal-icon" style="background: #eff6ff; color: #2563eb; border-color: #bfdbfe;">
-          <i data-lucide="palette" style="width: 24px; height: 24px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="palette" aria-hidden="true" style="width: 24px; height: 24px;" class="lucide lucide-palette"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"></path><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>
         </div>
         <h3>솔루션 노드 색상 설정 (Color Palette)</h3>
         <p>각 상위 노드의 색상을 직접 지정하거나, 추천 디자인 테마를 클릭하세요. 실시간으로 그래프에 즉각 반영됩니다.</p>
@@ -3058,14 +3277,14 @@
             </button>
             <button type="button" class="admin-modal-btn" onclick="applyNodeTheme('theme1')" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 10px 14px; text-align: left; display: flex; flex-direction: column; gap: 4px; border-radius: 8px; cursor: pointer;">
               <span style="font-weight: 800; font-size: 13px;">Theme 1: Cyber Blueprint</span>
-              <span style="font-size: 11px; color: #64748b;">하이테크 블루 & 아쿠아 단일 톤</span>
+              <span style="font-size: 11px; color: #64748b;">하이테크 블루 &amp; 아쿠아 단일 톤</span>
             </button>
             <button type="button" class="admin-modal-btn" onclick="applyNodeTheme('theme2')" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 10px 14px; text-align: left; display: flex; flex-direction: column; gap: 4px; border-radius: 8px; cursor: pointer;">
               <span style="font-weight: 800; font-size: 13px;">Theme 2: Architectural Mono</span>
               <span style="font-size: 11px; color: #64748b;">차콜/슬레이트 그레이 + 일렉트릭 블루</span>
             </button>
             <button type="button" class="admin-modal-btn" onclick="applyNodeTheme('theme3')" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 10px 14px; text-align: left; display: flex; flex-direction: column; gap: 4px; border-radius: 8px; cursor: pointer;">
-              <span style="font-weight: 800; font-size: 13px;">Theme 3: Earth & Materials</span>
+              <span style="font-weight: 800; font-size: 13px;">Theme 3: Earth &amp; Materials</span>
               <span style="font-size: 11px; color: #64748b;">테라코타 브릭, 세이지 그린, 인디고</span>
             </button>
           </div>
@@ -3097,7 +3316,7 @@
           <i data-lucide="github" style="width: 26px; height: 26px;"></i>
         </div>
         <h3>GitHub 자동 배포 연동 설정</h3>
-        <p>브라우저에서 클릭 한 번으로 GitHub에 커밋 & 푸시하려면 Personal Access Token이 필요합니다.</p>
+        <p>브라우저에서 클릭 한 번으로 GitHub에 커밋 &amp; 푸시하려면 Personal Access Token이 필요합니다.</p>
       </div>
       <div class="admin-modal-body">
         <div style="margin-bottom: 14px;">
@@ -3113,7 +3332,7 @@
           <input type="password" id="ghTokenInput" placeholder="ghp_... (repo 쓰기 권한 필수)" style="width: 100%; padding: 10px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
           <p class="admin-hint">
             💡 토큰이 없으신가요? 
-            <a href="https://github.com/settings/tokens/new?scopes=repo&description=SnowmanFactory-Interactive-CMS" target="_blank" style="color: #0070f3; text-decoration: underline; font-weight: 600;">
+            <a href="https://github.com/settings/tokens/new?scopes=repo&amp;description=SnowmanFactory-Interactive-CMS" target="_blank" style="color: #0070f3; text-decoration: underline; font-weight: 600;">
               [여기를 클릭해 GitHub 토큰 바로 발급받기]
             </a> (repo 권한 체크 후 발급된 토큰 복사)
           </p>
@@ -3130,9 +3349,9 @@
   </div>
 
   <!-- Admin Toast Notification -->
-  <div id="adminToast" class="admin-toast">
-    <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
-    <span id="adminToastText">저장되었습니다.</span>
+  <div id="adminToast" class="admin-toast show">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width: 16px; height: 16px;" class="lucide lucide-check-circle"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
+    <span id="adminToastText">⏳ GitHub 저장소의 최신 파일 SHA를 확인하는 중...</span>
   </div>
 
   <!-- Hidden Image File Input for Click-to-Upload -->
@@ -3142,14 +3361,14 @@
   <!-- ============================================================ -->
   <!-- LEFT FULL-HEIGHT TOC SIDEBAR PANEL (좌측 목차 및 순서 변경 패널) -->
   <!-- ============================================================ -->
-  <div id="tocBackdrop" onclick="closeTocPanel()"></div>
+  <div id="tocBackdrop" onclick="closeTocPanel()" class=""></div>
 
-  <aside id="tocSidebarPanel">
+  <aside id="tocSidebarPanel" class="">
     <!-- Header -->
     <div class="toc-header">
       <div class="toc-title-wrap">
         <div class="toc-icon-badge">
-          <i data-lucide="list-ordered" style="width: 17px; height: 17px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="list-ordered" aria-hidden="true" style="width: 17px; height: 17px;" class="lucide lucide-list-ordered"><path d="M11 5h10"></path><path d="M11 12h10"></path><path d="M11 19h10"></path><path d="M4 4h1v5"></path><path d="M4 9h2"></path><path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02"></path></svg>
         </div>
         <div>
           <h3 style="margin: 0; font-size: 15px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 7px;">
@@ -3160,14 +3379,140 @@
         </div>
       </div>
       <button onclick="closeTocPanel()" title="목차 닫기" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(239, 68, 68, 0.3)'; this.style.color='#fca5a5';" onmouseleave="this.style.background='rgba(255, 255, 255, 0.08)'; this.style.color='#cbd5e1';">
-        <i data-lucide="x" style="width: 15px; height: 15px;"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
       </button>
     </div>
 
     <!-- Body (Dynamic Page List) -->
     <div class="toc-body" id="tocListContainer">
-      <!-- Rendered dynamically by renderTocList() -->
-    </div>
+          <div class="toc-item-card active" data-index="0" onclick="handleTocItemClick(0)" draggable="true" ondragstart="handleTocDragStart(event, 0)" ondragover="handleTocDragOver(event)" ondrop="handleTocDrop(event, 0)" ondragend="handleTocDragEnd(event)">
+            
+            <!-- Page Number Badge -->
+            <div class="toc-num-badge">
+              P.1
+            </div>
+
+            <!-- Page Title & Type Tag -->
+            <div class="toc-item-content">
+              <div class="toc-item-title" title="프로젝트 상세 (P.1)">
+                프로젝트 상세 (P.1)
+              </div>
+              <div class="toc-item-meta">
+                <span class="toc-type-tag" style="color: #34d399; background: rgba(16, 185, 129, 0.15);">
+                  프로젝트
+                </span>
+                <span style="font-size: 9.5px; color: #38bdf8; font-weight: 700;">● 현재 페이지</span>
+              </div>
+            </div>
+
+            <!-- Reorder Actions (Up / Down) -->
+            <div class="toc-reorder-actions" onclick="event.stopPropagation()">
+              <button class="toc-order-btn" title="한 페이지 위로 이동" onclick="movePageUp(0)" disabled="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-up" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"></path></svg>
+              </button>
+              <button class="toc-order-btn" title="한 페이지 아래로 이동" onclick="movePageDown(0)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+            </div>
+
+          </div>
+        
+          <div class="toc-item-card " data-index="1" onclick="handleTocItemClick(1)" draggable="true" ondragstart="handleTocDragStart(event, 1)" ondragover="handleTocDragOver(event)" ondrop="handleTocDrop(event, 1)" ondragend="handleTocDragEnd(event)">
+            
+            <!-- Page Number Badge -->
+            <div class="toc-num-badge">
+              P.2
+            </div>
+
+            <!-- Page Title & Type Tag -->
+            <div class="toc-item-content">
+              <div class="toc-item-title" title="핵심 솔루션 및 통합 체계 현황">
+                핵심 솔루션 및 통합 체계 현황
+              </div>
+              <div class="toc-item-meta">
+                <span class="toc-type-tag" style="color: #0ea5e9; background: rgba(14, 165, 233, 0.15);">
+                  솔루션 맵
+                </span>
+                
+              </div>
+            </div>
+
+            <!-- Reorder Actions (Up / Down) -->
+            <div class="toc-reorder-actions" onclick="event.stopPropagation()">
+              <button class="toc-order-btn" title="한 페이지 위로 이동" onclick="movePageUp(1)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-up" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"></path></svg>
+              </button>
+              <button class="toc-order-btn" title="한 페이지 아래로 이동" onclick="movePageDown(1)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+            </div>
+
+          </div>
+        
+          <div class="toc-item-card " data-index="2" onclick="handleTocItemClick(2)" draggable="true" ondragstart="handleTocDragStart(event, 2)" ondragover="handleTocDragOver(event)" ondrop="handleTocDrop(event, 2)" ondragend="handleTocDragEnd(event)">
+            
+            <!-- Page Number Badge -->
+            <div class="toc-num-badge">
+              P.3
+            </div>
+
+            <!-- Page Title & Type Tag -->
+            <div class="toc-item-content">
+              <div class="toc-item-title" title="BIM &amp; 디지털 트윈                 통합 엔지니어링 체계">
+                BIM &amp; 디지털 트윈                 통합 엔지니어링 체계
+              </div>
+              <div class="toc-item-meta">
+                <span class="toc-type-tag" style="color: #38bdf8; background: rgba(56, 189, 248, 0.15);">
+                  카테고리 간지
+                </span>
+                
+              </div>
+            </div>
+
+            <!-- Reorder Actions (Up / Down) -->
+            <div class="toc-reorder-actions" onclick="event.stopPropagation()">
+              <button class="toc-order-btn" title="한 페이지 위로 이동" onclick="movePageUp(2)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-up" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"></path></svg>
+              </button>
+              <button class="toc-order-btn" title="한 페이지 아래로 이동" onclick="movePageDown(2)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+            </div>
+
+          </div>
+        
+          <div class="toc-item-card " data-index="3" onclick="handleTocItemClick(3)" draggable="true" ondragstart="handleTocDragStart(event, 3)" ondragover="handleTocDragOver(event)" ondrop="handleTocDrop(event, 3)" ondragend="handleTocDragEnd(event)">
+            
+            <!-- Page Number Badge -->
+            <div class="toc-num-badge">
+              P.4
+            </div>
+
+            <!-- Page Title & Type Tag -->
+            <div class="toc-item-content">
+              <div class="toc-item-title" title="프로젝트 시네마 영상">
+                프로젝트 시네마 영상
+              </div>
+              <div class="toc-item-meta">
+                <span class="toc-type-tag" style="color: #ec4899; background: rgba(236, 72, 153, 0.15);">
+                  시네마 쇼케이스
+                </span>
+                
+              </div>
+            </div>
+
+            <!-- Reorder Actions (Up / Down) -->
+            <div class="toc-reorder-actions" onclick="event.stopPropagation()">
+              <button class="toc-order-btn" title="한 페이지 위로 이동" onclick="movePageUp(3)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-up" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"></path></svg>
+              </button>
+              <button class="toc-order-btn" title="한 페이지 아래로 이동" onclick="movePageDown(3)" disabled="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" style="width: 13px; height: 13px;" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+              </button>
+            </div>
+
+          </div>
+        </div>
 
     <!-- Footer -->
     <div class="toc-footer">
@@ -3188,16 +3533,16 @@
 
       <div class="top-tools-center">
         <button class="tool-icon-btn" id="btnTopToc" title="목차 열기 (페이지 순서 변경)" onclick="toggleTocPanel()">
-          <i data-lucide="list" style="width: 18px; height: 18px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="list" aria-hidden="true" style="width: 18px; height: 18px;" class="lucide lucide-list"><path d="M3 5h.01"></path><path d="M3 12h.01"></path><path d="M3 19h.01"></path><path d="M8 5h13"></path><path d="M8 12h13"></path><path d="M8 19h13"></path></svg>
         </button>
         <button class="tool-icon-btn" title="전체화면" onclick="toggleFullScreen()">
-          <i data-lucide="maximize" style="width: 17px; height: 17px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="maximize" aria-hidden="true" style="width: 17px; height: 17px;" class="lucide lucide-maximize"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
         </button>
         <button class="tool-icon-btn" title="처음 인트로 화면으로" onclick="returnToIntro()">
-          <i data-lucide="home" style="width: 17px; height: 17px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="home" aria-hidden="true" style="width: 17px; height: 17px;" class="lucide lucide-home"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
         </button>
         <button class="tool-icon-btn" id="btnAdminTrigger" title="관리자 편집 모드 (단축키: Ctrl+Shift+A)" onclick="openAdminModal()">
-          <i data-lucide="lock" style="width: 16px; height: 16px; color: #60a5fa;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="lock" aria-hidden="true" style="width: 16px; height: 16px; color: #60a5fa;" class="lucide lucide-lock"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         </button>
       </div>
 
@@ -3207,8 +3552,8 @@
     </header>
 
     <!-- Mobile Rotate Prompt Toast -->
-    <div id="mobileRotateToast" class="mobile-rotate-toast active">
-      <i data-lucide="smartphone" class="rotate-icon" style="width: 14px; height: 14px;"></i>
+    <div id="mobileRotateToast" class="mobile-rotate-toast" style="display: none;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="smartphone" aria-hidden="true" class="lucide lucide-smartphone rotate-icon" style="width: 14px; height: 14px;"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
       <span>화면을 가로로 돌리시면 전체 화면으로 감상하실 수 있습니다</span>
       <button class="mobile-rotate-toast-close" onclick="closeRotateToast()">✕</button>
     </div>
@@ -3218,10 +3563,10 @@
       
       <!-- Side Nav Arrows -->
       <button class="stage-arrow-btn left" id="viewerPrevBtn" onclick="prevPage()" title="이전 페이지">
-        <i data-lucide="chevron-left" style="width: 26px; height: 26px;"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-left" aria-hidden="true" style="width: 26px; height: 26px;" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"></path></svg>
       </button>
       <button class="stage-arrow-btn right" id="viewerNextBtn" onclick="nextPage()" title="다음 페이지">
-        <i data-lucide="chevron-right" style="width: 26px; height: 26px;"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" style="width: 26px; height: 26px;" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
       </button>
 
       <!-- The A4 Sheet Box -->
@@ -3230,133 +3575,128 @@
         <!-- ============================================================ -->
         <!-- A4 PAGE 1: COVER (지명원 표지 원본 레이아웃)                 -->
         <!-- ============================================================ -->
-        <div class="a4-page-content" id="page-1-content" style="display: flex;">
+        <div class="a4-page-content" id="page-1-content" style="display: none;">
           <div class="a4-page-cover">
             
             <div class="cover-center-content">
-              <div class="cover-snowman-avatar" id="sheetSnowmanAvatar" title="마우스를 움직여보세요!">
+              <div class="cover-snowman-avatar" id="sheetSnowmanAvatar" title="마우스를 움직여보세요!" style="transform: perspective(500px) rotateY(7.66667deg) rotateX(2.49568deg);">
                 <svg viewBox="0 0 220 220" style="width: 100%; height: 100%; overflow: visible;">
                   <g class="snowman-arm">
-                    <line x1="45" y1="125" x2="20" y2="105" stroke="#000" stroke-width="4.5" stroke-linecap="round"/>
-                    <line x1="28" y1="112" x2="16" y2="124" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
-                    <line x1="26" y1="110" x2="30" y2="96" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
+                    <line x1="45" y1="125" x2="20" y2="105" stroke="#000" stroke-width="4.5" stroke-linecap="round"></line>
+                    <line x1="28" y1="112" x2="16" y2="124" stroke="#000" stroke-width="3.5" stroke-linecap="round"></line>
+                    <line x1="26" y1="110" x2="30" y2="96" stroke="#000" stroke-width="3.5" stroke-linecap="round"></line>
                   </g>
-                  <circle cx="120" cy="115" r="75" fill="none" stroke="none"/>
-                  <g id="sheetEyesGroup">
-                    <circle cx="98" cy="88" r="4.5" fill="#000"/>
-                    <circle cx="140" cy="82" r="4.5" fill="#000"/>
+                  <circle cx="120" cy="115" r="75" fill="none" stroke="none"></circle>
+                  <g id="sheetEyesGroup" style="transform: translate(6.13333px, 1.87176px);">
+                    <circle cx="98" cy="88" r="4.5" fill="#000"></circle>
+                    <circle cx="140" cy="82" r="4.5" fill="#000"></circle>
                   </g>
-                  <g id="sheetNoseGroup">
-                    <path d="M 128 98 L 165 104 C 168 105 168 108 165 109 L 128 116 Z" fill="#000"/>
+                  <g id="sheetNoseGroup" style="transform: translate(10.7333px, 2.80764px);">
+                    <path d="M 128 98 L 165 104 C 168 105 168 108 165 109 L 128 116 Z" fill="#000"></path>
                   </g>
-                  <g id="sheetMouthGroup">
-                    <path d="M 104 125 Q 122 137 142 124" fill="none" stroke="#000" stroke-width="4.5" stroke-linecap="round"/>
+                  <g id="sheetMouthGroup" style="transform: translate(3.06667px, 0.935882px);">
+                    <path d="M 104 125 Q 122 137 142 124" fill="none" stroke="#000" stroke-width="4.5" stroke-linecap="round"></path>
                   </g>
                 </svg>
               </div>
               
-              <img src="assets/logo.png" alt="SNOWMAN FACTORY" class="cover-logo-img">
+              <img src="assets/logo.png" alt="SNOWMAN FACTORY" class="cover-logo-img" title="클릭: 파일 선택 | Ctrl+V: 클립보드 이미지 붙여넣기 | 드래그&amp;드롭 지원">
             </div>
           </div>
-        </div>
-
-        <!-- ============================================================ -->
-        <!-- A4 PAGE 2: OBSIDIAN GRAPH SYSTEM (지명원 P.02 & 네트워크 인포그래픽) -->
-        <!-- ============================================================ -->
-        <div class="a4-page-content" id="page-2-content" style="display: none;">
+        </div><div class="a4-page-content" id="page-2-content" style="display: none;">
           <div class="a4-page-solutions">
             
             <!-- Header Row (Only Title: Solutions) -->
             <div class="obsidian-header-row" style="margin-bottom: 8px; padding-bottom: 12px; border-bottom: 1.5px solid #0f172a;">
-              <div class="obsidian-titles-wrap">
-                <h2 class="obsidian-main-title" style="font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: #0f172a; margin: 0; line-height: 1.2;">
-                  Solutions
-                </h2>
-              </div>
-            </div>
+          <div class="obsidian-titles-wrap">
+            <h2 class="obsidian-main-title" style="font-size: 24px; font-weight: 900; letter-spacing: -0.5px; color: #0f172a; margin: 0; line-height: 1.2;">
+              Solutions
+            </h2>
+          </div>
+        </div>
 
             <!-- Obsidian Interactive Graph Stage (오비탈 네트워크 인포그래픽 SVG & 카메라 줌) -->
             <div class="obsidian-graph-stage" id="graphContainer">
               <!-- Floating Zoom Reset Button -->
               <button class="graph-zoom-reset-btn" id="graphZoomResetBtn" onclick="resetGraphZoom()">
-                <i data-lucide="zoom-out" style="width: 14px; height: 14px;"></i>
-                <span>전체 보기 (ZOOM OUT)</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="zoom-out" aria-hidden="true" style="width: 14px; height: 14px;" class="lucide lucide-zoom-out"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line><line x1="8" x2="14" y1="11" y2="11"></line></svg>
+                <span spellcheck="false">전체 보기 (ZOOM OUT)</span>
               </button>
 
               <svg id="graphSvg" viewBox="0 0 1000 460">
                 <defs>
                   <filter id="nodeGlow" x="-30%" y="-30%" width="160%" height="160%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.14"/>
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.14"></feDropShadow>
                   </filter>
                   <filter id="activeGlow" x="-40%" y="-40%" width="180%" height="180%">
-                    <feDropShadow dx="0" dy="8" stdDeviation="14" flood-opacity="0.32"/>
+                    <feDropShadow dx="0" dy="8" stdDeviation="14" flood-opacity="0.32"></feDropShadow>
                   </filter>
                   <filter id="capsuleShadow" x="-20%" y="-40%" width="140%" height="200%">
-                    <feDropShadow dx="0" dy="5" stdDeviation="8" flood-opacity="0.14"/>
+                    <feDropShadow dx="0" dy="5" stdDeviation="8" flood-opacity="0.14"></feDropShadow>
                   </filter>
                   <linearGradient id="streamGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#0070f3" stop-opacity="0.2"/>
-                    <stop offset="35%" stop-color="#38bdf8" stop-opacity="1"/>
-                    <stop offset="65%" stop-color="#818cf8" stop-opacity="1"/>
-                    <stop offset="100%" stop-color="#0070f3" stop-opacity="0.2"/>
+                    <stop offset="0%" stop-color="#0070f3" stop-opacity="0.2"></stop>
+                    <stop offset="35%" stop-color="#38bdf8" stop-opacity="1"></stop>
+                    <stop offset="65%" stop-color="#818cf8" stop-opacity="1"></stop>
+                    <stop offset="100%" stop-color="#0070f3" stop-opacity="0.2"></stop>
                   </linearGradient>
                 </defs>
 
                 <!-- Camera Zoomable Viewport Group -->
-                <g id="viewportGroup">
+                <g id="viewportGroup" style="transform: translate(0px, 0px) scale(1);">
                   <!-- Editorial Orbit Grid & Central Horizontal Axis -->
                   <g class="bg-orbit-grid" id="bgOrbitGrid">
                     <!-- 얇고 연한 풀스크린 건축 모눈 그리드 (가로 3줄, 세로 5줄) -->
                     <!-- [가로 그리드 라인] (x: 0 ~ 1000) -->
                     <!-- 상단 노드 라인 (y: 125) -->
-                    <line x1="0" y1="125" x2="1000" y2="125" stroke="#e2e8f0" stroke-width="1.2" />
-                    <line class="data-pulse-stream" x1="0" y1="125" x2="1000" y2="125" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <line x1="0" y1="125" x2="1000" y2="125" stroke="#e2e8f0" stroke-width="1.2"></line>
+                    <line class="data-pulse-stream" x1="0" y1="125" x2="1000" y2="125" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line>
 
                     <!-- 중간 보조 라인 (y: 230) - 노드 사이 정중앙 -->
-                    <line x1="0" y1="230" x2="1000" y2="230" stroke="#f1f5f9" stroke-width="1.0" />
+                    <line x1="0" y1="230" x2="1000" y2="230" stroke="#f1f5f9" stroke-width="1.0"></line>
 
                     <!-- 하단 노드 라인 (y: 335) -->
-                    <line x1="0" y1="335" x2="1000" y2="335" stroke="#e2e8f0" stroke-width="1.2" />
-                    <line class="data-pulse-stream" x1="0" y1="335" x2="1000" y2="335" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <line x1="0" y1="335" x2="1000" y2="335" stroke="#e2e8f0" stroke-width="1.2"></line>
+                    <line class="data-pulse-stream" x1="0" y1="335" x2="1000" y2="335" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line>
 
                     <!-- [세로 그리드 라인] (y: 0 ~ 460) -->
                     <!-- 1열 노드 라인 (x: 180) -->
-                    <line x1="180" y1="0" x2="180" y2="460" stroke="#e2e8f0" stroke-width="1.2" />
-                    <line class="data-pulse-stream" x1="180" y1="0" x2="180" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <line x1="180" y1="0" x2="180" y2="460" stroke="#e2e8f0" stroke-width="1.2"></line>
+                    <line class="data-pulse-stream" x1="180" y1="0" x2="180" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line>
 
                     <!-- 1열과 2열 중간 보조 라인 (x: 340) -->
-                    <line x1="340" y1="0" x2="340" y2="460" stroke="#f1f5f9" stroke-width="1.0" />
+                    <line x1="340" y1="0" x2="340" y2="460" stroke="#f1f5f9" stroke-width="1.0"></line>
 
                     <!-- 2열 노드 라인 (x: 500) -->
-                    <line x1="500" y1="0" x2="500" y2="460" stroke="#e2e8f0" stroke-width="1.2" />
-                    <line class="data-pulse-stream" x1="500" y1="0" x2="500" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <line x1="500" y1="0" x2="500" y2="460" stroke="#e2e8f0" stroke-width="1.2"></line>
+                    <line class="data-pulse-stream" x1="500" y1="0" x2="500" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line>
 
                     <!-- 2열과 3열 중간 보조 라인 (x: 660) -->
-                    <line x1="660" y1="0" x2="660" y2="460" stroke="#f1f5f9" stroke-width="1.0" />
+                    <line x1="660" y1="0" x2="660" y2="460" stroke="#f1f5f9" stroke-width="1.0"></line>
 
                     <!-- 3열 노드 라인 (x: 820) -->
-                    <line x1="820" y1="0" x2="820" y2="460" stroke="#e2e8f0" stroke-width="1.2" />
-                    <line class="data-pulse-stream" x1="820" y1="0" x2="820" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <line x1="820" y1="0" x2="820" y2="460" stroke="#e2e8f0" stroke-width="1.2"></line>
+                    <line class="data-pulse-stream" x1="820" y1="0" x2="820" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line>
 
                     <!-- 각 상위 카테고리 노드 중심에 정확히 일치하는 점선 원 (r=96) -->
                     <g stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4" fill="none">
-                      <circle cx="180" cy="125" r="96" />
-                      <circle cx="500" cy="125" r="96" />
-                      <circle cx="820" cy="125" r="96" />
-                      <circle cx="180" cy="335" r="96" />
-                      <circle cx="500" cy="335" r="96" />
-                      <circle cx="820" cy="335" r="96" />
+                      <circle cx="180" cy="125" r="96"></circle>
+                      <circle cx="500" cy="125" r="96"></circle>
+                      <circle cx="820" cy="125" r="96"></circle>
+                      <circle cx="180" cy="335" r="96"></circle>
+                      <circle cx="500" cy="335" r="96"></circle>
+                      <circle cx="820" cy="335" r="96"></circle>
                     </g>
                   </g>
 
                   <!-- Dynamic Connections Layer -->
-                  <g id="edgesLayer"></g>
+                  <g id="edgesLayer"><g class="dynamic-grid-connections"><line x1="0" y1="125" x2="1000" y2="125" stroke="#e2e8f0" stroke-width="1.2"></line><line class="data-pulse-stream" x1="0" y1="125" x2="1000" y2="125" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line><line x1="0" y1="230" x2="1000" y2="230" stroke="#f1f5f9" stroke-width="1.0"></line><line x1="0" y1="335" x2="1000" y2="335" stroke="#e2e8f0" stroke-width="1.2"></line><line class="data-pulse-stream" x1="0" y1="335" x2="1000" y2="335" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line><line x1="180" y1="0" x2="180" y2="460" stroke="#e2e8f0" stroke-width="1.2"></line><line class="data-pulse-stream" x1="180" y1="0" x2="180" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line><line x1="340" y1="0" x2="340" y2="460" stroke="#f1f5f9" stroke-width="1.0"></line><line x1="500" y1="0" x2="500" y2="460" stroke="#e2e8f0" stroke-width="1.2"></line><line class="data-pulse-stream" x1="500" y1="0" x2="500" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line><line x1="660" y1="0" x2="660" y2="460" stroke="#f1f5f9" stroke-width="1.0"></line><line x1="820" y1="0" x2="820" y2="460" stroke="#e2e8f0" stroke-width="1.2"></line><line class="data-pulse-stream" x1="820" y1="0" x2="820" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round"></line><circle cx="180" cy="125" r="96" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"></circle><circle cx="500" cy="125" r="96" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"></circle><circle cx="820" cy="125" r="96" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"></circle><circle cx="180" cy="335" r="96" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"></circle><circle cx="500" cy="335" r="96" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"></circle><circle cx="820" cy="335" r="96" fill="none" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"></circle></g></g>
 
                   <!-- Child Satellite Nodes (White Dots & Text Badges) Layer -->
-                  <g id="childNodesLayer"></g>
+                  <g id="childNodesLayer"><g class="category-dots-group" data-id="bim"><animateTransform attributeName="transform" type="rotate" from="0 180 125" to="360 180 125" dur="24s" repeatCount="indefinite"></animateTransform><g class="child-node-group"><circle class="child-white-dot" cx="258.6385962517432" cy="180.06333788970042" r="6" fill="#ffffff" stroke="#1e3a8a" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="129.12775063361232" cy="206.4126172310169" r="6" fill="#ffffff" stroke="#1e3a8a" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="101.36140374825676" cy="69.93666211029961" r="6" fill="#ffffff" stroke="#1e3a8a" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="235.06333788970042" cy="46.36140374825679" r="6" fill="#ffffff" stroke="#1e3a8a" stroke-width="2.6" opacity="1"></circle></g></g><g class="category-dots-group" data-id="scan"><animateTransform attributeName="transform" type="rotate" from="360 500 125" to="0 500 125" dur="32s" repeatCount="indefinite"></animateTransform><g class="child-node-group"><circle class="child-white-dot" cx="589.0096500384116" cy="160.96223296792755" r="6" fill="#ffffff" stroke="#0284c7" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="440.8964983687368" cy="200.64903234624532" r="6" fill="#ffffff" stroke="#0284c7" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="412.99445244448157" cy="84.42864687289287" r="6" fill="#ffffff" stroke="#0284c7" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="535.9622329679275" cy="35.99034996158841" r="6" fill="#ffffff" stroke="#0284c7" stroke-width="2.6" opacity="1"></circle></g></g><g class="category-dots-group" data-id="xr"><animateTransform attributeName="transform" type="rotate" from="0 820 125" to="360 820 125" dur="20s" repeatCount="indefinite"></animateTransform><g class="child-node-group"><circle class="child-white-dot" cx="891.3419032458298" cy="189.2365382104504" r="6" fill="#ffffff" stroke="#4f46e5" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="748.6580967541702" cy="189.23653821045042" r="6" fill="#ffffff" stroke="#4f46e5" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="755.7634617895496" cy="53.658096754170174" r="6" fill="#ffffff" stroke="#4f46e5" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="891.3419032458298" cy="60.76346178954962" r="6" fill="#ffffff" stroke="#4f46e5" stroke-width="2.6" opacity="1"></circle></g></g><g class="category-dots-group" data-id="consulting"><animateTransform attributeName="transform" type="rotate" from="360 180 335" to="0 180 335" dur="36s" repeatCount="indefinite"></animateTransform><g class="child-node-group"><circle class="child-white-dot" cx="264.762968914457" cy="380.0692700274455" r="6" fill="#ffffff" stroke="#0d9488" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="140.9532822647232" cy="422.7003639336897" r="6" fill="#ffffff" stroke="#0d9488" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="96.86156123669389" cy="287" r="6" fill="#ffffff" stroke="#0d9488" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="230.87224936638765" cy="253.5873827689831" r="6" fill="#ffffff" stroke="#0d9488" stroke-width="2.6" opacity="1"></circle></g></g><g class="category-dots-group" data-id="simulation"><animateTransform attributeName="transform" type="rotate" from="0 500 335" to="360 500 335" dur="28s" repeatCount="indefinite"></animateTransform><g class="child-node-group"><circle class="child-white-dot" cx="564.2365382104504" cy="406.3419032458298" r="6" fill="#ffffff" stroke="#0891b2" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="433.3127964359363" cy="404.05662083251053" r="6" fill="#ffffff" stroke="#0891b2" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="430.9433791674895" cy="268.31279643593626" r="6" fill="#ffffff" stroke="#0891b2" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="577.665631459995" cy="278.57261577992256" r="6" fill="#ffffff" stroke="#0891b2" stroke-width="2.6" opacity="1"></circle></g></g><g class="category-dots-group" data-id="rnd"><animateTransform attributeName="transform" type="rotate" from="360 820 335" to="0 820 335" dur="22s" repeatCount="indefinite"></animateTransform><g class="child-node-group"><circle class="child-white-dot" cx="898.6385962517433" cy="390.0633378897004" r="6" fill="#ffffff" stroke="#3b82f6" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="766.3174812668083" cy="414.587606965284" r="6" fill="#ffffff" stroke="#3b82f6" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="735.237031085543" cy="289.93072997255445" r="6" fill="#ffffff" stroke="#3b82f6" stroke-width="2.6" opacity="1"></circle></g><g class="child-node-group"><circle class="child-white-dot" cx="886.6872035640637" cy="265.9433791674894" r="6" fill="#ffffff" stroke="#3b82f6" stroke-width="2.6" opacity="1"></circle></g></g></g>
 
                   <!-- 6 Parent Category Nodes Layer (중앙 수평 1열) -->
-                  <g id="parentNodesLayer"></g>
+                  <g id="parentNodesLayer"><g class="parent-node-group  " data-id="bim"><circle class="parent-outer-ring" cx="180" cy="125" r="78" fill="none" stroke="#1e3a8a" stroke-opacity="0.22" stroke-width="1.2"></circle><circle class="parent-node-circle" cx="180" cy="125" r="66" fill="#1e3a8a" stroke="#ffffff" stroke-width="2" filter="url(#nodeGlow)"></circle><text class="parent-node-text" x="180" y="118">BIM</text><text class="parent-node-subtext" x="180" y="145">디지털 트윈</text></g><g class="parent-node-group  " data-id="scan"><circle class="parent-outer-ring" cx="500" cy="125" r="78" fill="none" stroke="#0284c7" stroke-opacity="0.22" stroke-width="1.2"></circle><circle class="parent-node-circle" cx="500" cy="125" r="66" fill="#0284c7" stroke="#ffffff" stroke-width="2" filter="url(#nodeGlow)"></circle><text class="parent-node-text" x="500" y="118">3D 스캐닝</text><text class="parent-node-subtext" x="500" y="145">초정밀 역설계</text></g><g class="parent-node-group  " data-id="xr"><circle class="parent-outer-ring" cx="820" cy="125" r="78" fill="none" stroke="#4f46e5" stroke-opacity="0.22" stroke-width="1.2"></circle><circle class="parent-node-circle" cx="820" cy="125" r="66" fill="#4f46e5" stroke="#ffffff" stroke-width="2" filter="url(#nodeGlow)"></circle><text class="parent-node-text" x="820" y="118">공간 컴퓨팅</text><text class="parent-node-subtext" x="820" y="145">Spatial XR</text></g><g class="parent-node-group  " data-id="consulting"><circle class="parent-outer-ring" cx="180" cy="335" r="78" fill="none" stroke="#0d9488" stroke-opacity="0.22" stroke-width="1.2"></circle><circle class="parent-node-circle" cx="180" cy="335" r="66" fill="#0d9488" stroke="#ffffff" stroke-width="2" filter="url(#nodeGlow)"></circle><text class="parent-node-text" x="180" y="328">교육/컨설팅</text><text class="parent-node-subtext" x="180" y="355">DX 가이드</text></g><g class="parent-node-group  " data-id="simulation"><circle class="parent-outer-ring" cx="500" cy="335" r="78" fill="none" stroke="#0891b2" stroke-opacity="0.22" stroke-width="1.2"></circle><circle class="parent-node-circle" cx="500" cy="335" r="66" fill="#0891b2" stroke="#ffffff" stroke-width="2" filter="url(#nodeGlow)"></circle><text class="parent-node-text" x="500" y="328">시뮬레이션</text><text class="parent-node-subtext" x="500" y="355">친환경 해석</text></g><g class="parent-node-group  " data-id="rnd"><circle class="parent-outer-ring" cx="820" cy="335" r="78" fill="none" stroke="#3b82f6" stroke-opacity="0.22" stroke-width="1.2"></circle><circle class="parent-node-circle" cx="820" cy="335" r="66" fill="#3b82f6" stroke="#ffffff" stroke-width="2" filter="url(#nodeGlow)"></circle><text class="parent-node-text" x="820" y="328">연구 (R&amp;D)</text><text class="parent-node-subtext" x="820" y="355">자동화 설계</text></g></g>
                 </g>
               </svg>
             </div>
@@ -3369,6 +3709,11 @@
           </div>
         </div>
 
+        <!-- ============================================================ -->
+        <!-- A4 PAGE 2: OBSIDIAN GRAPH SYSTEM (지명원 P.02 & 네트워크 인포그래픽) -->
+        <!-- ============================================================ -->
+        
+
                 <!-- ============================================================ -->
         <!-- A4 PAGE 3: SOLUTION CATEGORY SECTION DIVIDER (솔루션 카테고리 간지) -->
         <!-- 제목 1/3 배치 & 하단 년도별 주요 프로젝트 아카이브 리스트 -->
@@ -3377,12 +3722,12 @@
         <!-- A4 PAGE 3: SOLUTION CATEGORY SECTION DIVIDER (솔루션 카테고리 간지) -->
         <!-- 제목 1/3 배치 & 카테고리별 최근 4개년 프로젝트 실적 리스트 (순수 텍스트) -->
         <!-- ============================================================ -->
-        <div class="a4-page-content" id="page-3-divider-content" data-category="bim" style="display: none;">
+        <div class="a4-page-content" id="page-3-divider-content" data-category="bim" style="display: flex;">
           <div class="a4-page-divider" style="width: 100%; height: 100%; position: relative; overflow: hidden; background: #080d1a; color: #ffffff; display: flex; flex-direction: column; justify-content: flex-start; padding: 50px 58px; box-sizing: border-box; background-image: radial-gradient(circle at 10% 25%, rgba(0,112,243,0.16) 0%, transparent 45%), linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 100% 100%, 32px 32px, 32px 32px;">
             
             <!-- Right Half Faded Visual Graphic with Soft Gradient Mask -->
             <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 54%; opacity: 0.32; pointer-events: none; mix-blend-mode: screen; mask-image: linear-gradient(to left, black 35%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 35%, transparent 100%);">
-              <img src="assets/project_01/point_cloud.png" alt="카테고리 비주얼" class="admin-editable-img divider-bg-img" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) contrast(1.2);">
+              <img src="assets/project_01/point_cloud.png" alt="카테고리 비주얼" class="divider-bg-img" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) contrast(1.2);" title="클릭: 파일 선택 | Ctrl+V: 클립보드 이미지 붙여넣기 | 드래그&amp;드롭 지원">
             </div>
 
             <!-- Watermark Background Big Number (01) -->
@@ -3393,12 +3738,12 @@
             <!-- Top Interactive Category Switcher (Admin Only Viewable/Selectable) -->
             <div class="divider-category-bar" style="position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
               <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="divider-cat-badge" style="font-size: 10.5px; font-weight: 800; font-family: 'Space Grotesk', monospace; letter-spacing: 1px; color: #38bdf8; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); padding: 3px 9px; border-radius: 4px;">
+                <span class="divider-cat-badge" style="font-size: 10.5px; font-weight: 800; font-family: 'Space Grotesk', monospace; letter-spacing: 1px; color: #38bdf8; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); padding: 3px 9px; border-radius: 4px;" spellcheck="false">
                   CATEGORY 01
                 </span>
                 <!-- Category Switcher Dropdown (Clickable in Admin Mode) -->
                 <select class="divider-cat-select" onchange="changeDividerCategory(this)" style="display: none; background: #0f172a; border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; outline: none; cursor: pointer;">
-                  <option value="bim" selected>01. BIM (디지털 트윈)</option>
+                  <option value="bim" selected="">01. BIM (디지털 트윈)</option>
                   <option value="scan">02. 3D 스캐닝 (초정밀 역설계)</option>
                   <option value="xr">03. 공간 컴퓨팅 (XR/AR)</option>
                   <option value="simulation">04. 친환경 에너지 시뮬레이션</option>
@@ -3406,7 +3751,7 @@
                   <option value="rnd">06. 미래건축 기술 R&amp;D</option>
                 </select>
               </div>
-              <span style="font-size: 10.5px; font-weight: 700; color: #64748b; font-family: 'Space Grotesk', monospace; letter-spacing: 1px;">
+              <span style="font-size: 10.5px; font-weight: 700; color: #64748b; font-family: 'Space Grotesk', monospace; letter-spacing: 1px;" spellcheck="false">
                 SNOWMAN FACTORY · ARCHITECTURE &amp; BIM
               </span>
             </div>
@@ -3414,21 +3759,21 @@
             <!-- Title & Concept Block (Located at 1/3 Height Position) -->
             <div style="position: relative; z-index: 5; margin-top: 14px; max-width: 720px;">
               <!-- English Small Heading -->
-              <p class="divider-en-title" contenteditable="false" style="font-size: 11px; font-weight: 800; letter-spacing: 2px; color: #38bdf8; text-transform: uppercase; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;">
+              <p class="divider-en-title" style="font-size: 11px; font-weight: 800; letter-spacing: 2px; color: #38bdf8; text-transform: uppercase; margin: 0 0 10px 0; font-family: 'Space Grotesk', sans-serif;" spellcheck="false">
                 BUILDING INFORMATION MODELING &amp; DIGITAL TWIN
               </p>
               
               <!-- Main Korean Heading -->
-              <h2 class="divider-main-title" contenteditable="false" style="font-size: 34px; font-weight: 900; line-height: 1.25; margin: 0 0 16px 0; color: #ffffff; letter-spacing: -0.8px;">
+              <h2 class="divider-main-title" style="font-size: 34px; font-weight: 900; line-height: 1.25; margin: 0 0 16px 0; color: #ffffff; letter-spacing: -0.8px;" spellcheck="false">
                 BIM &amp; 디지털 트윈<br>
-                <span style="color: #38bdf8;">통합 엔지니어링 체계</span>
+                <span style="color: #38bdf8;" spellcheck="false">통합 엔지니어링 체계</span>
               </h2>
 
               <!-- Neon Blue Accent Bar -->
               <div style="width: 52px; height: 3px; background: linear-gradient(90deg, #38bdf8, #0ea5e9); border-radius: 2px; margin-bottom: 16px;"></div>
 
               <!-- Descriptive Lead Paragraph -->
-              <p class="divider-desc-text" contenteditable="false" style="font-size: 13.5px; line-height: 1.7; color: #cbd5e1; margin: 0; font-weight: 400; word-break: keep-all; max-width: 650px;">
+              <p class="divider-desc-text" style="font-size: 13.5px; line-height: 1.7; color: #cbd5e1; margin: 0; font-weight: 400; word-break: keep-all; max-width: 650px;" spellcheck="false">
                 건축·구조·기계·전기 전 분야의 BIM 전환 모델링 및 사전 간섭 100% 자동 검출, 조달청 시설사업 기준의 공공·민간 고품질 디지털 트윈 인프라를 구축합니다.
               </p>
             </div>
@@ -3436,18 +3781,97 @@
             <!-- Bottom Project Archive List (Pure Text, No Cards, Category Filtered, Recent 4 Years) -->
             <div class="divider-projects-container" style="position: relative; z-index: 5; margin-top: auto; padding-top: 36px; width: 100%;">
               <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); padding-bottom: 8px;">
-                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #64748b; font-family: 'Space Grotesk', monospace;">
+                <span style="font-size: 11px; font-weight: 800; letter-spacing: 1.5px; color: #64748b; font-family: 'Space Grotesk', monospace;" spellcheck="false">
                   YEARLY TRACK RECORD (RECENT 4 YEARS)
                 </span>
-                <span style="font-size: 11px; color: #38bdf8; font-weight: 700; font-family: 'Space Grotesk', monospace;">
+                <span style="font-size: 11px; color: #38bdf8; font-weight: 700; font-family: 'Space Grotesk', monospace;" spellcheck="false">
                   PROJECT ARCHIVE
                 </span>
               </div>
 
               <!-- 4 Columns Grid: 2024, 2023, 2022, 2021 (Rendered Dynamically from Project DB) -->
               <div class="divider-projects-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px;">
-                <!-- Populated dynamically by syncDividerProjects() -->
+          <div class="divider-year-col" style="display: flex; flex-direction: column;">
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; border-bottom: 2px solid rgba(56, 189, 248, 0.4); padding-bottom: 4px; display: inline-block;">
+              2026
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                충청지역본부 청사 건립 설계용역(BIM)
               </div>
+            
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                대구청 제1기동대 BIM용역
+              </div>
+            
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                광명 CM병원 BIM용역
+              </div>
+            
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                Post Tower 건립공사
+              </div>
+            
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                커피그라인더 전시관 BIM 용역
+              </div>
+            
+            </div>
+          </div>
+        
+          <div class="divider-year-col" style="display: flex; flex-direction: column;">
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; border-bottom: 2px solid rgba(56, 189, 248, 0.4); padding-bottom: 4px; display: inline-block;">
+              2025
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                영은페이퍼 충무로 사옥 실시 BIM
+              </div>
+            
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                인천통합보훈회관 건립사업 설계용역
+              </div>
+            
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                북천안데이터센터 BIM 용역
+              </div>
+            
+              <div style="font-size: 13px; font-weight: 500; color: #e2e8f0; line-height: 1.55; word-break: keep-all; padding-left: 10px; position: relative;">
+                <span style="position: absolute; left: 0; color: #38bdf8; font-weight: 900; line-height: 1;">·</span>
+                담바우마을 에너지공급센터 BIM용역
+              </div>
+            
+            </div>
+          </div>
+        
+          <div class="divider-year-col" style="display: flex; flex-direction: column;">
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; border-bottom: 2px solid rgba(56, 189, 248, 0.4); padding-bottom: 4px; display: inline-block;">
+              2024
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="font-size: 12px; color: #64748b; font-style: italic; padding-left: 10px;">-</div>
+            </div>
+          </div>
+        
+          <div class="divider-year-col" style="display: flex; flex-direction: column;">
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 800; color: #38bdf8; margin-bottom: 12px; border-bottom: 2px solid rgba(56, 189, 248, 0.4); padding-bottom: 4px; display: inline-block;">
+              2023
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="font-size: 12px; color: #64748b; font-style: italic; padding-left: 10px;">-</div>
+            </div>
+          </div>
+        </div>
             </div>
 
           </div>
@@ -3460,7 +3884,7 @@
           <div class="a4-page-cinema">
             
             <!-- 100% Full Bleed Video (여백 없이 A4 전체 화면 가득 채움) -->
-            <video id="dambauPromoVideo" class="cinema-full-video" controls preload="metadata" poster="assets/project_01/site_photo.png" playsinline>
+            <video id="dambauPromoVideo" class="cinema-full-video" controls="" preload="metadata" poster="assets/project_01/site_photo.png" playsinline="">
               <source src="assets/dambau_promo_1080p.mp4" type="video/mp4">
               현재 브라우저가 비디오 재생을 지원하지 않습니다.
             </video>
@@ -3469,12 +3893,12 @@
             <div class="cinema-overlay-top">
               <div class="cinema-titles-wrap">
                 <div class="cinema-top-meta">
-                  <span class="cinema-index-num">PROJECT 17 • EXTENDED SHOWCASE</span>
-                  <span class="cinema-category-badge">BIM &amp; DIGITAL TWIN DOCUMENTARY</span>
+                  <span class="cinema-index-num" spellcheck="false">PROJECT 17 • EXTENDED SHOWCASE</span>
+                  <span class="cinema-category-badge" spellcheck="false">BIM &amp; DIGITAL TWIN DOCUMENTARY</span>
                 </div>
                 <div class="cinema-main-title">
                   담바우 에너지 공급센터 프로젝트 영상 기록
-                  <span class="film-badge"><i data-lucide="video" style="width: 11px; height: 11px; vertical-align: -1px;"></i> OFFICIAL FILM</span>
+                  <span class="film-badge" spellcheck="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="video" aria-hidden="true" style="width: 11px; height: 11px; vertical-align: -1px;" class="lucide lucide-video"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg> OFFICIAL FILM</span>
                 </div>
                 <div class="cinema-sub-desc">
                   3D LiDAR 정밀 스캐닝 및 1,200여 건 MEP 간섭 검출, 시설 완공까지의 실증 영상 아카이브
@@ -3482,8 +3906,8 @@
               </div>
               <div class="cinema-header-right">
                 <div class="cinema-header-note">
-                  <span class="cinema-rec-dot"></span>
-                  <span>1080P MASTER • BIM AWARDS 대상</span>
+                  <span class="cinema-rec-dot" spellcheck="false"></span>
+                  <span spellcheck="false">1080P MASTER • BIM AWARDS 대상</span>
                 </div>
               </div>
             </div>
@@ -3499,30 +3923,30 @@
     <footer class="motion-bottombar">
       <!-- Blue Plus Button -->
       <button class="bottom-plus-btn" title="핵심 역량 바로보기" onclick="openModal('bim')">
-        <i data-lucide="plus" style="width: 20px; height: 20px;"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="plus" aria-hidden="true" style="width: 20px; height: 20px;" class="lucide lucide-plus"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
       </button>
 
       <!-- Center Nav -->
       <div class="bottom-center-nav">
         <button class="page-step-btn" id="btnFirst" onclick="goToPage(0)" title="표지(01)로">
-          <i data-lucide="chevrons-left" style="width: 18px; height: 18px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevrons-left" aria-hidden="true" style="width: 18px; height: 18px;" class="lucide lucide-chevrons-left"><path d="m11 17-5-5 5-5"></path><path d="m18 17-5-5 5-5"></path></svg>
         </button>
         <button class="page-step-btn" id="btnPrev" onclick="prevPage()" title="이전 페이지">
-          <i data-lucide="chevron-left" style="width: 18px; height: 18px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-left" aria-hidden="true" style="width: 18px; height: 18px;" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"></path></svg>
         </button>
 
         <button class="page-step-btn" id="btnNext" onclick="nextPage()" title="다음 페이지">
-          <i data-lucide="chevron-right" style="width: 18px; height: 18px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right" aria-hidden="true" style="width: 18px; height: 18px;" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"></path></svg>
         </button>
         <button class="page-step-btn" id="btnLast" onclick="goToPage(3)" title="끝으로">
-          <i data-lucide="chevrons-right" style="width: 18px; height: 18px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevrons-right" aria-hidden="true" style="width: 18px; height: 18px;" class="lucide lucide-chevrons-right"><path d="m6 17 5-5-5-5"></path><path d="m13 17 5-5-5-5"></path></svg>
         </button>
       </div>
 
       <!-- Right Mode Indicators -->
       <div class="bottom-right-modes">
         <button class="view-mode-btn active" title="A4 가로 단일 페이지 모드">
-          <i data-lucide="file-text" style="width: 15px; height: 15px;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" style="width: 15px; height: 15px;" class="lucide lucide-file-text"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
           <span>A4 Single</span>
         </button>
       </div>
@@ -3533,7 +3957,7 @@
   <!-- SERVICE DETAIL MODAL -->
   <div class="service-modal-backdrop" id="serviceModal" onclick="closeModal(event)">
     <div class="service-modal-content" onclick="event.stopPropagation()">
-      <button class="modal-close-btn" onclick="closeModal()"><i data-lucide="x" style="width: 16px; height: 16px;"></i></button>
+      <button class="modal-close-btn" onclick="closeModal()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" style="width: 16px; height: 16px;" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button>
       <div class="modal-tag" id="modalTag">CAPABILITY OVERVIEW</div>
       <h3 class="modal-title" id="modalTitle">서비스명</h3>
       <p class="modal-desc" id="modalDesc">상세 설명</p>
@@ -3550,7 +3974,7 @@
     <div class="lightbox-dialog" onclick="event.stopPropagation()">
       <button class="lightbox-close-btn" onclick="closeLightbox()">
         <span>ESC / 닫기</span>
-        <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" style="width: 18px; height: 18px;" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
       </button>
       <img src="" alt="확대 뷰" class="lightbox-img" id="lightboxImg">
       <div class="lightbox-caption-bar">
@@ -6527,5 +6951,6 @@
     });
 
   </script>
-</body>
-</html>
+
+
+</body></html>
