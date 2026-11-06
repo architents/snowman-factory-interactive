@@ -1252,6 +1252,32 @@
     }
 
     /* Right Visual Stage (상/하/우 여백 0 Full Bleed 직각 사각 그리드) */
+    /* 2x2 Grid Support for Admin Project Templates */
+    .visual-grid-2x2 {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      background: #0f172a;
+      min-height: 0;
+    }
+    .visual-grid-2x2 .grid-cell {
+      position: relative;
+      overflow: hidden;
+      background: #0f172a;
+      min-height: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .visual-grid-2x2 .grid-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     .project-right-visual {
       flex: 1;
       height: 100%;
@@ -3786,29 +3812,31 @@
       if (type === 'project') {
         newPageDiv.innerHTML = `
           <div class="a4-page-project">
+            <!-- Left Panel -->
             <div class="project-left-panel">
-              <div class="project-panel-top">
+              <div>
                 <div class="project-top-meta-bar">
                   <span class="project-index-num">PROJECT</span>
-                  <span class="project-category-badge">ARCHITECTURE & BIM</span>
+                  <span style="color: #cbd5e1; font-size: 11px;">/</span>
+                  <span class="project-category-badge">ARCHITECTURE &amp; BIM</span>
                 </div>
                 <div class="project-pill-badge">
-                  <span class="pill-dot">●</span>
-                  <span>신규 프로젝트 쇼케이스</span>
+                  <span class="pill-dot">●</span> <span>신규 프로젝트 쇼케이스</span>
                 </div>
-                <h3 class="project-hero-title">
+                <h2 class="project-hero-title">
                   새 프로젝트 타이틀<br>
-                  <span class="title-highlight">핵심 솔루션 & 실증</span>
-                </h3>
+                  <span class="title-highlight">핵심 솔루션 &amp; 실증</span>
+                </h2>
                 <div class="project-award-banner">
-                  <span>🏆 우수 프로젝트 레퍼런스</span>
+                  <i data-lucide="award" style="width: 14px; height: 14px; stroke-width: 2.5;"></i>
+                  <span>우수 프로젝트 레퍼런스</span>
                 </div>
               </div>
               <div class="project-features-list">
                 <div class="project-feature-item">
-                  <div class="feature-icon-box"><i data-lucide="layers"></i></div>
+                  <div class="feature-icon-box"><i data-lucide="layers" style="width: 15px; height: 15px; stroke-width: 2.2;"></i></div>
                   <div class="feature-content">
-                    <div class="feature-title">정밀 3D 모델링 <span class="feature-en">PRECISION MODELING</span></div>
+                    <h4 class="feature-title">정밀 3D 모델링 <span class="feature-en">PRECISION MODELING</span></h4>
                     <ul class="feature-bullets">
                       <li>현장 정밀 실측 기반 고도화 모델 구축</li>
                       <li>설계 간섭 및 시공 리스크 사전 차단</li>
@@ -3816,9 +3844,9 @@
                   </div>
                 </div>
                 <div class="project-feature-item">
-                  <div class="feature-icon-box"><i data-lucide="cpu"></i></div>
+                  <div class="feature-icon-box"><i data-lucide="cpu" style="width: 15px; height: 15px; stroke-width: 2.2;"></i></div>
                   <div class="feature-content">
-                    <div class="feature-title">디지털 트윈 연계 <span class="feature-en">DIGITAL TWIN</span></div>
+                    <h4 class="feature-title">디지털 트윈 연계 <span class="feature-en">DIGITAL TWIN</span></h4>
                     <ul class="feature-bullets">
                       <li>실시간 센서 데이터 통합 모니터링</li>
                       <li>운영 유지관리(FM) 최적화 시스템</li>
@@ -3827,12 +3855,44 @@
                 </div>
               </div>
             </div>
+
+            <!-- Right Visual Stage (Page 3 규격 100% 일치: Top Hero + Bottom Split Grid) -->
             <div class="project-right-visual">
-              <div class="visual-grid-2x2">
-                <div class="grid-cell"><img src="assets/project_01/mep_bim.png" alt="이미지 1" class="admin-editable-img"></div>
-                <div class="grid-cell"><img src="assets/project_01/mep_detail.png" alt="이미지 2" class="admin-editable-img"></div>
-                <div class="grid-cell"><img src="assets/project_01/point_cloud.png" alt="이미지 3" class="admin-editable-img"></div>
-                <div class="grid-cell"><img src="assets/project_01/site_photo.png" alt="이미지 4" class="admin-editable-img"></div>
+              <div class="media-card top-hero-card" onclick="openLightbox(this.querySelector('img').src, '프로젝트 메인 조감도', '3D LiDAR 스캔 및 정밀 모델링 비주얼')">
+                <div class="hud-tag top-left">MAIN VISUAL</div>
+                <div class="media-zoom-btn"><i data-lucide="maximize-2" style="width: 14px; height: 14px;"></i></div>
+                <img src="assets/project_01/point_cloud.png" alt="프로젝트 메인 조감도" class="admin-editable-img" loading="lazy">
+                <div class="media-bottom-hud">
+                  <span class="hud-title">3차원 통합 모델링 조감도 (이미지 클릭 시 교체)</span>
+                </div>
+              </div>
+              <div class="bottom-split-grid">
+                <div class="media-card bottom-left-card" onclick="openLightbox(this.querySelector('img').src, '현장 전경', '시공 및 완공 현장 사진')">
+                  <div class="hud-tag top-left">[01] FIELD VIEW</div>
+                  <div class="media-zoom-btn"><i data-lucide="maximize-2" style="width: 14px; height: 14px;"></i></div>
+                  <img src="assets/project_01/site_photo.png" alt="현장 사진" class="admin-editable-img" loading="lazy">
+                  <div class="media-bottom-hud">
+                    <span class="hud-title">현장 시공 전경</span>
+                  </div>
+                </div>
+                <div class="bottom-right-stack">
+                  <div class="media-card stack-card" onclick="openLightbox(this.querySelector('img').src, 'MEP 모델링', '기계 설비 배관 모델링')">
+                    <div class="hud-tag top-left">[02] MEP SYSTEM</div>
+                    <div class="media-zoom-btn"><i data-lucide="maximize-2" style="width: 12px; height: 12px;"></i></div>
+                    <img src="assets/project_01/mep_bim.png" alt="MEP 설비 투시도" class="admin-editable-img" loading="lazy">
+                    <div class="media-bottom-hud compact">
+                      <span class="hud-title">MEP 3D 설비 모델링</span>
+                    </div>
+                  </div>
+                  <div class="media-card stack-card" onclick="openLightbox(this.querySelector('img').src, '상세 분석', '설비 간섭 및 정합성 검측')">
+                    <div class="hud-tag top-left">[03] DETAIL / CLASH</div>
+                    <div class="media-zoom-btn"><i data-lucide="maximize-2" style="width: 12px; height: 12px;"></i></div>
+                    <img src="assets/project_01/mep_detail.png" alt="상세 클로즈업" class="admin-editable-img" loading="lazy">
+                    <div class="media-bottom-hud compact">
+                      <span class="hud-title">상세 간섭 분석</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
