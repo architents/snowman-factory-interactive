@@ -2388,29 +2388,40 @@
                 <g id="viewportGroup">
                   <!-- Editorial Orbit Grid & Central Horizontal Axis -->
                   <g class="bg-orbit-grid" id="bgOrbitGrid">
-                    <!-- 상위 노드를 상하좌우로 시원하게 관통하며 끝까지 확장되는 풀스크린 엔지니어링 그리드 -->
-                    <!-- 가로 그리드선 1: 상단 행 (x: 0 ~ 1000, y: 125) -->
-                    <line x1="0" y1="125" x2="1000" y2="125" stroke="#cbd5e1" stroke-width="2.5" />
-                    <line class="data-pulse-stream" x1="0" y1="125" x2="1000" y2="125" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <!-- 얇고 연한 풀스크린 건축 모눈 그리드 (가로 3줄, 세로 5줄) -->
+                    <!-- [가로 그리드 라인] (x: 0 ~ 1000) -->
+                    <!-- 상단 노드 라인 (y: 125) -->
+                    <line x1="0" y1="125" x2="1000" y2="125" stroke="#e2e8f0" stroke-width="1.2" />
+                    <line class="data-pulse-stream" x1="0" y1="125" x2="1000" y2="125" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
 
-                    <!-- 가로 그리드선 2: 하단 행 (x: 0 ~ 1000, y: 335) -->
-                    <line x1="0" y1="335" x2="1000" y2="335" stroke="#cbd5e1" stroke-width="2.5" />
-                    <line class="data-pulse-stream" x1="0" y1="335" x2="1000" y2="335" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <!-- 중간 보조 라인 (y: 230) - 노드 사이 정중앙 -->
+                    <line x1="0" y1="230" x2="1000" y2="230" stroke="#f1f5f9" stroke-width="1.0" />
 
-                    <!-- 세로 그리드선 1: 1열 (x: 180, y: 0 ~ 460) -->
-                    <line x1="180" y1="0" x2="180" y2="460" stroke="#cbd5e1" stroke-width="2.5" />
-                    <line class="data-pulse-stream" x1="180" y1="0" x2="180" y2="460" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <!-- 하단 노드 라인 (y: 335) -->
+                    <line x1="0" y1="335" x2="1000" y2="335" stroke="#e2e8f0" stroke-width="1.2" />
+                    <line class="data-pulse-stream" x1="0" y1="335" x2="1000" y2="335" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
 
-                    <!-- 세로 그리드선 2: 2열 (x: 500, y: 0 ~ 460) -->
-                    <line x1="500" y1="0" x2="500" y2="460" stroke="#cbd5e1" stroke-width="2.5" />
-                    <line class="data-pulse-stream" x1="500" y1="0" x2="500" y2="460" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <!-- [세로 그리드 라인] (y: 0 ~ 460) -->
+                    <!-- 1열 노드 라인 (x: 180) -->
+                    <line x1="180" y1="0" x2="180" y2="460" stroke="#e2e8f0" stroke-width="1.2" />
+                    <line class="data-pulse-stream" x1="180" y1="0" x2="180" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
 
-                    <!-- 세로 그리드선 3: 3열 (x: 820, y: 0 ~ 460) -->
-                    <line x1="820" y1="0" x2="820" y2="460" stroke="#cbd5e1" stroke-width="2.5" />
-                    <line class="data-pulse-stream" x1="820" y1="0" x2="820" y2="460" stroke="url(#streamGradient)" stroke-width="3" stroke-dasharray="24, 48" stroke-linecap="round" />
+                    <!-- 1열과 2열 중간 보조 라인 (x: 340) -->
+                    <line x1="340" y1="0" x2="340" y2="460" stroke="#f1f5f9" stroke-width="1.0" />
+
+                    <!-- 2열 노드 라인 (x: 500) -->
+                    <line x1="500" y1="0" x2="500" y2="460" stroke="#e2e8f0" stroke-width="1.2" />
+                    <line class="data-pulse-stream" x1="500" y1="0" x2="500" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
+
+                    <!-- 2열과 3열 중간 보조 라인 (x: 660) -->
+                    <line x1="660" y1="0" x2="660" y2="460" stroke="#f1f5f9" stroke-width="1.0" />
+
+                    <!-- 3열 노드 라인 (x: 820) -->
+                    <line x1="820" y1="0" x2="820" y2="460" stroke="#e2e8f0" stroke-width="1.2" />
+                    <line class="data-pulse-stream" x1="820" y1="0" x2="820" y2="460" stroke="url(#streamGradient)" stroke-width="1.8" stroke-dasharray="24, 48" stroke-linecap="round" />
 
                     <!-- 각 상위 카테고리 노드 중심에 정확히 일치하는 점선 원 (r=96) -->
-                    <g stroke="#cbd5e1" stroke-width="1.4" stroke-dasharray="4,4" fill="none">
+                    <g stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4" fill="none">
                       <circle cx="180" cy="125" r="96" />
                       <circle cx="500" cy="125" r="96" />
                       <circle cx="820" cy="125" r="96" />
@@ -2900,45 +2911,55 @@
       parentNodesLayer.innerHTML = '';
       childNodesLayer.innerHTML = '';
       edgesLayer.innerHTML = '';
-      // A. 상위 카테고리 노드 간 2x3 격자형(Grid Matrix) 연결선 및 노드 중심 점선 원 동적 렌더링
+      // A. 상위 카테고리 노드 간 얇고 연한 모눈 그리드(가로 3선, 세로 5선) 및 노드 중심 점선 원 동적 렌더링
       const gridG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       gridG.setAttribute('class', 'dynamic-grid-connections');
 
-      // 0) 옛날 캐시 잔재 (중앙 y=230 직선 및 원) 강제 삭제
+      // 0) 옛날 캐시 잔재 (구버전 점선원 circle[cy="230"]) 강제 삭제
       try {
-        const oldCenterElements = document.querySelectorAll('#graphSvg [y1="230"], #graphSvg [y2="230"], #graphSvg [cy="230"]');
-        oldCenterElements.forEach(el => el.remove());
+        const oldCenterCircles = document.querySelectorAll('#graphSvg circle[cy="230"]');
+        oldCenterCircles.forEach(el => el.remove());
       } catch (err) {}
 
-      // 1) 격자형 연결선 - 상하좌우로 상위 노드를 뚫고 끝까지 확장 (가로 2줄: 0~1000, 세로 3줄: 0~460)
-      const lines = [
-        { x1: 0, y1: 125, x2: 1000, y2: 125 }, // 상단 가로 확장선
-        { x1: 0, y1: 335, x2: 1000, y2: 335 }, // 하단 가로 확장선
-        { x1: 180, y1: 0, x2: 180, y2: 460 },  // 1열 세로 확장선
-        { x1: 500, y1: 0, x2: 500, y2: 460 },  // 2열 세로 확장선
-        { x1: 820, y1: 0, x2: 820, y2: 460 }   // 3열 세로 확장선
+      // 1) 얇고 연한 그리드 연결선 (가로 3선, 세로 5선)
+      const gridLines = [
+        // [가로선 x: 0 ~ 1000]
+        { x1: 0, y1: 125, x2: 1000, y2: 125, isMajor: true },  // 상단 주선
+        { x1: 0, y1: 230, x2: 1000, y2: 230, isMajor: false }, // 중간 보조선 (노드 사이 중앙)
+        { x1: 0, y1: 335, x2: 1000, y2: 335, isMajor: true },  // 하단 주선
+
+        // [세로선 y: 0 ~ 460]
+        { x1: 180, y1: 0, x2: 180, y2: 460, isMajor: true },  // 1열 주선
+        { x1: 340, y1: 0, x2: 340, y2: 460, isMajor: false }, // 1-2열 중간 보조선
+        { x1: 500, y1: 0, x2: 500, y2: 460, isMajor: true },  // 2열 주선
+        { x1: 660, y1: 0, x2: 660, y2: 460, isMajor: false }, // 2-3열 중간 보조선
+        { x1: 820, y1: 0, x2: 820, y2: 460, isMajor: true }   // 3열 주선
       ];
-      lines.forEach(l => {
+
+      gridLines.forEach(l => {
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1', l.x1);
         line.setAttribute('y1', l.y1);
         line.setAttribute('x2', l.x2);
         line.setAttribute('y2', l.y2);
-        line.setAttribute('stroke', '#cbd5e1');
-        line.setAttribute('stroke-width', '2.5');
+        line.setAttribute('stroke', l.isMajor ? '#e2e8f0' : '#f1f5f9');
+        line.setAttribute('stroke-width', l.isMajor ? '1.2' : '1.0');
         gridG.appendChild(line);
 
-        const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        pulse.setAttribute('class', 'data-pulse-stream');
-        pulse.setAttribute('x1', l.x1);
-        pulse.setAttribute('y1', l.y1);
-        pulse.setAttribute('x2', l.x2);
-        pulse.setAttribute('y2', l.y2);
-        pulse.setAttribute('stroke', 'url(#streamGradient)');
-        pulse.setAttribute('stroke-width', '3');
-        pulse.setAttribute('stroke-dasharray', '20, 48');
-        pulse.setAttribute('stroke-linecap', 'round');
-        gridG.appendChild(pulse);
+        // 주요 노드 관통선에는 은은하고 섬세한 펄스 스트림 결합
+        if (l.isMajor) {
+          const pulse = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          pulse.setAttribute('class', 'data-pulse-stream');
+          pulse.setAttribute('x1', l.x1);
+          pulse.setAttribute('y1', l.y1);
+          pulse.setAttribute('x2', l.x2);
+          pulse.setAttribute('y2', l.y2);
+          pulse.setAttribute('stroke', 'url(#streamGradient)');
+          pulse.setAttribute('stroke-width', '1.8');
+          pulse.setAttribute('stroke-dasharray', '24, 48');
+          pulse.setAttribute('stroke-linecap', 'round');
+          gridG.appendChild(pulse);
+        }
       });
 
       // 2) 각 상위 카테고리 노드 중심에 정확히 위치하는 점선 원 (r=96)
@@ -2949,7 +2970,7 @@
         dottedOrbit.setAttribute('r', '96');
         dottedOrbit.setAttribute('fill', 'none');
         dottedOrbit.setAttribute('stroke', '#cbd5e1');
-        dottedOrbit.setAttribute('stroke-width', '1.4');
+        dottedOrbit.setAttribute('stroke-width', '1.2');
         dottedOrbit.setAttribute('stroke-dasharray', '4,4');
         gridG.appendChild(dottedOrbit);
       });
