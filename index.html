@@ -2302,7 +2302,22 @@
       animation: adminSpin 1s linear infinite;
     }
 
-  </style>
+  
+    /* Project DB Management Modal CSS Fix */
+    #projectDbModal, #excelPasteModal {
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999999 !important;
+    }
+    #projectDbModal.open, #excelPasteModal.open {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+</style>
 </head>
 <body>
 
@@ -3531,16 +3546,31 @@
     let currentDbEditingList = [];
 
     function openProjectDbModal() {
-      currentDbEditingList = JSON.parse(JSON.stringify(getProjectDatabase()));
-      renderProjectDbTable();
-      const modal = document.getElementById('projectDbModal');
-      if (modal) modal.style.display = 'flex';
-      if (window.lucide) lucide.createIcons();
+      console.log('[ProjectDB] openProjectDbModal() triggered');
+      try {
+        currentDbEditingList = JSON.parse(JSON.stringify(getProjectDatabase()));
+        renderProjectDbTable();
+        const modal = document.getElementById('projectDbModal');
+        if (modal) {
+          modal.style.display = 'flex';
+          modal.classList.add('open');
+          console.log('[ProjectDB] Modal opened successfully');
+        } else {
+          console.error('[ProjectDB] modal element #projectDbModal not found!');
+        }
+        if (window.lucide) lucide.createIcons();
+      } catch (err) {
+        console.error('[ProjectDB] Error opening modal:', err);
+        alert('프로젝트 DB 모달 열기 중 오류가 발생했습니다: ' + err.message);
+      }
     }
 
     function closeProjectDbModal() {
       const modal = document.getElementById('projectDbModal');
-      if (modal) modal.style.display = 'none';
+      if (modal) {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+      }
     }
 
     function renderProjectDbTable() {
@@ -3655,13 +3685,19 @@
       const modal = document.getElementById('excelPasteModal');
       const textarea = document.getElementById('excelPasteTextarea');
       if (textarea) textarea.value = '';
-      if (modal) modal.style.display = 'flex';
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('open');
+      }
       if (window.lucide) lucide.createIcons();
     }
 
     function closeExcelPasteModal() {
       const modal = document.getElementById('excelPasteModal');
-      if (modal) modal.style.display = 'none';
+      if (modal) {
+        modal.classList.remove('open');
+        modal.style.display = 'none';
+      }
     }
 
     function processExcelPasteData() {
@@ -3736,6 +3772,25 @@
       link.click();
       document.body.removeChild(link);
     }
+
+    // Explicit Window Bindings for Inline onclick handlers
+    window.openProjectDbModal = openProjectDbModal;
+    window.closeProjectDbModal = closeProjectDbModal;
+    window.saveProjectDbAndSync = saveProjectDbAndSync;
+    window.addProjectDbRow = addProjectDbRow;
+    window.deleteProjectDbRow = deleteProjectDbRow;
+    window.openExcelPasteModal = openExcelPasteModal;
+    window.closeExcelPasteModal = closeExcelPasteModal;
+    window.processExcelPasteData = processExcelPasteData;
+    window.exportProjectDbToCSV = exportProjectDbToCSV;
+    window.resetProjectDbToDefault = resetProjectDbToDefault;
+    window.changeDividerCategory = changeDividerCategory;
+    window.renderProjectDbTable = renderProjectDbTable;
+    window.updateProjectDbField = updateProjectDbField;
+    window.syncAllDividers = syncAllDividers;
+    window.syncDividerProjects = syncDividerProjects;
+    window.generateDividerProjectsHTML = generateDividerProjectsHTML;
+
 
     lucide.createIcons();
 
