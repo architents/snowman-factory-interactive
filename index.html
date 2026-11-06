@@ -2105,6 +2105,10 @@
         <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
         <span>페이지 삭제</span>
       </button>
+      <button class="admin-btn" onclick="openNodeColorModal()" title="솔루션 노드 색상 설정 (Theme 4 및 커스텀 컬러)">
+        <i data-lucide="palette" style="width: 15px; height: 15px;"></i>
+        <span>노드 색상</span>
+      </button>
       <div class="admin-divider"></div>
       <button class="admin-btn" onclick="saveBrochureChanges(true)" title="현재 변경사항 브라우저 저장">
         <i data-lucide="save" style="width: 15px; height: 15px;"></i>
@@ -2146,6 +2150,61 @@
       <div class="admin-modal-footer">
         <button class="admin-modal-btn cancel" onclick="closeAdminLoginModal()">취소</button>
         <button class="admin-modal-btn confirm" onclick="verifyAdminLogin()">편집 모드 시작</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution Node Color Palette Modal (Admin CMS) -->
+  <div id="nodeColorModal" class="admin-modal-backdrop">
+    <div class="admin-modal-box wide" style="max-width: 680px;">
+      <div class="admin-modal-header">
+        <div class="admin-modal-icon" style="background: #eff6ff; color: #2563eb; border-color: #bfdbfe;">
+          <i data-lucide="palette" style="width: 24px; height: 24px;"></i>
+        </div>
+        <h3>솔루션 노드 색상 설정 (Color Palette)</h3>
+        <p>각 상위 노드의 색상을 직접 지정하거나, 추천 디자인 테마를 클릭하세요. 실시간으로 그래프에 즉각 반영됩니다.</p>
+      </div>
+
+      <div class="admin-modal-body" style="padding: 16px 24px 24px;">
+        <!-- Theme Presets Bar -->
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+            디자인 추천 테마 프리셋
+          </label>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+            <button type="button" class="admin-modal-btn" onclick="applyNodeTheme('theme4')" style="background: #ffffff; border: 1.5px solid #2563eb; color: #1e40af; padding: 10px 14px; text-align: left; display: flex; flex-direction: column; gap: 4px; border-radius: 8px; cursor: pointer;">
+              <span style="font-weight: 800; font-size: 13px;">★ Theme 4: Vivid Editorial (기본)</span>
+              <span style="font-size: 11px; color: #64748b;">깊이감 있는 에디토리얼 6색 정밀 튜닝</span>
+            </button>
+            <button type="button" class="admin-modal-btn" onclick="applyNodeTheme('theme1')" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 10px 14px; text-align: left; display: flex; flex-direction: column; gap: 4px; border-radius: 8px; cursor: pointer;">
+              <span style="font-weight: 800; font-size: 13px;">Theme 1: Cyber Blueprint</span>
+              <span style="font-size: 11px; color: #64748b;">하이테크 블루 & 아쿠아 단일 톤</span>
+            </button>
+            <button type="button" class="admin-modal-btn" onclick="applyNodeTheme('theme2')" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 10px 14px; text-align: left; display: flex; flex-direction: column; gap: 4px; border-radius: 8px; cursor: pointer;">
+              <span style="font-weight: 800; font-size: 13px;">Theme 2: Architectural Mono</span>
+              <span style="font-size: 11px; color: #64748b;">차콜/슬레이트 그레이 + 일렉트릭 블루</span>
+            </button>
+            <button type="button" class="admin-modal-btn" onclick="applyNodeTheme('theme3')" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 10px 14px; text-align: left; display: flex; flex-direction: column; gap: 4px; border-radius: 8px; cursor: pointer;">
+              <span style="font-weight: 800; font-size: 13px;">Theme 3: Earth & Materials</span>
+              <span style="font-size: 11px; color: #64748b;">테라코타 브릭, 세이지 그린, 인디고</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Individual 6 Node Color Pickers -->
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+            상위 노드별 개별 색상 커스텀
+          </label>
+          <div id="nodeColorPickersContainer" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-modal-footer" style="display: flex; justify-content: space-between;">
+        <button class="admin-modal-btn cancel" onclick="resetToTheme4()">Theme 4 기본값 복원</button>
+        <button class="admin-modal-btn confirm" onclick="closeNodeColorModal()">설정 완료</button>
       </div>
     </div>
   </div>
@@ -2758,7 +2817,7 @@
         fullName: "BIM (Building Information Modeling)",
         x: 180,
         y: 125,
-        color: "#1d4ed8",
+        color: "#1e40af",
         randomAngles: [35, 122, 215, 305],
         children: [
           { pos: "top-left", title: "BIM 정밀 모델링", en: "Integrated BIM 3D" },
@@ -2782,7 +2841,7 @@
         fullName: "3D LiDAR 스캐닝 & 역설계",
         x: 500,
         y: 125,
-        color: "#0891b2",
+        color: "#0e7490",
         randomAngles: [22, 128, 205, 292],
         children: [
           { pos: "top-left", title: "LiDAR 1mm 오차", en: "High Precision Scan" },
@@ -2806,7 +2865,7 @@
         fullName: "공간 컴퓨팅 (AR · VR · MR)",
         x: 820,
         y: 125,
-        color: "#7c3aed",
+        color: "#6d28d9",
         randomAngles: [42, 138, 228, 318],
         children: [
           { pos: "top-left", title: "XR 시공 가이드", en: "Field AR Overlay" },
@@ -2830,7 +2889,7 @@
         fullName: "교육 및 DX 표준 컨설팅",
         x: 180,
         y: 335,
-        color: "#ea580c",
+        color: "#c2410c",
         randomAngles: [28, 114, 210, 302],
         children: [
           { pos: "top-left", title: "연성대 산학 협력", en: "Academia Partnership" },
@@ -2854,7 +2913,7 @@
         fullName: "친환경 에너지 BIM 시뮬레이션",
         x: 500,
         y: 335,
-        color: "#16a34a",
+        color: "#15803d",
         randomAngles: [48, 134, 224, 324],
         children: [
           { pos: "top-left", title: "일조 & 음영 해석", en: "Solar & Shading Sim." },
@@ -2878,7 +2937,7 @@
         fullName: "디지털 건축 알고리즘 & 자동화 R&D",
         x: 820,
         y: 335,
-        color: "#475569",
+        color: "#334155",
         randomAngles: [35, 124, 208, 314],
         children: [
           { pos: "top-left", title: "Dynamo 자동 설계", en: "Algorithmic Design" },
@@ -3692,6 +3751,134 @@
     }
   
     // =============================================================
+        // -------------------------------------------------------------
+    // NODE COLOR PALETTE CMS SYSTEM (방법 2 구현 & Theme 4 기본)
+    // -------------------------------------------------------------
+    const NODE_THEMES = {
+      theme4: {
+        name: "Theme 4: Vivid Editorial",
+        colors: {
+          bim: "#1e40af",        // Deep Royal Cobalt
+          scan: "#0e7490",       // Precision Teal Cyan
+          xr: "#6d28d9",         // Spatial Indigo Violet
+          consulting: "#c2410c", // Warm Ochre Terracotta
+          simulation: "#15803d", // Nordic Forest Pine
+          rnd: "#334155"         // Architectural Slate
+        }
+      },
+      theme1: {
+        name: "Theme 1: Cyber Blueprint",
+        colors: {
+          bim: "#1e3a8a",
+          scan: "#0284c7",
+          xr: "#4f46e5",
+          consulting: "#0d9488",
+          simulation: "#0891b2",
+          rnd: "#3b82f6"
+        }
+      },
+      theme2: {
+        name: "Theme 2: Architectural Mono & Accent",
+        colors: {
+          bim: "#0f172a",
+          scan: "#334155",
+          xr: "#2563eb",
+          consulting: "#475569",
+          simulation: "#64748b",
+          rnd: "#1e293b"
+        }
+      },
+      theme3: {
+        name: "Theme 3: Earth & Materials",
+        colors: {
+          bim: "#9a3412",
+          scan: "#0f766e",
+          xr: "#4338ca",
+          consulting: "#b45309",
+          simulation: "#3f6212",
+          rnd: "#57534e"
+        }
+      }
+    };
+
+    function openNodeColorModal() {
+      const modal = document.getElementById('nodeColorModal');
+      const container = document.getElementById('nodeColorPickersContainer');
+      if (!modal || !container) return;
+
+      container.innerHTML = '';
+      categoriesData.forEach(cat => {
+        const item = document.createElement('div');
+        item.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 8px;';
+        item.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 12px; font-weight: 800; color: #0f172a;">${cat.name}</span>
+            <span style="font-size: 10px; color: #64748b; font-family: monospace;" id="hexLabel_${cat.id}">${cat.color}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <input type="color" value="${cat.color}" oninput="onColorInput('${cat.id}', this.value)" style="width: 38px; height: 32px; border: none; border-radius: 6px; cursor: pointer; background: transparent; padding: 0;">
+            <span style="font-size: 11px; color: #475569; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${cat.sub}</span>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+
+      modal.classList.add('open');
+      lucide.createIcons();
+    }
+
+    function closeNodeColorModal() {
+      const modal = document.getElementById('nodeColorModal');
+      if (modal) modal.classList.remove('open');
+      saveNodeColors();
+    }
+
+    function onColorInput(catId, hex) {
+      const cat = categoriesData.find(c => c.id === catId);
+      if (cat) {
+        cat.color = hex;
+        const label = document.getElementById('hexLabel_' + catId);
+        if (label) label.textContent = hex;
+        renderObsidianGraph();
+        saveNodeColors();
+      }
+    }
+
+    function applyNodeTheme(themeKey) {
+      const theme = NODE_THEMES[themeKey];
+      if (!theme) return;
+      Object.entries(theme.colors).forEach(([id, hex]) => {
+        const cat = categoriesData.find(c => c.id === id);
+        if (cat) cat.color = hex;
+      });
+      renderObsidianGraph();
+      saveNodeColors();
+      openNodeColorModal(); // 갱신된 색상으로 리렌더링
+      showAdminToast(`${theme.name} 팔레트가 적용되었습니다.`);
+    }
+
+    function resetToTheme4() {
+      applyNodeTheme('theme4');
+    }
+
+    function saveNodeColors() {
+      const colorMap = {};
+      categoriesData.forEach(c => { colorMap[c.id] = c.color; });
+      localStorage.setItem('snowman_node_colors_v1', JSON.stringify(colorMap));
+    }
+
+    function loadSavedNodeColors() {
+      try {
+        const saved = localStorage.getItem('snowman_node_colors_v1');
+        if (saved) {
+          const colorMap = JSON.parse(saved);
+          categoriesData.forEach(c => {
+            if (colorMap[c.id]) c.color = colorMap[c.id];
+          });
+        }
+      } catch (e) {}
+    }
+
     // DYNAMIC PAGE SYSTEM & ADMIN INLINE CMS LOGIC
     // =============================================================
     let isAdminMode = false;
@@ -4345,6 +4532,7 @@
 
     // 페이지 로드 시 기존 저장본 자동 복원
     window.addEventListener('DOMContentLoaded', () => {
+      loadSavedNodeColors();
       restoreBrochureChanges();
     });
 
