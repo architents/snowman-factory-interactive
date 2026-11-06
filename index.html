@@ -2317,6 +2317,210 @@
       opacity: 1 !important;
       pointer-events: auto !important;
     }
+
+    /* ========================================================= */
+    /* LEFT TOC SIDEBAR PANEL (좌측 목차 및 순서 변경 패널) */
+    /* ========================================================= */
+    #tocBackdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      z-index: 99990;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    #tocBackdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #tocSidebarPanel {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 370px;
+      max-width: 90vw;
+      height: 100vh;
+      background: #090e1a;
+      background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.12) 0%, transparent 40%),
+                        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px, 24px 24px;
+      border-right: 1px solid rgba(56, 189, 248, 0.28);
+      box-shadow: 20px 0 50px rgba(0, 0, 0, 0.75), 0 0 30px rgba(14, 165, 233, 0.1);
+      z-index: 99995;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      box-sizing: border-box;
+    }
+    #tocSidebarPanel.active {
+      transform: translateX(0);
+    }
+
+    .toc-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(15, 23, 42, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toc-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toc-icon-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .toc-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc-item-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 9px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+    }
+    .toc-item-card:hover {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: rgba(56, 189, 248, 0.3);
+      transform: translateX(3px);
+    }
+    .toc-item-card.active {
+      background: rgba(14, 165, 233, 0.16);
+      border-color: #38bdf8;
+      box-shadow: 0 0 16px rgba(14, 165, 233, 0.25);
+    }
+    .toc-item-card.dragging {
+      opacity: 0.4;
+      border: 1px dashed #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .toc-num-badge {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 13px;
+      font-weight: 800;
+      color: #38bdf8;
+      background: #0f172a;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 7px;
+      border-radius: 6px;
+      min-width: 28px;
+      text-align: center;
+    }
+    .toc-item-card.active .toc-num-badge {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #38bdf8;
+    }
+
+    .toc-item-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .toc-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f1f5f9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toc-item-card.active .toc-item-title {
+      color: #38bdf8;
+    }
+
+    .toc-item-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toc-type-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    .toc-reorder-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .toc-order-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #cbd5e1;
+      width: 24px;
+      height: 22px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      padding: 0;
+    }
+    .toc-order-btn:hover:not(:disabled) {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #38bdf8;
+    }
+    .toc-order-btn:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+
+    .toc-footer {
+      padding: 12px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(15, 23, 42, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #64748b;
+    }
+
 </style>
 </head>
 <body>
@@ -2412,6 +2616,14 @@
       <!-- SUBVIEW 1: MAIN MENU (기본 도구 목록) -->
       <div id="adminViewMain" style="display: flex; flex-direction: column; gap: 7px;">
         <span class="admin-section-label">PAGE CONTROLS (페이지 조작)</span>
+        
+        <button class="admin-btn accent-cyan" onclick="openTocPanel()" title="전체 목차 확인 및 페이지 순서 변경">
+          <div class="btn-left">
+            <i data-lucide="list-ordered" style="width: 15px; height: 15px; color: #38bdf8;"></i>
+            <span>목차 및 순서 변경</span>
+          </div>
+          <span style="font-size: 9.5px; background: rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 1px 6px; border-radius: 4px; font-weight: 700;">TOC</span>
+        </button>
         
         <button class="admin-btn primary" onclick="showAdminSubview('addPage')" title="새 페이지 추가 템플릿 선택">
           <div class="btn-left">
@@ -2926,6 +3138,46 @@
   <!-- Hidden Image File Input for Click-to-Upload -->
   <input type="file" id="adminImageFileInput" accept="image/*" style="display: none;" onchange="handleAdminImageUpload(event)">
 
+  
+  <!-- ============================================================ -->
+  <!-- LEFT FULL-HEIGHT TOC SIDEBAR PANEL (좌측 목차 및 순서 변경 패널) -->
+  <!-- ============================================================ -->
+  <div id="tocBackdrop" onclick="closeTocPanel()"></div>
+
+  <aside id="tocSidebarPanel">
+    <!-- Header -->
+    <div class="toc-header">
+      <div class="toc-title-wrap">
+        <div class="toc-icon-badge">
+          <i data-lucide="list-ordered" style="width: 17px; height: 17px;"></i>
+        </div>
+        <div>
+          <h3 style="margin: 0; font-size: 15px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 7px;">
+            브로슈어 목차
+            <span id="tocTotalBadge" style="font-size: 10px; background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); padding: 1px 6px; border-radius: 4px; font-family: monospace;">P.1 / 4</span>
+          </h3>
+          <p style="margin: 2px 0 0; font-size: 11px; color: #94a3b8;">클릭하여 바로 이동하거나, 위/아래 버튼으로 순서를 변경합니다.</p>
+        </div>
+      </div>
+      <button onclick="closeTocPanel()" title="목차 닫기" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;" onmouseenter="this.style.background='rgba(239, 68, 68, 0.3)'; this.style.color='#fca5a5';" onmouseleave="this.style.background='rgba(255, 255, 255, 0.08)'; this.style.color='#cbd5e1';">
+        <i data-lucide="x" style="width: 15px; height: 15px;"></i>
+      </button>
+    </div>
+
+    <!-- Body (Dynamic Page List) -->
+    <div class="toc-body" id="tocListContainer">
+      <!-- Rendered dynamically by renderTocList() -->
+    </div>
+
+    <!-- Footer -->
+    <div class="toc-footer">
+      <span>순서 변경 시 브라우저에 자동 저장됩니다.</span>
+      <button onclick="saveBrochureChanges(true)" style="background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 5px; cursor: pointer;">
+        저장
+      </button>
+    </div>
+  </aside>
+
   <div id="brochure-viewer">
     
     <!-- Topbar -->
@@ -2935,7 +3187,7 @@
       </div>
 
       <div class="top-tools-center">
-        <button class="tool-icon-btn" title="목차 보기" onclick="alert('목차:\n01. Cover (표지)\n02. Key Solutions & Services (핵심 역량)\n03. BIM AWARDS 2024 대상 프로젝트 (담바우 역설계)\n04. 담바우 프로젝트 시네마 (공식 홍보영상)')">
+        <button class="tool-icon-btn" id="btnTopToc" title="목차 열기 (페이지 순서 변경)" onclick="toggleTocPanel()">
           <i data-lucide="list" style="width: 18px; height: 18px;"></i>
         </button>
         <button class="tool-icon-btn" title="전체화면" onclick="toggleFullScreen()">
@@ -3791,6 +4043,263 @@
     window.syncDividerProjects = syncDividerProjects;
     window.generateDividerProjectsHTML = generateDividerProjectsHTML;
 
+
+    
+    // =============================================================
+    // LEFT TOC SIDEBAR & PAGE REORDERING SYSTEM
+    // =============================================================
+
+    function toggleTocPanel() {
+      const panel = document.getElementById('tocSidebarPanel');
+      if (panel && panel.classList.contains('active')) {
+        closeTocPanel();
+      } else {
+        openTocPanel();
+      }
+    }
+
+    function openTocPanel() {
+      renderTocList();
+      const panel = document.getElementById('tocSidebarPanel');
+      const backdrop = document.getElementById('tocBackdrop');
+      if (panel) panel.classList.add('active');
+      if (backdrop) backdrop.classList.add('active');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeTocPanel() {
+      const panel = document.getElementById('tocSidebarPanel');
+      const backdrop = document.getElementById('tocBackdrop');
+      if (panel) panel.classList.remove('active');
+      if (backdrop) backdrop.classList.remove('active');
+    }
+
+    // 각 페이지의 대표 타이틀 및 뱃지 추출 헬퍼
+    function getBrochurePageMeta(pageElem, index) {
+      let title = '페이지 ' + (index + 1);
+      let badge = 'PAGE';
+      let badgeColor = '#64748b';
+      let badgeBg = 'rgba(100, 116, 139, 0.2)';
+
+      if (!pageElem) return { title, badge, badgeColor, badgeBg };
+
+      // 1. Divider Page
+      if (pageElem.querySelector('.a4-page-divider') || pageElem.getAttribute('data-category')) {
+        badge = '카테고리 간지';
+        badgeColor = '#38bdf8';
+        badgeBg = 'rgba(56, 189, 248, 0.15)';
+        const mainTitle = pageElem.querySelector('.divider-main-title');
+        if (mainTitle) {
+          title = mainTitle.innerText.replace(/\r?\n/g, ' ').trim();
+        } else {
+          const cat = pageElem.getAttribute('data-category') || 'BIM';
+          title = cat.toUpperCase() + ' 솔루션 인트로';
+        }
+      }
+      // 2. Interactive Map / Cover (Page 1 or page-2-content)
+      else if (pageElem.id === 'page-2-content' || pageElem.querySelector('#main-svg-stage')) {
+        badge = '솔루션 맵';
+        badgeColor = '#0ea5e9';
+        badgeBg = 'rgba(14, 165, 233, 0.15)';
+        title = '핵심 솔루션 및 통합 체계 현황';
+      }
+      // 3. Cinema Showcase
+      else if (pageElem.querySelector('.a4-page-cinema') || pageElem.querySelector('video')) {
+        badge = '시네마 쇼케이스';
+        badgeColor = '#ec4899';
+        badgeBg = 'rgba(236, 72, 153, 0.15)';
+        const h = pageElem.querySelector('h1, h2, h3, .cinema-title');
+        title = h ? h.innerText.replace(/\r?\n/g, ' ').trim() : '프로젝트 시네마 영상';
+      }
+      // 4. Project Layouts
+      else {
+        const layout = pageElem.getAttribute('data-layout') || '';
+        if (layout.includes('matrix')) badge = '2x2 매트릭스';
+        else if (layout.includes('focus')) badge = '메인 포커스';
+        else if (layout.includes('stacked')) badge = '상하 2단';
+        else if (layout.includes('split')) badge = '1:1 수직분할';
+        else if (layout.includes('minimal')) badge = '풀블리드';
+        else badge = '프로젝트';
+        
+        badgeColor = '#34d399';
+        badgeBg = 'rgba(16, 185, 129, 0.15)';
+
+        const h = pageElem.querySelector('h1, h2, h3, .project-title, .obsidian-main-title');
+        if (h) {
+          title = h.innerText.replace(/\r?\n/g, ' ').trim();
+        } else {
+          title = `프로젝트 상세 (P.${index + 1})`;
+        }
+      }
+
+      return { title, badge, badgeColor, badgeBg };
+    }
+
+    // 목차 리스트 동적 렌더링
+    function renderTocList() {
+      const container = document.getElementById('tocListContainer');
+      const totalBadge = document.getElementById('tocTotalBadge');
+      if (!container) return;
+
+      const pages = getAllPages();
+      totalBrochurePages = pages.length;
+
+      if (totalBadge) {
+        totalBadge.textContent = `P.${currentBrochurePage + 1} / ${totalBrochurePages}`;
+      }
+
+      if (pages.length === 0) {
+        container.innerHTML = '<div style="color: #64748b; font-size: 12px; text-align: center; padding: 30px;">표시할 페이지가 없습니다.</div>';
+        return;
+      }
+
+      container.innerHTML = pages.map((page, idx) => {
+        const meta = getBrochurePageMeta(page, idx);
+        const isActive = (idx === currentBrochurePage);
+        const isFirst = (idx === 0);
+        const isLast = (idx === pages.length - 1);
+
+        return `
+          <div class="toc-item-card ${isActive ? 'active' : ''}" data-index="${idx}" onclick="handleTocItemClick(${idx})" draggable="true" ondragstart="handleTocDragStart(event, ${idx})" ondragover="handleTocDragOver(event)" ondrop="handleTocDrop(event, ${idx})" ondragend="handleTocDragEnd(event)">
+            
+            <!-- Page Number Badge -->
+            <div class="toc-num-badge">
+              P.${idx + 1}
+            </div>
+
+            <!-- Page Title & Type Tag -->
+            <div class="toc-item-content">
+              <div class="toc-item-title" title="${meta.title.replace(/"/g, '&quot;')}">
+                ${meta.title}
+              </div>
+              <div class="toc-item-meta">
+                <span class="toc-type-tag" style="color: ${meta.badgeColor}; background: ${meta.badgeBg};">
+                  ${meta.badge}
+                </span>
+                ${isActive ? '<span style="font-size: 9.5px; color: #38bdf8; font-weight: 700;">● 현재 페이지</span>' : ''}
+              </div>
+            </div>
+
+            <!-- Reorder Actions (Up / Down) -->
+            <div class="toc-reorder-actions" onclick="event.stopPropagation()">
+              <button class="toc-order-btn" title="한 페이지 위로 이동" onclick="movePageUp(${idx})" ${isFirst ? 'disabled' : ''}>
+                <i data-lucide="chevron-up" style="width: 13px; height: 13px;"></i>
+              </button>
+              <button class="toc-order-btn" title="한 페이지 아래로 이동" onclick="movePageDown(${idx})" ${isLast ? 'disabled' : ''}>
+                <i data-lucide="chevron-down" style="width: 13px; height: 13px;"></i>
+              </button>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function handleTocItemClick(idx) {
+      goToPage(idx);
+      renderTocList();
+      // 작은 화면일 경우 닫기
+      if (window.innerWidth < 768) {
+        closeTocPanel();
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 페이지 순서 변경 (DOM Reordering)
+    // -------------------------------------------------------------
+    function movePage(fromIdx, toIdx) {
+      const sheet = document.getElementById('a4Sheet');
+      if (!sheet) return;
+
+      const pages = getAllPages();
+      if (fromIdx < 0 || fromIdx >= pages.length || toIdx < 0 || toIdx >= pages.length || fromIdx === toIdx) {
+        return;
+      }
+
+      const movedPage = pages[fromIdx];
+      const refPage = pages[toIdx];
+
+      if (toIdx > fromIdx) {
+        // 아래로 이동: refPage의 다음 형제 앞에 삽입
+        sheet.insertBefore(movedPage, refPage.nextSibling);
+      } else {
+        // 위로 이동: refPage 앞에 삽입
+        sheet.insertBefore(movedPage, refPage);
+      }
+
+      // 현재 보고 있는 페이지 인덱스 갱신
+      if (currentBrochurePage === fromIdx) {
+        currentBrochurePage = toIdx;
+      } else if (fromIdx < currentBrochurePage && toIdx >= currentBrochurePage) {
+        currentBrochurePage--;
+      } else if (fromIdx > currentBrochurePage && toIdx <= currentBrochurePage) {
+        currentBrochurePage++;
+      }
+
+      updateBrochureUI();
+      renderTocList();
+
+      // 브라우저 저장소에 변경된 순서 자동 영구 반영
+      saveBrochureChanges(false);
+
+      if (window.showAdminToast) {
+        showAdminToast(`P.${fromIdx + 1} 페이지가 P.${toIdx + 1} 위치로 이동되었습니다.`);
+      }
+    }
+
+    function movePageUp(idx) {
+      if (idx > 0) movePage(idx, idx - 1);
+    }
+
+    function movePageDown(idx) {
+      const pages = getAllPages();
+      if (idx < pages.length - 1) movePage(idx, idx + 1);
+    }
+
+    // -------------------------------------------------------------
+    // Drag & Drop Reordering Support
+    // -------------------------------------------------------------
+    let draggedTocIndex = null;
+
+    function handleTocDragStart(e, idx) {
+      draggedTocIndex = idx;
+      e.currentTarget.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', idx);
+    }
+
+    function handleTocDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleTocDrop(e, targetIdx) {
+      e.preventDefault();
+      if (draggedTocIndex !== null && draggedTocIndex !== targetIdx) {
+        movePage(draggedTocIndex, targetIdx);
+      }
+    }
+
+    function handleTocDragEnd(e) {
+      e.currentTarget.classList.remove('dragging');
+      draggedTocIndex = null;
+    }
+
+    // Window Bindings
+    window.toggleTocPanel = toggleTocPanel;
+    window.openTocPanel = openTocPanel;
+    window.closeTocPanel = closeTocPanel;
+    window.renderTocList = renderTocList;
+    window.movePage = movePage;
+    window.movePageUp = movePageUp;
+    window.movePageDown = movePageDown;
+    window.handleTocItemClick = handleTocItemClick;
+    window.handleTocDragStart = handleTocDragStart;
+    window.handleTocDragOver = handleTocDragOver;
+    window.handleTocDrop = handleTocDrop;
+    window.handleTocDragEnd = handleTocDragEnd;
 
     lucide.createIcons();
 
@@ -5750,14 +6259,14 @@
       if (!sheet) return;
 
       // contenteditable 임시 제거본을 저장하지 않고 내부 HTML 그대로 보관
-      localStorage.setItem('snowman_brochure_sheet_v4', sheet.innerHTML);
+      localStorage.setItem('snowman_brochure_sheet_v5', sheet.innerHTML);
       if (showMessage) {
         showAdminToast('✅ 브라우저에 모든 변경사항이 안전하게 저장되었습니다.');
       }
     }
 
     function restoreBrochureChanges() {
-      const saved = localStorage.getItem('snowman_brochure_sheet_v4');
+      const saved = localStorage.getItem('snowman_brochure_sheet_v5');
       if (saved) {
         const sheet = document.getElementById('a4Sheet');
         if (sheet) {
@@ -5771,7 +6280,7 @@
       if (!confirm('정말로 모든 수정 사항을 초기화하고 원래 기본 브로슈어로 되돌리시겠습니까?')) {
         return;
       }
-      localStorage.removeItem('snowman_brochure_sheet_v4');
+      localStorage.removeItem('snowman_brochure_sheet_v5');
       location.reload();
     }
 
